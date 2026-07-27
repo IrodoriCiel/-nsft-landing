@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<!--
+  NetSuite Full Tools — plantilla de la landing page.
+
+  ESTE es el archivo que se edita a mano; index.html se GENERA a partir de él
+  con `npm run landing`. Los textos propios de la web (titulares, FAQ,
+  privacidad) viven aquí en los dos idiomas; el catálogo de herramientas NO:
+  lo inyecta build.js desde STORE_DESCRIPTION.md.
+
+  Marcadores que rellena build.js:
+    6.0.0   versión del manifest        102     nº de herramientas
+    9  nº de categorías            <script>window.NSFT_CATALOG = {"groups":[{"id":"star","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpolygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\">\u003c/polygon>\u003c/svg>","color":"#C2557A","nameEs":"Destacados","nameEn":"Featured"},{"id":"reg","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\">\u003c/path>\u003cpolyline points=\"14 2 14 8 20 8\">\u003c/polyline>\u003c/svg>","color":"#2C6E4E","nameEs":"Registros","nameEn":"Records"},{"id":"dev","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpolyline points=\"16 18 22 12 16 6\">\u003c/polyline>\u003cpolyline points=\"8 6 2 12 8 18\">\u003c/polyline>\u003c/svg>","color":"#7C63E0","nameEs":"Desarrollo / Scripting","nameEn":"Development / Scripting"},{"id":"sql","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003ccircle cx=\"11\" cy=\"11\" r=\"8\">\u003c/circle>\u003cline x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\">\u003c/line>\u003c/svg>","color":"#1A73E8","nameEs":"Búsquedas y SQL","nameEn":"Searches & SQL"},{"id":"ui","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003crect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\">\u003c/rect>\u003cline x1=\"3\" y1=\"9\" x2=\"21\" y2=\"9\">\u003c/line>\u003cline x1=\"9\" y1=\"21\" x2=\"9\" y2=\"9\">\u003c/line>\u003c/svg>","color":"#B8862F","nameEs":"Apariencia / Layout","nameEn":"Appearance / Layout"},{"id":"prod","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z\">\u003c/path>\u003c/svg>","color":"#2F8F8A","nameEs":"Productividad","nameEn":"Productivity"},{"id":"file","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\">\u003c/path>\u003cline x1=\"8\" y1=\"13\" x2=\"16\" y2=\"13\">\u003c/line>\u003cline x1=\"8\" y1=\"17\" x2=\"16\" y2=\"17\">\u003c/line>\u003c/svg>","color":"#B0653A","nameEs":"File Cabinet","nameEn":"File Cabinet"},{"id":"pdf","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\">\u003c/path>\u003cpolyline points=\"14 2 14 8 20 8\">\u003c/polyline>\u003cline x1=\"9\" y1=\"15\" x2=\"15\" y2=\"15\">\u003c/line>\u003cline x1=\"9\" y1=\"18\" x2=\"15\" y2=\"18\">\u003c/line>\u003c/svg>","color":"#5E7387","nameEs":"Plantillas PDF / HTML","nameEn":"PDF / HTML templates"},{"id":"wf","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cline x1=\"3\" y1=\"7\" x2=\"18\" y2=\"7\">\u003c/line>\u003cpolyline points=\"15 4 18 7 15 10\">\u003c/polyline>\u003cline x1=\"21\" y1=\"17\" x2=\"6\" y2=\"17\">\u003c/line>\u003cpolyline points=\"9 14 6 17 9 20\">\u003c/polyline>\u003c/svg>","color":"#6E7F2F","nameEs":"Workflows","nameEn":"Workflows"}],"tools":[{"group":"star","nameEs":"Asistente de IA","descEs":"Pregunta en lenguaje natural sobre el registro y tu cuenta, sin salir de la página (con tu propia clave).","nameEn":"AI Assistant","descEn":"Ask in plain language about the record and your account, without leaving the page (bring your own key)."},{"group":"star","nameEs":"Temas de color para NetSuite","descEs":"Personaliza el esquema de colores a tu gusto.","nameEn":"Color Themes for NetSuite","descEn":"Customize the color scheme to your taste."},{"group":"star","nameEs":"Modo oscuro global","descEs":"Un tema oscuro para toda la interfaz, más cómodo para la vista.","nameEn":"Global Dark Mode","descEn":"A dark theme for the whole interface, easier on the eyes."},{"group":"star","nameEs":"Agrupar pestañas","descEs":"Agrupa automáticamente tus pestañas por cuenta y entorno (ej. 123_SB1).","nameEn":"Grouped Tabs","descEn":"Automatically group your tabs by account and environment (e.g. 123_SB1)."},{"group":"star","nameEs":"Paleta de comandos","descEs":"Navega y ejecuta cualquier herramienta con Ctrl+Shift+Espacio.","nameEn":"Command Palette","descEn":"Navigate and run any tool with Ctrl+Shift+Space."},{"group":"star","nameEs":"Hoja de atajos de teclado","descEs":"Todos los atajos de NSFT con Ctrl+Shift+?.","nameEn":"Keyboard Shortcuts Cheat Sheet","descEn":"Every NSFT shortcut with Ctrl+Shift+?."},{"group":"star","nameEs":"Distintivo de entorno (PRD/SB/RP)","descEs":"El icono te dice siempre en qué entorno estás.","nameEn":"Environment Badge (PRD/SB/RP)","descEn":"The icon always tells you which environment you're in."},{"group":"reg","nameEs":"Ver objeto del registro","descEs":"Inspecciona el objeto completo del registro actual en un visor limpio.","nameEn":"View Record Object","descEn":"Inspect the full record object in a clean, searchable viewer."},{"group":"reg","nameEs":"Ver scripts del registro","descEs":"Todos los scripts y workflows asociados, de un vistazo.","nameEn":"View Record Scripts","descEn":"Every script and workflow tied to the record, at a glance."},{"group":"reg","nameEs":"Record Trail","descEs":"Documentos de origen y destino enlazados de una transacción, con salto rápido y copia de IDs.","nameEn":"Record Trail","descEn":"Linked source and target documents of a transaction, with quick open and ID copy."},{"group":"reg","nameEs":"Cargar registro a consola","descEs":"Carga el registro actual en la consola (SS1.0 y SS2.x).","nameEn":"Load Record to Console","descEn":"Load the current record into the console (SS1.0 and SS2.x)."},{"group":"reg","nameEs":"Menú Opciones de Registro","descEs":"Accesos directos según el tipo de registro (agregar campo, ver XML, dependientes…).","nameEn":"Record Options Menu","descEn":"Shortcuts based on record type (add field, view XML, dependencies…)."},{"group":"reg","nameEs":"Ir al record","descEs":"Salta a cualquier registro con Alt+Shift+G por número, tipo o nombre.","nameEn":"Go to Record","descEn":"Jump to any record with Alt+Shift+G by number, type or name."},{"group":"reg","nameEs":"Registros recientes ampliados","descEs":"Historial completo con buscador y fecha de acceso.","nameEn":"Expanded Recent Records","descEn":"Full history with inline search and access date."},{"group":"reg","nameEs":"Abrir en otro entorno","descEs":"Abre la misma URL en producción, sandbox o release preview conservando ruta y parámetros.","nameEn":"Open in Another Environment","descEn":"Open the same URL in production, sandbox or release preview, keeping path and params."},{"group":"reg","nameEs":"Número de sandbox en el logo","descEs":"Distingue entre varios sandboxes de la misma cuenta.","nameEn":"Sandbox Number on Header Logo","descEn":"Tell multiple sandboxes of the same account apart."},{"group":"reg","nameEs":"Copiar IDs internos","descEs":"Copia con un clic IDs de campos, sublistas y registros.","nameEn":"Copy Internal IDs","descEn":"One-click copy of field, sublist and record IDs."},{"group":"reg","nameEs":"Mostrar información de campos","descEs":"En la ayuda de campo: editar valor, copiar ID, ver info técnica.","nameEn":"Show Field Information","descEn":"In field help: edit value, copy ID, view technical info."},{"group":"reg","nameEs":"Historial del campo","descEs":"Quién cambió un campo, cuándo, y sus valores anterior y nuevo.","nameEn":"Field History","descEn":"Who changed a field, when, and its previous and new values."},{"group":"reg","nameEs":"Buscar campo por ID/etiqueta","descEs":"Encuentra cualquier campo con Ctrl+Shift+F.","nameEn":"Find Field by ID/Label","descEn":"Find any field with Ctrl+Shift+F."},{"group":"reg","nameEs":"Abrir registro personalizado desde sublista","descEs":"Abre la definición del Custom Record dueño con un clic.","nameEn":"Open Custom Record from Sublist","descEn":"Open the owning Custom Record definition with one click."},{"group":"reg","nameEs":"Vista previa de custom fields al pasar el cursor","descEs":"ID, tipo y valores sin abrir su definición.","nameEn":"Hover Preview for Custom Fields","descEn":"ID, type and values without opening the definition."},{"group":"reg","nameEs":"Enlaces nativos relacionados","descEs":"Enlaces directos al registro de los campos nativos.","nameEn":"Related Native Links","descEn":"Direct links to native field records."},{"group":"reg","nameEs":"Botón Guardar y Editar","descEs":"Guarda y vuelve a edición automáticamente.","nameEn":"Save and Edit Button","descEn":"Save and return to edit mode automatically."},{"group":"reg","nameEs":"Botón Editar y Guardar","descEs":"Recarga y reguarda el registro (útil para forzar user event scripts).","nameEn":"Edit and Save Button","descEn":"Reload and re-save the record (great for forcing user event scripts)."},{"group":"reg","nameEs":"Botón Eliminar registro","descEs":"Botón Eliminar en la barra de acciones.","nameEn":"Delete Record Button","descEn":"A Delete button in the action bar."},{"group":"reg","nameEs":"Botón Cancelar sin History.Back","descEs":"Vuelve a la vista del registro actual, no a la página anterior.","nameEn":"Cancel Without History.Back","descEn":"Returns to the current record's view, not the previous page."},{"group":"reg","nameEs":"Botón Actualizar sublista","descEs":"Recarga una sublista sin refrescar toda la página.","nameEn":"Refresh Sublist Button","descEn":"Reload a sublist without refreshing the whole page."},{"group":"dev","nameEs":"Tema del editor de código","descEs":"Aplica un tema al editor.","nameEn":"Code Editor Theme","descEn":"Apply a theme to the editor."},{"group":"dev","nameEs":"Cerrar editor al guardar","descEs":"Cierra la pestaña del editor en cuanto guardas.","nameEn":"Close Editor on Save","descEn":"Closes the editor tab the moment you save."},{"group":"dev","nameEs":"Abrir archivo en nueva pestaña","descEs":"Enlace directo junto a cada archivo de una página de scripting.","nameEn":"Open File in New Tab","descEn":"Direct link next to each file on a scripting page."},{"group":"dev","nameEs":"Modo en vivo","descEs":"Logs en tiempo real, con autoinicio configurable.","nameEn":"Live Mode","descEn":"Real-time logs, with configurable auto-start."},{"group":"dev","nameEs":"Embellecer logs","descEs":"Formatea y resalta JSON/SQL en las listas de ejecución.","nameEn":"Prettify Logs","descEn":"Formats and highlights JSON/SQL in execution lists."},{"group":"dev","nameEs":"Botón Full Logs","descEs":"Salta al archivo completo de logs desde un script.","nameEn":"Full Logs Button","descEn":"Jump to the full logs archive from a script."},{"group":"dev","nameEs":"Execution Log buscable","descEs":"Busca dentro del log del script y encuentra al instante lo que necesitas.","nameEn":"Searchable Execution Log","descEn":"Search inside the script log and find what you need instantly."},{"group":"dev","nameEs":"Herramientas de Suitelet","descEs":"Acciones rápidas: Ver Script, Ver Despliegue, Editar Archivo.","nameEn":"Suitelet Tools","descEn":"Quick actions: View Script, View Deployment, Edit File."},{"group":"dev","nameEs":"Subida rápida de scripts","descEs":"Arrastra y suelta el .js en el registro de Script para subirlo al File Cabinet.","nameEn":"Quick Script Upload","descEn":"Drag & drop the .js on the Script record to upload it to the File Cabinet."},{"group":"dev","nameEs":"Autocompletar IDs de scripts","descEs":"Rellena los IDs según el nombre del archivo .js.","nameEn":"Autofill Script IDs","descEn":"Fills IDs based on the .js filename."},{"group":"dev","nameEs":"Cargar módulo N en consola","descEs":"Usa N/record, N/search y más desde la consola del navegador.","nameEn":"Load N Module in Console","descEn":"Use N/record, N/search and more from the browser console."},{"group":"dev","nameEs":"Embellecer JSON de Suitelets y RESTlets","descEs":"Respuestas JSON como árbol colapsable con buscador, copiar y descargar.","nameEn":"Beautify JSON from Suitelets and RESTlets","descEn":"JSON responses as a collapsible tree with search, copy and download."},{"group":"dev","nameEs":"Panel de rendimiento de la página","descEs":"Cuánto tardó en cargar y en qué se fue el tiempo.","nameEn":"Page Performance Panel","descEn":"How long the page took to load and where the time went."},{"group":"dev","nameEs":"Respaldo de SuiteScripts a GitHub","descEs":"Sube tus SuiteScripts a tu repositorio (incremental: solo lo que cambió).","nameEn":"Backup SuiteScripts to GitHub","descEn":"Push your SuiteScripts to your repo (incremental: only what changed)."},{"group":"sql","nameEs":"SuiteQL Runner","descEs":"Ejecuta consultas SuiteQL en la página, con guardado, historial, favoritos y resultados en tabla. Incluye catálogo de registros con diagrama de relaciones (ERD), variables reutilizables y librería de snippets.","nameEn":"SuiteQL Runner","descEn":"Run SuiteQL queries in-page, with saving, history, favorites and table results. Includes a records catalog with a relationship diagram (ERD), reusable variables and a snippet library."},{"group":"sql","nameEs":"Exportar búsquedas a SuiteScript","descEs":"Convierte saved searches a SuiteScript 1.0 y 2.0.","nameEn":"Export Search to SuiteScript","descEn":"Turn saved searches into SuiteScript 1.0 and 2.0."},{"group":"sql","nameEs":"Creación rápida de búsquedas","descEs":"Selector con buscador y enlaces favoritos.","nameEn":"Quick Search Creation","descEn":"Record-type selector with search and favorite links."},{"group":"sql","nameEs":"Buscador de campos en búsquedas","descEs":"Filtros y búsqueda rápida en los selectores de campos.","nameEn":"Search Fields Finder","descEn":"Filters and quick search in field selectors."},{"group":"sql","nameEs":"Autocompletar fórmula de búsqueda","descEs":"Sugiere IDs de campo dentro de { } en el editor de fórmulas.","nameEn":"Search Formula Autocomplete","descEn":"Suggests field IDs inside { } in the formula editor."},{"group":"sql","nameEs":"Visor de respuesta CSV","descEs":"Muestra el resultado de un import CSV como tabla editable y descargable.","nameEn":"CSV Response Viewer","descEn":"Shows a CSV import result as an editable, downloadable table."},{"group":"sql","nameEs":"Preview inline de búsquedas","descEs":"Panel inferior con la vista previa sin salir de la página.","nameEn":"Inline Search Preview","descEn":"Bottom panel with the preview without leaving the page."},{"group":"sql","nameEs":"Vista dividida de búsquedas","descEs":"Abre una saved search en un panel lateral junto a la página actual.","nameEn":"Saved Search Split View","descEn":"Open a saved search in a side panel next to the current page."},{"group":"ui","nameEs":"Banner de aviso de Producción","descEs":"Una barra visible cuando trabajas en Producción, para evitar cambios accidentales.","nameEn":"Production Warning Banner","descEn":"A visible bar when you're in Production, to avoid accidental changes."},{"group":"ui","nameEs":"Versión de NetSuite en el header","descEs":"Muestra el release actual en la barra superior.","nameEn":"NetSuite Version in Header","descEn":"Shows the current release in the top bar."},{"group":"ui","nameEs":"Quitar animaciones de NetSuite","descEs":"La interfaz responde al instante.","nameEn":"Remove NetSuite Animations","descEn":"The interface responds instantly."},{"group":"ui","nameEs":"Mejorar títulos de página","descEs":"Incluye nombre (tipo) e ID del registro en el título.","nameEn":"Better Page Titles","descEn":"Adds record name (type) and ID to the title."},{"group":"ui","nameEs":"Botón de perfil en cabecera","descEs":"Acceso directo a tu perfil de empleado.","nameEn":"Profile Button in Header","descEn":"A shortcut to your employee profile."},{"group":"ui","nameEs":"Menú de navegación compacto","descEs":"Reduce el tamaño de los elementos del menú.","nameEn":"Compact Navigation Menu","descEn":"Reduces the size of menu items."},{"group":"ui","nameEs":"Menú principal más pequeño","descEs":"Ajusta la barra superior con presets y vista previa.","nameEn":"Smaller Main Menu","descEn":"Adjusts the top bar with presets and live preview."},{"group":"ui","nameEs":"Field groups flotantes","descEs":"Mantiene fijos los títulos de cada grupo al hacer scroll.","nameEn":"Floating Field Groups","descEn":"Keeps each group title pinned as you scroll."},{"group":"ui","nameEs":"Fijar pestañas","descEs":"La barra de subpestañas se mantiene arriba.","nameEn":"Fixed Tabs","descEn":"The subtab bar stays at the top."},{"group":"ui","nameEs":"Listas desplegables compactas","descEs":"Ves más opciones de un vistazo.","nameEn":"Compact Dropdown Lists","descEn":"See more options at a glance."},{"group":"ui","nameEs":"Dropdowns más anchos","descEs":"Los textos largos ya no se cortan.","nameEn":"Wider Dropdowns","descEn":"Long texts are no longer truncated."},{"group":"ui","nameEs":"Fijar cabeceras de sublista","descEs":"Cabeceras visibles al hacer scroll vertical.","nameEn":"Fixed Sublist Headers","descEn":"Headers stay visible on vertical scroll."},{"group":"ui","nameEs":"Cabeceras de sublista compactas","descEs":"Sin salto de línea.","nameEn":"Compact Sublist Headers","descEn":"No line wrapping."},{"group":"ui","nameEs":"Fijar columna de sublista","descEs":"La primera columna se mantiene visible al hacer scroll horizontal.","nameEn":"Fixed Sublist Column","descEn":"The first column stays visible on horizontal scroll."},{"group":"ui","nameEs":"Números de línea en sublists","descEs":"Columna con el número de fila.","nameEn":"Sublist Line Numbers","descEn":"A row-number column."},{"group":"ui","nameEs":"Filtrar filas de sublistas","descEs":"Caja de búsqueda para encontrar líneas al instante.","nameEn":"Filter Sublist Rows","descEn":"A search box to find lines instantly."},{"group":"ui","nameEs":"IDs de línea en sublistas","descEs":"El id único y estable de cada línea, ideal para scripting.","nameEn":"Sublist Line IDs","descEn":"Each line's unique, stable id, ideal for scripting."},{"group":"ui","nameEs":"Paginado rápido en sublists","descEs":"Botones y atajos para navegar páginas.","nameEn":"Quick Sublist Paging","descEn":"Buttons and shortcuts to navigate pages."},{"group":"ui","nameEs":"Páginas de error más legibles","descEs":"Mejor diseño en las pantallas de error.","nameEn":"Cleaner Error Pages","descEn":"Better design on error screens."},{"group":"ui","nameEs":"Multi-select jerárquico","descEs":"Indenta las opciones según su jerarquía Padre : Hijo.","nameEn":"Hierarchical Multi-select","descEn":"Indents options by their Parent : Child hierarchy."},{"group":"ui","nameEs":"Contador en multi-select","descEs":"Muestra \"N / N\" seleccionados junto al label.","nameEn":"Multi-select Counter","descEn":"Shows \"N / N\" selected next to the label."},{"group":"ui","nameEs":"Contador de caracteres","descEs":"Usados vs. máximo; amarillo cerca del tope, rojo al alcanzarlo.","nameEn":"Character Counter","descEn":"Used vs. max; amber near the limit, red when reached."},{"group":"ui","nameEs":"Textareas más altos","descEs":"Más altura mínima y crecen con el contenido.","nameEn":"Taller Textareas","descEn":"Larger minimum height, grows with content."},{"group":"ui","nameEs":"Nombres en filtro \"From Bundle\"","descEs":"Muestra el nombre del bundle junto al ID.","nameEn":"Names on \"From Bundle\" Filter","descEn":"Shows the bundle name beside the ID."},{"group":"ui","nameEs":"Ocultar aprendizaje guiado","descEs":"Elimina el botón flotante de Oracle Guided Learning.","nameEn":"Hide Guided Learning","descEn":"Removes the floating Oracle Guided Learning button."},{"group":"prod","nameEs":"Autogenerar IDs de campos y registros","descEs":"ID automático a partir del nombre, con prefijo configurable.","nameEn":"Autogenerate Field/Record IDs","descEn":"Automatic ID from the name, with a configurable prefix."},{"group":"prod","nameEs":"Copiar ID de cuenta en roles","descEs":"Muestra y copia el ID de la cuenta desde el menú de roles.","nameEn":"Copy Account ID in Roles","descEn":"Shows and copies the account ID from the roles menu."},{"group":"prod","nameEs":"Buscador de roles","descEs":"Filtra roles y cuentas al escribir.","nameEn":"Role Finder","descEn":"Filter roles and accounts as you type."},{"group":"prod","nameEs":"Logo de compañía en login","descEs":"Muestra logo y nombre de la compañía en la página de login.","nameEn":"Company Logo on Login","descEn":"Shows the company logo and name on the login page."},{"group":"prod","nameEs":"Indicador de sandbox en login","descEs":"Banner que marca las cuentas sandbox.","nameEn":"Sandbox Indicator on Login","descEn":"A banner marking sandbox accounts."},{"group":"prod","nameEs":"Bloqueador de cierre de sesión","descEs":"Neutraliza el popup de expiración para no perder tu trabajo.","nameEn":"Logout Blocker","descEn":"Neutralizes the session-timeout popup so you don't lose work."},{"group":"prod","nameEs":"Regresar al account desde netsuite.com","descEs":"Te devuelve a tu cuenta si caes en la landing pública.","nameEn":"Return to Account from netsuite.com","descEn":"Sends you back to your account if you hit the public page."},{"group":"prod","nameEs":"Auto refresco en bundles","descEs":"Interruptor de auto refresco en la lista de bundles.","nameEn":"Auto Refresh on Bundles","descEn":"An auto-refresh toggle on the Bundle List."},{"group":"prod","nameEs":"Auto-refresh de portlets","descEs":"Refresca los portlets del dashboard automáticamente.","nameEn":"Portlet Auto-refresh","descEn":"Auto-refreshes dashboard portlets."},{"group":"prod","nameEs":"Embellecer campos de código","descEs":"Formatea y resalta JSON/SQL en registros al verlos.","nameEn":"Prettify Code Fields","descEn":"Formats and highlights JSON/SQL in records when viewing."},{"group":"prod","nameEs":"Formatear SQL/JSON","descEs":"Botón para formatear SQL/JSON en áreas de texto.","nameEn":"Format SQL/JSON","descEn":"A button to format SQL/JSON in text areas."},{"group":"file","nameEs":"Utilidades de archivador","descEs":"Columna con enlaces permanentes e IDs de carpetas/archivos.","nameEn":"File Cabinet Utilities","descEn":"A column with permalinks and IDs for folders/files."},{"group":"file","nameEs":"Copiar ruta del archivo","descEs":"Copia la ruta completa desde la fila.","nameEn":"Copy File Path","descEn":"Copy the full path from the row."},{"group":"file","nameEs":"Copiar permalink de carpeta","descEs":"Link directo a la carpeta actual junto a su título.","nameEn":"Copy Folder Permalink","descEn":"A direct link to the current folder next to its title."},{"group":"file","nameEs":"Editar archivo desde fila","descEs":"Abre el editor de texto directamente desde cada fila.","nameEn":"Edit File from Row","descEn":"Open the text editor straight from each row."},{"group":"file","nameEs":"Renombrar desde fila","descEs":"Renombra archivos y carpetas sin abrir el record.","nameEn":"Rename from Row","descEn":"Rename files and folders without opening the record."},{"group":"file","nameEs":"Eliminar desde fila con conteo","descEs":"Borra con confirmación del contenido afectado.","nameEn":"Delete from Row with Count","descEn":"Delete with a confirmation of the affected content."},{"group":"file","nameEs":"Subida por drag & drop","descEs":"Arrastra archivos desde tu escritorio a una carpeta.","nameEn":"Drag & Drop Upload","descEn":"Drag files from your desktop onto a folder."},{"group":"file","nameEs":"Descargar carpeta como ZIP","descEs":"Descarga una carpeta completa (con subcarpetas opcionales) en .zip.","nameEn":"Download Folder as ZIP","descEn":"Download a whole folder (optionally with subfolders) as a .zip."},{"group":"file","nameEs":"Preview de contenido","descEs":"Muestra el contenido del archivo con resaltado de sintaxis.","nameEn":"Content Preview","descEn":"Shows file content with syntax highlighting."},{"group":"file","nameEs":"Nombres de bundle en carpetas","descEs":"Añade el nombre del bundle a las carpetas \"Bundle 12345\".","nameEn":"Bundle Names on Folders","descEn":"Appends the bundle name to \"Bundle 12345\" folders."},{"group":"file","nameEs":"Safety en carpetas de sistema","descEs":"Bloquea acciones destructivas y avisa en carpetas del sistema.","nameEn":"System Folder Safety","descEn":"Blocks destructive actions and warns on system folders."},{"group":"pdf","nameEs":"Preview lateral","descEs":"Panel con vista previa en vivo mientras editas la plantilla.","nameEn":"Side Preview","descEn":"A live-preview panel while you edit the template."},{"group":"pdf","nameEs":"Autocompletado","descEs":"Sugiere variables y funciones nsformat_* al editar plantillas FreeMarker.","nameEn":"Autocomplete","descEn":"Suggests nsformat_* variables and functions while editing FreeMarker templates."},{"group":"pdf","nameEs":"Historial de versiones","descEs":"Navega entre versiones anteriores de la plantilla.","nameEn":"Version History","descEn":"Browse previous versions of the template."},{"group":"wf","nameEs":"Transiciones de workflow con color","descEs":"Un color por transición en el diagrama, con paleta y grosor configurables.","nameEn":"Colored Workflow Transitions","descEn":"One color per transition in the diagram, with configurable palette and width."},{"group":"wf","nameEs":"Indexador de workflow","descEs":"Indexa estados, transiciones y acciones, con panel buscador y filtros.","nameEn":"Workflow Indexer","descEn":"Indexes states, transitions and actions, with a searchable filter panel."}]};</script>   datos del catálogo
+-->
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetSuite Full Tools — +100 herramientas para NetSuite</title>
+<meta name="description" content="Extensión de Chrome gratuita con más de 100 herramientas para NetSuite: SuiteQL Runner, copiar IDs internos, modo oscuro, File Cabinet, paleta de comandos y mucho más. Gratis y con todas las funciones incluidas.">
+<meta name="theme-color" content="#2C6E4E">
+<link rel="icon" type="image/png" sizes="128x128" href="assets/icon128.png">
+<link rel="apple-touch-icon" href="assets/icon128.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="NetSuite Full Tools — +100 herramientas para NetSuite">
+<meta property="og:description" content="Más de 100 utilidades de productividad y desarrollo dentro de las pantallas de NetSuite que ya usas. Gratis, con todas las funciones incluidas.">
+<meta property="og:image" content="assets/icon128.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="preload" href="assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+
+<script>
+  /* Arranque: estampa el tema antes del primer pintado para que no haya
+     parpadeo blanco al recargar en oscuro, y activa las animaciones de
+     entrada solo si hay JS (sin JS la página se ve entera). */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('nsft-theme'); } catch (e) { /* incógnito */ }
+    if (!t) {
+      t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.classList.add('nsft-anim');
+  })();
+</script>
+</head>
+<body>
+
+<!-- Grano de película y barra de progreso: el mismo lenguaje visual de la welcome page -->
+<div class="nsft-grain" aria-hidden="true"></div>
+<div class="nsft-progress" aria-hidden="true"><span id="nsft-progress-bar" class="nsft-progress-bar"></span></div>
+
+<div id="nsft-root" data-lang="es" data-theme="light" data-tab="visor" data-cat="all" style="background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;">
+
+
+  <header style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in oklab, var(--bg) 78%, transparent);border-bottom:1px solid var(--line);">
+    <div style="max-width:1220px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px;">
+      <a href="#top" style="display:flex;align-items:center;gap:11px;color:var(--fg);">
+        <span class="nsft-logo-badge"><img src="assets/logo.webp" alt="" width="128" height="128"></span>
+        <span style="display:flex;flex-direction:column;line-height:1.05;">
+          <span style="font-size:15.5px;font-weight:800;letter-spacing:-.01em;">NetSuite Full Tools</span>
+          <span style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.09em;">CHROME EXTENSION</span>
+        </span>
+      </a>
+      <nav style="display:flex;gap:4px;margin-left:auto;align-items:center;">
+        <a href="#destacados" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);"><span data-l="es">Destacados</span><span data-l="en">Highlights</span></a>
+        <a href="#vistazo" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);">Demo</a>
+        <a href="#catalogo" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);"><span data-l="es">Catálogo</span><span data-l="en">Catalog</span></a>
+        <a href="privacidad.html" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);"><span data-l="es">Privacidad</span><span data-l="en">Privacy</span></a>
+        <a href="#faq" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);">FAQ</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button data-act="lang" style="border:1px solid var(--line);background:var(--surface);color:var(--fg2);border-radius:9px;padding:7px 10px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
+          <span data-l="es">ES · <span style="color:var(--muted);">EN</span></span><span data-l="en"><span style="color:var(--muted);">ES</span> · EN</span>
+        </button>
+        <button data-act="theme" title="Light / dark" style="border:1px solid var(--line);background:var(--surface);color:var(--fg2);border-radius:9px;width:36px;height:34px;display:grid;place-items:center;cursor:pointer;font-size:14px;">
+          <span data-l="es">◐</span><span data-l="en">◐</span>
+        </button>
+        <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc" target="_blank" rel="noopener" style="background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:700;box-shadow:var(--shadowSm);display:inline-flex;align-items:center;gap:8px;">
+          <svg class="nsft-chrome-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:15px;height:15px;flex:0 0 auto;"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0z"/><path d="M1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29z"/><path d="M15.273 7.636a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364z"/><path d="M12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728z"/></svg><span data-l="es">Instalar gratis</span><span data-l="en">Install free</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section id="top" class="nsft-hero">
+    <div class="nsft-hero-bg" aria-hidden="true"></div>
+    <span class="nsft-orb nsft-orb-1" data-parallax="0.08" aria-hidden="true"></span>
+    <span class="nsft-orb nsft-orb-2" data-parallax="-0.06" aria-hidden="true"></span>
+    <span class="nsft-orb nsft-orb-3" data-parallax="0.14" aria-hidden="true"></span>
+    <div class="nsft-hero-wrap">
+
+      <div class="nsft-hero-grid">
+        <div class="nsft-hero-copy">
+          <div data-hero-el="" class="nsft-hero-lockup">
+            <span class="nsft-hero-logo" role="img" aria-label="NetSuite Full Tools">
+              <span class="nsft-hero-logo-halo" aria-hidden="true"></span>
+              <span class="nsft-hero-logo-ring" aria-hidden="true"></span>
+              <span class="nsft-hero-logo-ring nsft-hero-logo-ring-b" aria-hidden="true"></span>
+              <img src="assets/logo.webp" alt="" width="512" height="512">
+            </span>
+            <span class="nsft-hero-eyebrow">NetSuite Full Tools</span>
+          </div>
+
+          <h1 data-hero-el="" class="nsft-hero-title">
+            <span data-l="es">+100 herramientas para NetSuite, <span class="nsft-hero-title-grad">con IA integrada</span>.</span><span data-l="en">100+ tools for NetSuite, <span class="nsft-hero-title-grad">with built-in AI</span>.</span>
+          </h1>
+
+          <p data-hero-el="" class="nsft-hero-lead">
+            <span data-l="es">Pregúntale a la IA sobre el registro abierto, ejecuta SuiteQL sin salir de la página y copia cualquier ID interno de un clic.</span>
+            <span data-l="en">Ask the AI about the open record, run SuiteQL without leaving the page and copy any internal ID in one click.</span>
+          </p>
+
+          <div data-hero-el="" class="nsft-hero-cta">
+            <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc" target="_blank" rel="noopener" class="nsft-btn nsft-btn-primary">
+              <svg class="nsft-chrome-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:18px;height:18px;flex:0 0 auto;"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0z"/><path d="M1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29z"/><path d="M15.273 7.636a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364z"/><path d="M12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728z"/></svg>
+              <span data-l="es">Añadir a Chrome</span><span data-l="en">Add to Chrome</span>
+            </a>
+            <a href="#catalogo" class="nsft-btn nsft-btn-ghost">
+              <span data-l="es">Ver el catálogo</span><span data-l="en">Browse the catalog</span>
+            </a>
+          </div>
+
+          <ul data-hero-el="" class="nsft-hero-trust">
+            <li><span class="nsft-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span data-l="es">Gratis, con todas las funciones</span><span data-l="en">Free, every feature included</span></li>
+            <li><span class="nsft-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span data-l="es">Instalación en un clic</span><span data-l="en">One-click install</span></li>
+            <li><span class="nsft-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span><span data-l="es">Activa solo lo que uses</span><span data-l="en">Enable only what you use</span></li>
+          </ul>
+        </div>
+
+      <div data-hero-mock="" data-parallax="-0.05" class="nsft-hero-mock">
+            <div style="border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:#EDEFF2;border-bottom:1px solid #DDE1E6;">
+                <span style="width:11px;height:11px;border-radius:99px;background:#F05B4F;"></span>
+                <span style="width:11px;height:11px;border-radius:99px;background:#F7BD4F;"></span>
+                <span style="width:11px;height:11px;border-radius:99px;background:#5FC466;"></span>
+                <div style="margin-left:10px;display:flex;gap:6px;align-items:center;flex:1;">
+                  <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #D6DBE0;border-radius:7px;padding:4px 9px;font-size:11px;color:#3A4750;font-family:'JetBrains Mono',monospace;">
+                    <span style="width:8px;height:8px;border-radius:2px;background:#E0A94F;"></span>1234567_SB1
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #D6DBE0;border-radius:7px;padding:4px 9px;font-size:11px;color:#3A4750;font-family:'JetBrains Mono',monospace;">
+                    <span style="width:8px;height:8px;border-radius:2px;background:#8E7BE8;"></span>1234567_PRD
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#3D3D3D;">
+                <span style="font-size:11px;letter-spacing:.14em;color:#EDEDED;font-weight:700;">ORACLE <span style="font-weight:400;">NETSUITE</span></span>
+                <span style="font-size:12.5px;font-weight:800;color:#F0B429;letter-spacing:.08em;">SANDBOX · SB1</span>
+              </div>
+              <div style="display:flex;gap:16px;padding:9px 14px;background:#4A8B6A;color:#fff;font-size:11.5px;font-weight:600;">
+                <span>⟲</span><span>★</span><span>⌂</span><span>Actividades</span><span>Transacciones</span><span>Listas</span><span>Informes</span><span>Personalizar</span>
+              </div>
+              <div style="padding:16px 14px 20px;background:#F6F7F8;position:relative;min-height:368px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                  <span style="font-size:14px;font-weight:700;color:#2B3B33;">Sales Order #SO10482</span>
+                  <span style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#6A7C86;border:1px dashed #C2CCD3;border-radius:5px;padding:2px 6px;">id 4342821 ⧉</span>
+                </div>
+                <div style="display:flex;gap:7px;margin-bottom:14px;">
+                  <span style="background:#3F9E6B;color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:4px;">Editar</span>
+                  <span style="background:#2C7E52;color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:4px;">Editar &amp; Guardar</span>
+                  <span style="background:#D64545;color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:4px;">Eliminar</span>
+                  <span style="background:#E9ECEF;color:#42505A;font-size:11px;font-weight:700;padding:5px 11px;border-radius:4px;">Atrás</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;opacity:.55;">
+                  <div style="height:9px;border-radius:3px;background:#DDE3E7;"></div>
+                  <div style="height:9px;border-radius:3px;background:#DDE3E7;"></div>
+                  <div style="height:9px;border-radius:3px;background:#E7ECEF;"></div>
+                  <div style="height:9px;border-radius:3px;background:#E7ECEF;"></div>
+                </div>
+
+                <div data-r="stack" style="position:absolute;right:14px;bottom:14px;width:56%;border-radius:11px;overflow:hidden;background:#1B1F23;box-shadow:0 24px 50px -18px rgba(6,16,11,.55);border:1px solid #2A3138;">
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 11px;background:#22282E;border-bottom:1px solid #2E353C;">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7FD3AE;">{}</span>
+                    <span style="font-size:11.5px;color:#D7E2DA;font-weight:600;">NetSuite Full Tools — Visor de Registros</span>
+                    <span style="margin-left:auto;color:#7C8A92;font-size:11px;letter-spacing:.18em;">⧉ − ✕</span>
+                  </div>
+                  <div style="padding:9px 11px;">
+                    <div style="border:1px solid #39424A;border-radius:7px;padding:6px 9px;font-size:11px;color:#8A98A0;background:#181C20;margin-bottom:9px;">Buscar Propiedad / Valor</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.75;">
+                      <div style="color:#9AA7AF;">▾ <span style="color:#E4EAEE;">Object</span></div>
+                      <div style="padding-left:14px;color:#8DB7E8;">recordType: <span style="color:#E2A96B;">"salesorder"</span></div>
+                      <div style="padding-left:14px;color:#8DB7E8;">id: <span style="color:#B6E28A;">4342821</span></div>
+                      <div style="padding-left:14px;color:#9AA7AF;">▾ <span style="color:#8DB7E8;">bodyFields:</span> <span style="color:#E4EAEE;">Object</span></div>
+                      <div style="padding-left:28px;color:#8DB7E8;">entity: <span style="color:#E2A96B;">"1042"</span></div>
+                      <div style="padding-left:28px;color:#8DB7E8;">trandate: <span style="color:#E2A96B;">"16/11/2026"</span></div>
+                      <div style="padding-left:28px;color:#8DB7E8;">total: <span style="color:#B6E28A;">18402.55</span></div>
+                      <div style="padding-left:28px;color:#8DB7E8;">subsidiary: <span style="color:#E2A96B;">"2"</span></div>
+                      <div style="padding-left:14px;color:#9AA7AF;">▸ <span style="color:#8DB7E8;">lineFields:</span> <span style="color:#E4EAEE;">Object</span></div>
+                    </div>
+                    <div style="margin-top:9px;text-align:center;font-size:10px;color:#7FD3AE;background:#16211C;border:1px solid #21382C;border-radius:6px;padding:5px;">Usa Ctrl + Clic en una propiedad para buscarla en el formulario</div>
+                  </div>
+                </div>
+
+                <div style="position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:6px;animation:floaty 6s ease-in-out infinite;">
+                  <div style="background:#fff;border:1px solid #D6DBE0;border-radius:7px;padding:5px 9px;font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#3A4750;box-shadow:var(--shadowSm);">{} recObj</div>
+                  <div style="background:#fff;border:1px solid #D6DBE0;border-radius:7px;padding:5px 9px;font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#3A4750;box-shadow:var(--shadowSm);">▤ SuiteQL</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <div data-anim="up" class="nsft-stats">
+        <div class="nsft-stat">
+          <span class="nsft-stat-num"><span id="nsft-total" data-total="102">0</span></span>
+          <span class="nsft-stat-label"><span data-l="es">herramientas, una por interruptor</span><span data-l="en">tools, one switch each</span></span>
+        </div>
+        <div class="nsft-stat">
+          <span class="nsft-stat-num">6</span>
+          <span class="nsft-stat-label"><span data-l="es">proveedores de IA a elegir</span><span data-l="en">AI providers to choose from</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="perfiles" class="nsft-roles">
+    <div class="nsft-roles-inner">
+      <div data-anim="up" class="nsft-roles-head">
+        <div class="nsft-eyebrow"><span data-l="es">PARA QUIÉN ES</span><span data-l="en">WHO IT'S FOR</span></div>
+        <h2 class="nsft-roles-title">
+          <span data-l="es">Abre la misma cuenta. Cada uno enciende lo suyo.</span><span data-l="en">Same account. Everyone switches on their own set.</span>
+        </h2>
+        <p class="nsft-roles-sub">
+          <span data-l="es">Las 102 herramientas se activan una a una desde el popup, así que la extensión acaba pareciéndose a tu trabajo y no al de otro.</span>
+          <span data-l="en">All 102 tools switch on one at a time from the popup, so the extension ends up looking like your job — not someone else's.</span>
+        </p>
+      </div>
+
+      <div class="nsft-roles-grid">
+        <article data-anim="up" class="nsft-role">
+          <span class="nsft-role-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <h3 class="nsft-role-title"><span data-l="es">Administradores</span><span data-l="en">Administrators</span></h3>
+          <p class="nsft-role-desc"><span data-l="es">El día a día: registros, sublistas y no romper Producción.</span><span data-l="en">The daily grind: records, sublists and not breaking Production.</span></p>
+          <ul class="nsft-role-list">
+            <li><span data-l="es">Copiar IDs internos de campos, sublistas y registros</span><span data-l="en">Copy internal IDs of fields, sublists and records</span></li>
+            <li><span data-l="es">Filtrar filas y fijar cabeceras en sublistas largas</span><span data-l="en">Filter rows and freeze headers in long sublists</span></li>
+            <li><span data-l="es">Ir a cualquier registro con Alt+Shift+G</span><span data-l="en">Jump to any record with Alt+Shift+G</span></li>
+            <li><span data-l="es">Aviso de Producción y distintivo de entorno</span><span data-l="en">Production warning and environment badge</span></li>
+          </ul>
+        </article>
+        <article data-anim="up" class="nsft-role">
+          <span class="nsft-role-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+          <h3 class="nsft-role-title"><span data-l="es">Consultores</span><span data-l="en">Consultants</span></h3>
+          <p class="nsft-role-desc"><span data-l="es">Configurar, consultar y documentar sin salir de la pantalla.</span><span data-l="en">Configure, query and document without leaving the screen.</span></p>
+          <ul class="nsft-role-list">
+            <li><span data-l="es">SuiteQL Runner con esquema, JOINs y favoritos</span><span data-l="en">SuiteQL Runner with schema, JOINs and favorites</span></li>
+            <li><span data-l="es">Exportar búsquedas guardadas a SuiteScript</span><span data-l="en">Export saved searches to SuiteScript</span></li>
+            <li><span data-l="es">Preview lateral de plantillas PDF/HTML</span><span data-l="en">Side preview for PDF/HTML templates</span></li>
+            <li><span data-l="es">Indexador de workflows con transiciones en color</span><span data-l="en">Workflow indexer with colored transitions</span></li>
+          </ul>
+        </article>
+        <article data-anim="up" class="nsft-role">
+          <span class="nsft-role-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+          <h3 class="nsft-role-title"><span data-l="es">Desarrolladores</span><span data-l="en">Developers</span></h3>
+          <p class="nsft-role-desc"><span data-l="es">SuiteScript, logs y el objeto del registro a mano.</span><span data-l="en">SuiteScript, logs and the record object at hand.</span></p>
+          <ul class="nsft-role-list">
+            <li><span data-l="es">Ver el objeto y los scripts del registro actual</span><span data-l="en">Inspect the current record object and its scripts</span></li>
+            <li><span data-l="es">Logs en vivo y Execution Log buscable</span><span data-l="en">Live logs and a searchable execution log</span></li>
+            <li><span data-l="es">Subida rápida de scripts y autocompletado de IDs</span><span data-l="en">Quick script upload and ID autocomplete</span></li>
+            <li><span data-l="es">Respaldo de SuiteScripts a tu repo de GitHub</span><span data-l="en">SuiteScripts backup to your GitHub repo</span></li>
+          </ul>
+        </article>
+      </div>
+
+      <p data-anim="up" class="nsft-roles-foot">
+        <span data-l="es">Y el <b>Asistente de IA</b> para los tres: pregúntale por el registro abierto o pídele la consulta SuiteQL que necesitas.</span>
+        <span data-l="en">Plus the <b>AI Assistant</b> for all three: ask about the open record or have it write the SuiteQL you need.</span>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="destacados" style="padding:90px 24px 0;">
+    <div style="max-width:1220px;margin:0 auto;">
+      <div data-anim="up" style="max-width:640px;margin-bottom:34px;">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--brand);margin-bottom:12px;">★ <span data-l="es">DESTACADOS</span><span data-l="en">HIGHLIGHTS</span></div>
+        <h2 style="font-size:40px;line-height:1.08;letter-spacing:-.03em;font-weight:800;margin:0 0 12px;">
+          <span data-l="es">Lo que la gente instala primero</span><span data-l="en">What people turn on first</span>
+        </h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.55;margin:0;">
+          <span data-l="es">Siete funciones que cambian tu día desde el primer registro que abres.</span>
+          <span data-l="en">Seven features that change your day from the very first record you open.</span>
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;">
+        <div data-anim="scale" style="grid-column:span 3;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:24px;box-shadow:var(--shadowSm);">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
+            <span style="font-size:16px;color:#8E7BE8;">✦</span>
+            <h3 style="margin:0;font-size:19px;font-weight:800;letter-spacing:-.01em;"><span data-l="es">Asistente de IA</span><span data-l="en">AI Assistant</span></h3>
+            <span style="font-size:10px;font-weight:800;color:#8E7BE8;background:color-mix(in oklab,#8E7BE8 14%,transparent);border-radius:5px;padding:3px 6px;">BETA</span>
+          </div>
+          <p style="margin:0 0 18px;font-size:14.5px;line-height:1.5;color:var(--muted);">
+            <span data-l="es">Pregunta en lenguaje natural sobre el registro y tu cuenta, sin salir de la página. Con tu propia clave.</span>
+            <span data-l="en">Ask in plain language about the record and your account, without leaving the page. With your own key.</span>
+          </p>
+          <div style="border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface2);">
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 11px;border-bottom:1px solid var(--line2);">
+              <span style="font-size:12px;color:#8E7BE8;">✦</span><span style="font-size:12.5px;font-weight:700;">Asistente IA</span>
+              <span style="margin-left:auto;color:var(--muted);font-size:11px;letter-spacing:.2em;">✎ ⚙ ?</span>
+            </div>
+            <div style="padding:22px 16px;text-align:center;">
+              <div style="width:40px;height:40px;border-radius:12px;background:#EFEAFD;display:grid;place-items:center;margin:0 auto 12px;font-size:17px;color:#7C63E0;box-shadow:0 0 0 8px color-mix(in oklab,#8E7BE8 8%,transparent);">✦</div>
+              <div style="font-size:13.5px;font-weight:700;margin-bottom:4px;">¡Hola! ¿En qué te ayudo?</div>
+              <div style="font-size:12px;color:var(--muted);line-height:1.45;max-width:34ch;margin:0 auto;">Pregúntame lo que necesites de esta página o de tu cuenta.</div>
+            </div>
+            <div style="padding:9px 11px;border-top:1px solid var(--line2);display:flex;gap:8px;align-items:center;">
+              <div style="flex:1;border:1px solid #C9BCF3;border-radius:9px;padding:7px 10px;font-size:11.5px;color:var(--muted);">Pregunta sobre esta página o tu cuenta…</div>
+              <div style="width:30px;height:30px;border-radius:9px;background:#7C63E0;color:#fff;display:grid;place-items:center;font-size:13px;">→</div>
+            </div>
+          </div>
+        </div>
+
+        <div data-anim="scale" style="grid-column:span 3;display:grid;gap:16px;">
+          <div style="border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:24px;box-shadow:var(--shadowSm);">
+            <h3 style="margin:0 0 8px;font-size:19px;font-weight:800;letter-spacing:-.01em;">⌨ <span data-l="es">Paleta de comandos</span><span data-l="en">Command palette</span></h3>
+            <p style="margin:0 0 16px;font-size:14.5px;line-height:1.5;color:var(--muted);">
+              <span data-l="es">Navega y ejecuta cualquier herramienta con</span><span data-l="en">Find and run any tool with</span>
+              <span style="font-family:'JetBrains Mono',monospace;color:var(--fg);font-weight:600;"> Ctrl+Shift+Space</span>.
+              <span data-l="es">Y la hoja de atajos completa con</span><span data-l="en">Full shortcut sheet with</span>
+              <span style="font-family:'JetBrains Mono',monospace;color:var(--fg);font-weight:600;"> Ctrl+Shift+?</span>
+            </p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:7px;padding:5px 9px;background:var(--surface2);">Alt+Shift+G</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:7px;padding:5px 9px;background:var(--surface2);">Ctrl+Shift+F</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:7px;padding:5px 9px;background:var(--surface2);">Ctrl+↵</span>
+            </div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:24px;box-shadow:var(--shadowSm);">
+            <h3 style="margin:0 0 8px;font-size:19px;font-weight:800;letter-spacing:-.01em;">⚠ <span data-l="es">Nunca más rompas Producción</span><span data-l="en">Never break Production again</span></h3>
+            <p style="margin:0 0 14px;font-size:14.5px;line-height:1.5;color:var(--muted);">
+              <span data-l="es">Distintivo de entorno en el icono, banner de aviso y número de sandbox en el logo.</span>
+              <span data-l="en">Environment badge on the icon, warning banner, and sandbox number on the logo.</span>
+            </p>
+            <div style="display:flex;align-items:center;gap:10px;background:#FDECEC;border:1px solid #F3C9C9;border-radius:9px;padding:9px 12px;">
+              <span style="font-size:10.5px;font-weight:800;color:#fff;background:#D64545;border-radius:5px;padding:3px 7px;">PRD</span>
+              <span style="font-size:12.5px;font-weight:700;color:#8E2B2B;">Estás trabajando en PRODUCCIÓN</span>
+            </div>
+          </div>
+        </div>
+
+        <div data-anim="scale" style="grid-column:span 2;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:24px;box-shadow:var(--shadowSm);">
+          <h3 style="margin:0 0 8px;font-size:18px;font-weight:800;letter-spacing:-.01em;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;vertical-align:-2px;display:inline-block;"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> <span data-l="es">Temas de color</span><span data-l="en">Color themes</span></h3>
+          <p style="margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--muted);"><span data-l="es">Ajusta matiz y saturación de NetSuite a tu gusto.</span><span data-l="en">Tune NetSuite's hue and saturation to taste.</span></p>
+          <div style="border:1px solid var(--line);border-radius:11px;padding:13px;background:var(--surface2);">
+            <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:5px;"><span>Matiz</span><span style="font-weight:700;color:var(--fg);">216</span></div>
+            <div style="height:7px;border-radius:99px;background:linear-gradient(90deg,#E24B4B,#E0C74B,#4BE07A,#4BC7E0,#7C63E0,#E24BC0);position:relative;margin-bottom:14px;">
+              <span style="position:absolute;left:64%;top:-4px;width:15px;height:15px;border-radius:99px;background:#7C63E0;border:2px solid #fff;box-shadow:var(--shadowSm);"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:5px;"><span>Saturación</span><span style="font-weight:700;color:var(--fg);">23%</span></div>
+            <div style="height:7px;border-radius:99px;background:var(--line);position:relative;">
+              <span style="position:absolute;left:23%;top:-4px;width:15px;height:15px;border-radius:99px;background:var(--brand);border:2px solid #fff;box-shadow:var(--shadowSm);"></span>
+            </div>
+          </div>
+        </div>
+
+        <div data-anim="scale" style="grid-column:span 2;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:24px;box-shadow:var(--shadowSm);">
+          <h3 style="margin:0 0 8px;font-size:18px;font-weight:800;letter-spacing:-.01em;">◐ <span data-l="es">Modo oscuro global</span><span data-l="en">Global dark mode</span></h3>
+          <p style="margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--muted);"><span data-l="es">Un tema oscuro para toda la interfaz, más cómodo para la vista.</span><span data-l="en">A dark theme for the whole UI — easier on the eyes.</span></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="border:1px solid var(--line);border-radius:10px;overflow:hidden;">
+              <div style="height:11px;background:#4A8B6A;"></div>
+              <div style="background:#F6F7F8;padding:9px;display:grid;gap:5px;"><div style="height:6px;background:#DDE3E7;border-radius:2px;"></div><div style="height:6px;background:#E7ECEF;border-radius:2px;"></div><div style="height:6px;width:60%;background:#E7ECEF;border-radius:2px;"></div></div>
+            </div>
+            <div style="border:1px solid #263129;border-radius:10px;overflow:hidden;">
+              <div style="height:11px;background:#1E4A36;"></div>
+              <div style="background:#111713;padding:9px;display:grid;gap:5px;"><div style="height:6px;background:#26312A;border-radius:2px;"></div><div style="height:6px;background:#1D2620;border-radius:2px;"></div><div style="height:6px;width:60%;background:#1D2620;border-radius:2px;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-anim="scale" style="grid-column:span 2;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:24px;box-shadow:var(--shadowSm);">
+          <h3 style="margin:0 0 8px;font-size:18px;font-weight:800;letter-spacing:-.01em;">▤ <span data-l="es">Agrupar pestañas</span><span data-l="en">Group tabs</span></h3>
+          <p style="margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--muted);"><span data-l="es">Tus pestañas se agrupan solas por cuenta y entorno.</span><span data-l="en">Your tabs group themselves by account and environment.</span></p>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:7px;"><span style="height:20px;flex:1;border-radius:6px 6px 0 0;background:#E8837A;"></span><span style="height:20px;flex:1;border-radius:6px 6px 0 0;background:#A98CE8;"></span><span style="height:20px;flex:1.4;border-radius:6px 6px 0 0;background:var(--surface2);border:1px solid var(--line);border-bottom:0;"></span></div>
+            <div style="display:flex;gap:7px;font-size:10.5px;font-family:'JetBrains Mono',monospace;color:var(--muted);"><span style="flex:1;">1234567_PRD</span><span style="flex:1;">1234567_SB1</span><span style="flex:1.4;">1234567_RP</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vistazo" style="padding:96px 24px 0;">
+    <div style="max-width:1220px;margin:0 auto;">
+      <div data-anim="up" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:28px;">
+        <div style="max-width:600px;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--brand);margin-bottom:12px;">DEMO</div>
+          <h2 style="font-size:40px;line-height:1.08;letter-spacing:-.03em;font-weight:800;margin:0 0 12px;"><span data-l="es">Míralo antes de instalarlo</span><span data-l="en">Look before you install</span></h2>
+          <p style="font-size:17px;color:var(--muted);line-height:1.55;margin:0;"><span data-l="es">Estas son las mismas interfaces que verás dentro de NetSuite.</span><span data-l="en">These are the very interfaces you'll get inside NetSuite.</span></p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button data-tb="visor" data-act="tab:visor" style="border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;">{} <span data-l="es">Visor de Registros</span><span data-l="en">Record Viewer</span></button>
+          <button data-tb="suiteql" data-act="tab:suiteql" style="border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;">▤ SuiteQL Runner</button>
+          <button data-tb="ui" data-act="tab:ui" style="border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;">⧉ <span data-l="es">Sublistas e IDs</span><span data-l="en">Sublists &amp; IDs</span></button>
+          <button data-tb="ia" data-act="tab:ia" style="border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;">◧ <span data-l="es">Logs y editor</span><span data-l="en">Logs &amp; editor</span></button>
+        </div>
+      </div>
+
+      <div data-anim="up" data-p="visor">
+        <div style="border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#1B1F23;box-shadow:var(--shadow);">
+          <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:#22282E;border-bottom:1px solid #2E353C;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7FD3AE;">{}</span>
+            <span style="font-size:13px;color:#D7E2DA;font-weight:600;">NetSuite Full Tools — Visor de Registros</span>
+            <span style="margin-left:auto;color:#7C8A92;font-size:12px;letter-spacing:.22em;">⤓ ◫ ⟲ − ✕</span>
+          </div>
+          <div style="padding:14px 16px 18px;">
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+              <div style="flex:1;border:1px solid #39424A;border-radius:8px;padding:9px 12px;font-size:12.5px;color:#8A98A0;background:#181C20;">Buscar Propiedad / Valor</div>
+              <label style="font-size:12px;color:#9AA7AF;display:flex;align-items:center;gap:7px;"><span style="width:13px;height:13px;border:1px solid #4A555E;border-radius:3px;display:inline-block;"></span>Ocultar vacíos</label>
+            </div>
+            <div style="border:1px solid #2A3138;border-radius:10px;background:#15191D;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;">
+              <div style="color:#9AA7AF;">▾ <span style="color:#E4EAEE;">Object</span></div>
+              <div style="padding-left:18px;color:#8DB7E8;">recordType: <span style="color:#E2A96B;">"script"</span></div>
+              <div style="padding-left:18px;color:#8DB7E8;">id: <span style="color:#B6E28A;">3226</span></div>
+              <div style="padding-left:18px;color:#9AA7AF;">▾ <span style="color:#8DB7E8;">bodyFields:</span> <span style="color:#E4EAEE;">Object</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">apiversion: <span style="color:#B6E28A;">2.1</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">defaultfunction: <span style="color:#E2A96B;">"onRequest"</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">description: <span style="color:#E2A96B;">"Login por token del Portal Externo: valida credenciales."</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">isinactive: <span style="color:#E2A96B;">"F"</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">name: <span style="color:#E2A96B;">"CB - ST - PortExt - Login"</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">scriptid: <span style="color:#E2A96B;">"customscript_cb_st_portal_login"</span></div>
+              <div style="padding-left:36px;color:#8DB7E8;">scripttype: <span style="color:#E2A96B;">"SCRIPTLET"</span></div>
+              <div style="padding-left:18px;color:#9AA7AF;">▸ <span style="color:#8DB7E8;">lineFields:</span> <span style="color:#E4EAEE;">Object</span></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:center;">
+              <span style="font-size:11.5px;color:#7FD3AE;background:#16211C;border:1px solid #21382C;border-radius:7px;padding:6px 12px;">Usa <b>Ctrl + Clic</b> en una propiedad para buscarla en el formulario</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-anim="up" data-p="suiteql">
+        <div style="border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#FBFCFD;box-shadow:var(--shadow);">
+          <div style="display:flex;align-items:center;gap:9px;padding:9px 13px;background:#F1F3F5;border-bottom:1px solid #E1E5E9;">
+            <span style="font-size:12px;color:#2C6E4E;">▤</span><span style="font-size:12.5px;font-weight:700;color:#2B3B33;">NetSuite Full Tools — SuiteQL Runner</span>
+            <span style="margin-left:auto;font-size:11.5px;color:#7A8790;letter-spacing:.22em;">− ⛶ ✕</span>
+          </div>
+          <div style="display:flex;gap:18px;padding:7px 13px;background:#F8F9FA;border-bottom:1px solid #E8ECEF;font-size:11.5px;color:#42505A;">
+            <span>Archivo</span><span>Editar</span><span>Ejecutar</span><span>Ver</span><span>Ayuda</span>
+            <span style="margin-left:auto;color:#2C7E52;font-weight:600;">✓ Cargados 402 campos para transaction</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:7px;padding:9px 13px;border-bottom:1px solid #E8ECEF;flex-wrap:wrap;">
+            <span style="background:#1A73E8;color:#fff;font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:7px;">▶ Ejecutar <span style="opacity:.7;font-family:'JetBrains Mono',monospace;">Ctrl+↵</span></span>
+            <span style="border:1px solid #D6DBE0;font-size:11.5px;padding:6px 11px;border-radius:7px;color:#42505A;">≡ Formatear</span>
+            <span style="border:1px solid #D6DBE0;font-size:11.5px;padding:6px 11px;border-radius:7px;color:#42505A;">⋈ JOIN</span>
+            <span style="border:1px solid #D6DBE0;font-size:11.5px;padding:6px 11px;border-radius:7px;color:#42505A;">▤ Plantilla</span>
+            <span style="border:1px solid #D6DBE0;font-size:11.5px;padding:6px 11px;border-radius:7px;color:#42505A;">★ Favoritos</span>
+            <span style="border:1px solid #C9BCF3;color:#7C63E0;font-size:11.5px;padding:6px 11px;border-radius:7px;font-weight:700;">✦ IA</span>
+            <span style="margin-left:auto;background:#2C7E52;color:#fff;font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:7px;">⟳ Actualizar esquema</span>
+          </div>
+          <div style="display:grid;grid-template-columns:210px minmax(0,1fr) 250px;min-height:330px;">
+            <div style="border-right:1px solid #E8ECEF;padding:11px;background:#F8F9FA;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
+                <span style="font-size:10.5px;font-weight:800;letter-spacing:.1em;color:#6A7C86;">ESQUEMA</span>
+                <span style="font-size:10.5px;font-weight:700;color:#1A73E8;border:1px solid #BBD3F5;border-radius:5px;padding:2px 6px;">ERD</span>
+              </div>
+              <div style="border:1px solid #D6DBE0;border-radius:7px;padding:6px 9px;font-size:11px;color:#8A959C;background:#fff;margin-bottom:10px;">Filtrar campos…</div>
+              <div style="display:grid;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#2B3B33;">
+                <div style="display:flex;justify-content:space-between;">entity <span style="font-family:'Plus Jakarta Sans';color:#8A959C;">Entidad</span></div>
+                <div style="display:flex;justify-content:space-between;">infoitem <span style="font-family:'Plus Jakarta Sans';color:#8A959C;">Artículo</span></div>
+                <div style="display:flex;justify-content:space-between;">item <span style="font-family:'Plus Jakarta Sans';color:#8A959C;">Artículo</span></div>
+                <div style="display:flex;justify-content:space-between;">subsidiary <span style="font-family:'Plus Jakarta Sans';color:#8A959C;">Subsidiaria</span></div>
+                <div style="display:flex;justify-content:space-between;font-weight:700;">transaction <span style="font-family:'Plus Jakarta Sans';color:#8A959C;font-weight:400;">Transacción</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;">
+              <div style="display:flex;gap:2px;padding:7px 10px 0;border-bottom:1px solid #E8ECEF;">
+                <span style="font-size:11.5px;padding:6px 12px;border-radius:7px 7px 0 0;color:#6A7C86;">● Consulta 1 ✕</span>
+                <span style="font-size:11.5px;padding:6px 12px;border-radius:7px 7px 0 0;color:#6A7C86;">Consulta 2 ✕</span>
+                <span style="font-size:11.5px;padding:6px 12px;border-radius:7px 7px 0 0;color:#1A73E8;border:1px solid #E8ECEF;border-bottom-color:#fff;background:#fff;font-weight:700;">● Consulta 3 ✕</span>
+                <span style="font-size:12px;padding:6px 10px;color:#6A7C86;">+</span>
+              </div>
+              <div style="display:flex;background:#fff;flex:1;">
+                <div style="padding:12px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#B4BEC5;text-align:right;line-height:1.7;user-select:none;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                <div style="padding:12px 6px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;flex:1;position:relative;">
+                  <div><span style="color:#A63FB0;font-weight:600;">SELECT</span></div>
+                  <div style="padding-left:20px;color:#2B3B33;">id,</div>
+                  <div style="padding-left:20px;color:#2B3B33;">name,</div>
+                  <div style="padding-left:20px;color:#2B3B33;">legalname,</div>
+                  <div style="padding-left:20px;color:#2B3B33;">country,</div>
+                  <div><span style="color:#A63FB0;font-weight:600;">FROM</span></div>
+                  <div style="padding-left:20px;color:#1A73E8;">Subsidiary t</div>
+                  <div><span style="color:#A63FB0;font-weight:600;">WHERE</span></div>
+                  <div style="padding-left:20px;color:#2B3B33;">t.<span style="display:inline-block;width:1.5px;height:14px;background:#2B3B33;vertical-align:-2px;animation:caret 1.1s steps(1) infinite;"></span></div>
+                  <div style="position:absolute;left:34px;top:calc(9 * 1.7 * 12.5px + 4px);width:230px;border:1px solid #C8D0D6;border-radius:6px;background:#fff;box-shadow:0 12px 26px -12px rgba(20,40,30,.4);overflow:hidden;font-size:11.5px;">
+                    <div style="background:#1A73E8;color:#fff;padding:3px 9px;">t.abbrevType</div>
+                    <div style="padding:3px 9px;color:#42505A;">t.accountBasedNumber</div>
+                    <div style="padding:3px 9px;color:#42505A;">t.accountingBookMapLines</div>
+                    <div style="padding:3px 9px;color:#42505A;">t.actionItem</div>
+                    <div style="padding:3px 9px;color:#42505A;">t.actualShipDate</div>
+                    <div style="padding:3px 9px;color:#42505A;">t.approvalStatus</div>
+                  </div>
+                </div>
+              </div>
+              <div style="border-top:1px solid #E8ECEF;padding:10px 12px;display:flex;gap:10px;align-items:center;background:#F8F9FA;">
+                <div style="flex:1;border:1px solid #D6DBE0;border-radius:7px;padding:6px 9px;font-size:11px;color:#8A959C;background:#fff;">Buscar resultados…</div>
+                <span style="border:1px solid #D6DBE0;font-size:11px;padding:6px 10px;border-radius:7px;color:#42505A;background:#fff;">▥ Graficar</span>
+                <span style="border:1px solid #D6DBE0;font-size:11px;padding:6px 10px;border-radius:7px;color:#42505A;background:#fff;">⤓ Descargar</span>
+              </div>
+              <div style="height:78px;display:grid;place-items:center;font-size:13px;color:#9AA5AC;font-style:italic;background:#fff;">Sin datos para mostrar</div>
+            </div>
+            <div style="border-left:1px solid #E8ECEF;padding:12px;background:#FCFCFE;">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:16px;">
+                <span style="font-size:11.5px;color:#7C63E0;">✦</span><span style="font-size:12px;font-weight:700;color:#2B3B33;">Asistente IA</span>
+                <span style="font-size:9.5px;font-weight:800;color:#7C63E0;background:#F1ECFD;border-radius:4px;padding:2px 5px;">BETA</span>
+              </div>
+              <div style="text-align:center;padding:14px 4px 18px;">
+                <div style="width:36px;height:36px;border-radius:11px;background:#EFEAFD;display:grid;place-items:center;margin:0 auto 10px;font-size:15px;color:#7C63E0;">✦</div>
+                <div style="font-size:12.5px;font-weight:700;color:#2B3B33;margin-bottom:4px;">Dime qué necesitas</div>
+                <div style="font-size:11.5px;color:#7A8790;line-height:1.45;">Cuéntame qué información buscas y te genero el SuiteQL.</div>
+              </div>
+              <div style="border:1px solid #D6DBE0;border-radius:8px;padding:6px 9px;font-size:11px;color:#8A959C;background:#fff;">Describe la consulta…</div>
+              <div style="margin-top:9px;display:flex;align-items:center;gap:6px;font-size:10.5px;color:#7A8790;">
+                <span style="background:#E9F0FB;color:#1A57B0;font-weight:700;border-radius:4px;padding:2px 5px;">DS</span> deepseek-v4-flash
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:7px 13px;border-top:1px solid #E8ECEF;background:#F1F3F5;font-size:11px;color:#6A7C86;font-family:'JetBrains Mono',monospace;">
+            <span style="color:#2C7E52;">● Conectado</span><span style="margin-left:auto;">Len: 105 · Lines: 11 · 1:1</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-anim="up" data-p="ui">
+        <div data-r="2col" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);overflow:hidden;">
+            <div style="padding:11px 14px;border-bottom:1px solid #E8ECEF;background:#F1F3F5;font-size:12.5px;font-weight:700;color:#2B3B33;"><span data-l="es">Copiar IDs · sublistas mejoradas</span><span data-l="en">Copy IDs · enhanced sublists</span></div>
+            <div style="padding:14px;">
+              <div style="display:flex;gap:26px;margin-bottom:12px;font-size:11px;">
+                <div><div style="color:#6A7C86;letter-spacing:.06em;">ARTÍCULO ⧉</div><div style="height:8px;width:110px;background:#E7ECEF;border-radius:2px;margin-top:6px;"></div></div>
+                <div><div style="color:#6A7C86;letter-spacing:.06em;">CANTIDAD ⧉</div><div style="margin-top:5px;font-weight:700;color:#2B3B33;">-1.92</div></div>
+                <div><div style="color:#6A7C86;letter-spacing:.06em;">UNIDADES ⧉</div><div style="margin-top:5px;font-weight:700;color:#2B3B33;">KILOGRAMO</div></div>
+              </div>
+              <div style="background:#DCE6F0;padding:6px 10px;font-size:11.5px;font-weight:700;color:#274866;border-radius:4px 4px 0 0;">Detalle de inventario</div>
+              <div style="border:1px solid #D6DBE0;border-top:0;padding:9px;">
+                <div style="display:flex;gap:7px;margin-bottom:9px;">
+                  <span style="border:1px solid #C4CDD4;background:#F4F6F8;font-size:10.5px;font-weight:700;color:#42505A;padding:4px 8px;border-radius:4px;">COPIAR ID SUBLISTA</span>
+                  <span style="border:1px solid #C4CDD4;background:#F4F6F8;font-size:10.5px;color:#42505A;padding:4px 8px;border-radius:4px;">Agregar varios</span>
+                </div>
+                <div style="display:grid;grid-template-columns:26px repeat(5,1fr);font-size:10px;color:#6A7C86;gap:4px;border-bottom:1px solid #E1E5E9;padding-bottom:6px;">
+                  <span>#</span><span>⧉ SERIE/LOTE *</span><span>⧉ DEPÓSITO *</span><span>⧉ ESTADO *</span><span>⧉ CADUCIDAD</span><span>⧉ CANTIDAD</span>
+                </div>
+                <div style="display:grid;grid-template-columns:26px repeat(5,1fr);font-size:11px;color:#2B3B33;gap:4px;padding:7px 0;align-items:center;background:#FFFDF0;">
+                  <span style="color:#8A959C;font-family:'JetBrains Mono',monospace;">1</span>
+                  <span style="height:8px;background:#E7ECEF;border-radius:2px;"></span>
+                  <span style="height:8px;background:#E7ECEF;border-radius:2px;"></span>
+                  <span style="font-weight:600;">Good</span><span>16/11/2026</span><span style="font-weight:700;">-1.92</span>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:9px;">
+                  <span style="background:#1A73E8;color:#fff;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:4px;">✔ OK</span>
+                  <span style="border:1px solid #C4CDD4;background:#F4F6F8;font-size:10.5px;color:#42505A;padding:4px 10px;border-radius:4px;">✕ Cancelar</span>
+                  <span style="border:1px solid #C4CDD4;background:#F4F6F8;font-size:10.5px;color:#42505A;padding:4px 10px;border-radius:4px;">+ Insertar</span>
+                  <span style="border:1px solid #C4CDD4;background:#F4F6F8;font-size:10.5px;color:#42505A;padding:4px 10px;border-radius:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;vertical-align:-2px;display:inline-block;"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg> Eliminar</span>
+                </div>
+                <div style="margin-top:9px;font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#2C7E52;background:#EDF6F1;border:1px solid #CFE6DA;border-radius:6px;padding:5px 8px;">line id: 1042 · copiado al portapapeles</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid;gap:16px;">
+            <div style="border-radius:16px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadowSm);padding:20px;">
+              <h3 style="margin:0 0 12px;font-size:16px;font-weight:800;"><span data-l="es">Información de campo al instante</span><span data-l="en">Instant field info</span></h3>
+              <div style="border:1px solid var(--line);border-radius:11px;overflow:hidden;">
+                <div style="background:var(--surface2);padding:9px 12px;font-size:12px;font-weight:700;border-bottom:1px solid var(--line2);">Subsidiary</div>
+                <div style="padding:11px 12px;display:grid;gap:7px;font-size:11.5px;font-family:'JetBrains Mono',monospace;color:var(--fg2);">
+                  <div><span style="color:var(--muted);">id: </span>subsidiary</div>
+                  <div><span style="color:var(--muted);">type: </span>select · List/Record</div>
+                  <div><span style="color:var(--muted);">value: </span>2 — MX Operations</div>
+                </div>
+                <div style="display:flex;gap:6px;padding:9px 12px;border-top:1px solid var(--line2);">
+                  <span style="background:var(--brand);color:#fff;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:6px;">⧉ Copiar ID</span>
+                  <span style="border:1px solid var(--line);font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:6px;color:var(--fg2);">✎ Editar valor</span>
+                  <span style="border:1px solid var(--line);font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:6px;color:var(--fg2);">⏱ Historial</span>
+                </div>
+              </div>
+            </div>
+            <div style="border-radius:16px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadowSm);padding:20px;">
+              <h3 style="margin:0 0 12px;font-size:16px;font-weight:800;">Record Trail</h3>
+              <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11.5px;">
+                <span style="border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--surface2);font-weight:700;">Sales Order</span>
+                <span style="color:var(--muted);">→</span>
+                <span style="border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--surface2);font-weight:700;">Item Fulfillment</span>
+                <span style="color:var(--muted);">→</span>
+                <span style="border:1px solid var(--brand);border-radius:8px;padding:6px 10px;background:var(--brandSoft);font-weight:700;color:var(--brand);">Invoice ⧉</span>
+                <span style="color:var(--muted);">→</span>
+                <span style="border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--surface2);font-weight:700;">Payment</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-anim="up" data-p="ia">
+        <div data-r="2col" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#20252B;box-shadow:var(--shadow);">
+            <div style="display:flex;align-items:center;gap:8px;padding:10px 13px;background:#191D22;border-bottom:1px solid #2A3138;">
+              <span style="width:9px;height:9px;border-radius:99px;background:#E8837A;"></span>
+              <span style="font-size:12px;color:#C9D4CD;font-family:'JetBrains Mono',monospace;">customscript_cb_cs_order.js</span>
+              <span style="margin-left:auto;font-size:10.5px;color:#7FD3AE;border:1px solid #21382C;background:#16211C;border-radius:5px;padding:2px 7px;">Tema del editor</span>
+            </div>
+            <div style="display:flex;">
+              <div style="padding:14px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#5A666E;text-align:right;line-height:1.75;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+              <div style="padding:14px 10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#D7E2DA;">
+                <div style="color:#7E8C94;">/**</div>
+                <div style="color:#7E8C94;"> * @NApiVersion 2.x</div>
+                <div style="color:#7E8C94;"> * @NScriptType ClientScript</div>
+                <div style="color:#7E8C94;"> */</div>
+                <div><span style="color:#C792EA;">define</span>([], <span style="color:#C792EA;">function</span> () {</div>
+                <div style="padding-left:18px;color:#7E8C94;">// se ejecuta al cargar el registro</div>
+                <div style="padding-left:18px;"><span style="color:#C792EA;">function</span> <span style="color:#82AAFF;">pageInit</span>(context) {</div>
+                <div style="padding-left:36px;">console.<span style="color:#82AAFF;">log</span>(<span style="color:#E2A96B;">'Client Script cargado'</span>);</div>
+                <div style="padding-left:18px;">}</div>
+                <div style="padding-left:18px;"><span style="color:#C792EA;">return</span> {</div>
+                <div style="padding-left:36px;"><span style="color:#B6E28A;">pageInit</span>: pageInit</div>
+                <div style="padding-left:18px;">};</div>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#fff;box-shadow:var(--shadow);">
+            <div style="display:flex;align-items:center;gap:9px;padding:10px 13px;background:#F1F3F5;border-bottom:1px solid #E1E5E9;">
+              <span style="background:#1A73E8;color:#fff;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:5px;">Actualizar</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#2C7E52;"><span style="width:28px;height:16px;border-radius:99px;background:#2C7E52;position:relative;display:inline-block;"><span style="position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:99px;background:#fff;"></span></span>En Vivo</span>
+              <span style="font-size:10.5px;font-family:'JetBrains Mono',monospace;color:#42505A;border:1px solid #D6DBE0;border-radius:5px;padding:2px 6px;">3 segs</span>
+              <span style="width:7px;height:7px;border-radius:99px;background:#2C7E52;animation:pulseDot 1.6s ease-in-out infinite;"></span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px 13px;font-size:10px;color:#6A7C86;border-bottom:1px solid #E8ECEF;letter-spacing:.05em;">
+              <span>TÍTULO</span><span>FECHA ▾</span><span>TIEMPO</span><span>USUARIO</span><span>DETALLES</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px 13px;font-size:11px;color:#2B3B33;">
+              <span>beforeLoad</span><span>22/01/2026</span><span>9:20 AM</span><span style="height:8px;background:#E7ECEF;border-radius:2px;align-self:center;"></span><span style="color:#1A73E8;">DEBUG</span>
+            </div>
+            <div style="margin:6px 13px 13px;border-radius:9px;background:#181C20;padding:11px;">
+              <div style="display:flex;gap:6px;margin-bottom:9px;">
+                <span style="background:#2A3138;color:#C9D4CD;font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;">COPIAR</span>
+                <span style="background:#2A3138;color:#C9D4CD;font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;">DESCARGAR</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;">
+                <div style="color:#9AA7AF;">{</div>
+                <div style="padding-left:14px;color:#8DB7E8;">"customer": <span style="color:#E2A96B;">"1042"</span>,</div>
+                <div style="padding-left:14px;color:#8DB7E8;">"lines": <span style="color:#B6E28A;">14</span>,</div>
+                <div style="padding-left:14px;color:#8DB7E8;">"status": <span style="color:#E2A96B;">"pendingApproval"</span>,</div>
+                <div style="padding-left:14px;color:#8DB7E8;">"total": <span style="color:#B6E28A;">18402.55</span></div>
+                <div style="color:#9AA7AF;">}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogo" style="padding:96px 24px 0;">
+    <div style="max-width:1220px;margin:0 auto;">
+      <div data-anim="up" style="max-width:640px;margin-bottom:26px;">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--brand);margin-bottom:12px;"><span data-l="es">CATÁLOGO COMPLETO</span><span data-l="en">FULL CATALOG</span></div>
+        <h2 style="font-size:40px;line-height:1.08;letter-spacing:-.03em;font-weight:800;margin:0 0 12px;"><span data-l="es">Todas las herramientas, buscables</span><span data-l="en">Every tool, searchable</span></h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.55;margin:0;"><span data-l="es">Cada una se activa por separado desde el popup. Filtra por categoría o escribe lo que necesites.</span><span data-l="en">Each one toggles independently from the popup. Filter by category or just type what you need.</span></p>
+      </div>
+
+      <div data-anim="fade" style="position:sticky;top:66px;z-index:20;background:color-mix(in oklab, var(--bg) 88%, transparent);backdrop-filter:blur(10px);padding:12px 0;margin-bottom:18px;border-bottom:1px solid var(--line);">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:10px 13px;min-width:280px;flex:1;max-width:420px;">
+            <span style="color:var(--muted);font-size:13px;">⌕</span>
+            <input id="nsft-q" type="search" autocomplete="off" aria-label="Buscar herramienta" style="border:0;outline:0;background:transparent;font-family:inherit;font-size:14.5px;color:var(--fg);width:100%;">
+          </div>
+          <span style="font-size:13px;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;"><span id="nsft-count">0</span> <span data-l="es">resultados</span><span data-l="en">results</span></span>
+        </div>
+        <div id="nsft-chips" class="nsft-chips"></div>
+      </div>
+
+      <div>
+        <div id="nsft-catalog" style="display:flex;flex-direction:column;gap:38px;"></div>
+        <div id="nsft-empty" hidden style="border:1px dashed var(--line);border-radius:14px;padding:44px;text-align:center;color:var(--muted);font-size:15px;">
+          <span data-l="es">Nada con ese nombre. Prueba con «ID», «sublista» o «log».</span><span data-l="en">Nothing by that name. Try “ID”, “sublist” or “log”.</span>
+        </div>
+      </div>
+      <div style="margin-top:18px;font-size:13px;color:var(--muted);"><span data-l="es">Y seguimos añadiendo. El aviso de nueva versión te enseña las novedades cuando la extensión se actualiza.</span><span data-l="en">And we keep adding. The new-version notice shows you what's new whenever the extension updates.</span></div>
+    </div>
+  </section>
+
+
+  <section id="faq" style="padding:96px 24px 0;">
+    <div style="max-width:880px;margin:0 auto;">
+      <h2 data-anim="up" style="font-size:38px;line-height:1.1;letter-spacing:-.03em;font-weight:800;margin:0 0 26px;text-align:center;"><span data-l="es">Preguntas frecuentes</span><span data-l="en">Frequently asked questions</span></h2>
+      <div style="display:grid;gap:10px;">
+        <details data-anim="up" style="border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:16px 18px;">
+          <summary style="display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;"><span style="flex:1;"><span data-l="es">¿Es realmente gratis?</span><span data-l="en">Is it really free?</span></span><span data-chev="" style="color:var(--brand);font-size:18px;transition:transform .18s;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--muted);"><span data-l="es">Sí. Todas las herramientas están incluidas, sin cuentas, sin planes y sin límites de uso.</span><span data-l="en">Yes. Every tool is included — no accounts, no plans, no usage limits.</span></p>
+        </details>
+        <details data-anim="up" style="border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:16px 18px;">
+          <summary style="display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;"><span style="flex:1;"><span data-l="es">¿Necesito instalar algo en NetSuite?</span><span data-l="en">Do I need to install anything in NetSuite?</span></span><span data-chev="" style="color:var(--brand);font-size:18px;transition:transform .18s;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--muted);"><span data-l="es">No. Nada de bundles, SuiteApps ni despliegues. Es una extensión de navegador: se instala en un clic y funciona sobre la interfaz que ya tienes.</span><span data-l="en">No. No bundles, SuiteApps or deployments. It's a browser extension: one click to install and it works on top of the UI you already have.</span></p>
+        </details>
+        <details data-anim="up" style="border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:16px 18px;">
+          <summary style="display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;"><span style="flex:1;"><span data-l="es">¿Puede romper mi cuenta o mis datos?</span><span data-l="en">Can it break my account or data?</span></span><span data-chev="" style="color:var(--brand);font-size:18px;transition:transform .18s;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--muted);"><span data-l="es">NSFT solo usa las mismas acciones que harías tú con tus permisos. Además avisa cuando estás en Producción y protege las carpetas del sistema del File Cabinet.</span><span data-l="en">NSFT only performs the same actions you'd perform yourself, with your own permissions. It also warns you when you're in Production and guards system folders in the File Cabinet.</span></p>
+        </details>
+        <details data-anim="up" style="border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:16px 18px;">
+          <summary style="display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;"><span style="flex:1;"><span data-l="es">¿Qué pasa con el Asistente de IA?</span><span data-l="en">What about the AI Assistant?</span></span><span data-chev="" style="color:var(--brand);font-size:18px;transition:transform .18s;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--muted);"><span data-l="es">Es opcional y viene desactivado. Funciona con tu propia clave de API, y solo entonces se envía la consulta al proveedor que tú elijas.</span><span data-l="en">It's optional and off by default. It runs on your own API key, and only then is the query sent to the provider you choose.</span></p>
+        </details>
+        <details data-anim="up" style="border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:16px 18px;">
+          <summary style="display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;"><span style="flex:1;"><span data-l="es">¿Tengo que activar las 100 herramientas?</span><span data-l="en">Do I have to enable all 100 tools?</span></span><span data-chev="" style="color:var(--brand);font-size:18px;transition:transform .18s;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--muted);"><span data-l="es">No. El popup las organiza por categoría y cada una tiene su interruptor. Empieza con dos o tres y ve sumando.</span><span data-l="en">No. The popup groups them by category, each with its own switch. Start with two or three and add more over time.</span></p>
+        </details>
+        <details data-anim="up" style="border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:16px 18px;">
+          <summary style="display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;"><span style="flex:1;"><span data-l="es">¿Funciona en sandbox y release preview?</span><span data-l="en">Does it work in sandbox and release preview?</span></span><span data-chev="" style="color:var(--brand);font-size:18px;transition:transform .18s;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--muted);"><span data-l="es">Sí, y te dice en cuál estás: distintivo PRD/SB/RP en el icono, número de sandbox en el logo y salto rápido a la misma URL en otro entorno.</span><span data-l="en">Yes — and it tells you which one you're in: a PRD/SB/RP badge on the icon, the sandbox number on the logo, and a quick jump to the same URL in another environment.</span></p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="feedback" class="nsft-forms">
+    <div class="nsft-forms-inner">
+      <div data-anim="up" class="nsft-forms-head">
+        <div class="nsft-eyebrow"><span data-l="es">¿TE FALTA ALGO?</span><span data-l="en">SOMETHING MISSING?</span></div>
+        <h2 class="nsft-forms-title">
+          <span data-l="es">Cuéntamelo y entra en la siguiente versión</span><span data-l="en">Tell me and it goes into the next version</span>
+        </h2>
+      </div>
+      <div class="nsft-forms-grid">
+        <a href="https://forms.gle/6FPaQNjs6pUJu9WV8" target="_blank" rel="noopener" data-anim="up" class="nsft-form-card">
+          <span class="nsft-form-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="6" width="8" height="14" rx="4"></rect><path d="M19 7l-3 2"></path><path d="M5 7l3 2"></path><path d="M19 13h2"></path><path d="M3 13h2"></path><path d="M19 19l-3-2"></path><path d="M5 19l3-2"></path><path d="M9 6a3 3 0 0 1 6 0"></path></svg></span>
+          <span class="nsft-form-text">
+            <strong><span data-l="es">Reportar un error</span><span data-l="en">Report a bug</span></strong>
+            <small><span data-l="es">Cuéntame qué falló y lo arreglo.</span><span data-l="en">Tell me what went wrong so I can fix it.</span></small>
+          </span>
+          <span class="nsft-form-chev" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://forms.gle/ZTdVMEu3CZYTxhWf7" target="_blank" rel="noopener" data-anim="up" class="nsft-form-card">
+          <span class="nsft-form-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span>
+          <span class="nsft-form-text">
+            <strong><span data-l="es">Pedir nueva función</span><span data-l="en">Request a feature</span></strong>
+            <small><span data-l="es">Propón mejoras o herramientas nuevas.</span><span data-l="en">Suggest an improvement or a new tool.</span></small>
+          </span>
+          <span class="nsft-form-chev" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:96px 24px 0;">
+    <div style="max-width:1220px;margin:0 auto;">
+      <div data-anim="up" style="border-radius:22px;background:linear-gradient(135deg, var(--brand), #2f7f66 55%, #2f8f8a);padding:56px 44px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow);">
+        <div style="position:absolute;inset:0;opacity:.16;background:radial-gradient(420px 220px at 18% 10%, #fff, transparent 70%),radial-gradient(420px 220px at 84% 92%, var(--gold), transparent 70%);"></div>
+        <div style="position:relative;">
+          <h2 style="font-size:44px;line-height:1.06;letter-spacing:-.035em;font-weight:800;color:#fff;margin:0 0 14px;"><span data-l="es">Haz que NetSuite trabaje para ti</span><span data-l="en">Make NetSuite work for you</span></h2>
+          <p style="font-size:18px;color:rgba(255,255,255,.86);margin:0 auto 28px;max-width:56ch;line-height:1.55;"><span data-l="es">Instálala en un clic, activa lo que te interese y recupera tus horas. Es gratis — y si te sirve, déjale una estrella.</span><span data-l="en">Install in one click, enable what you like, get your hours back. It's free — and if it helps, leave it a star.</span></p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc" target="_blank" style="background:#fff;color:var(--brand);padding:16px 28px;border-radius:12px;font-size:16px;font-weight:800;display:inline-flex;align-items:center;gap:10px;"><svg class="nsft-chrome-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:19px;height:19px;flex:0 0 auto;"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0z"/><path d="M1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29z"/><path d="M15.273 7.636a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364z"/><path d="M12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728z"/></svg><span data-l="es">Añadir a Chrome — gratis</span><span data-l="en">Add to Chrome — free</span></a>
+            <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/reviews" target="_blank" style="border:1px solid rgba(255,255,255,.45);color:#fff;padding:16px 26px;border-radius:12px;font-size:16px;font-weight:800;">★★★★★ <span data-l="es">Dejar una reseña</span><span data-l="en">Leave a review</span></a>
+            <a href="https://buymeacoffee.com/miguelgarcia93" target="_blank" rel="noopener" class="nsft-coffee-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px;flex:0 0 auto;"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg><span data-l="es">Invítame un café</span><span data-l="en">Buy me a coffee</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:56px 24px 40px;margin-top:64px;border-top:1px solid var(--line);">
+    <div data-r="4col" style="max-width:1220px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;">
+      <div data-anim="fade">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span class="nsft-logo-badge nsft-logo-badge-sm"><img src="assets/logo.webp" alt="" width="128" height="128"></span>
+          <span style="font-size:14.5px;font-weight:800;">NetSuite Full Tools</span>
+        </div>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.55;margin:0;max-width:34ch;"><span data-l="es">Extensión de Chrome independiente. No afiliada a Oracle ni a NetSuite.</span><span data-l="en">Independent Chrome extension. Not affiliated with Oracle or NetSuite.</span></p>
+      </div>
+      <div data-anim="fade" style="display:flex;flex-direction:column;gap:9px;">
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;color:var(--muted);"><span data-l="es">PRODUCTO</span><span data-l="en">PRODUCT</span></div>
+        <a href="#destacados" style="font-size:13.5px;font-weight:600;"><span data-l="es">Destacados</span><span data-l="en">Highlights</span></a>
+        <a href="#catalogo" style="font-size:13.5px;font-weight:600;"><span data-l="es">Catálogo</span><span data-l="en">Catalog</span></a>
+        <a href="#vistazo" style="font-size:13.5px;font-weight:600;">Demo</a>
+      </div>
+      <div data-anim="fade" style="display:flex;flex-direction:column;gap:9px;">
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;color:var(--muted);"><span data-l="es">RECURSOS</span><span data-l="en">RESOURCES</span></div>
+        <a href="#faq" style="font-size:13.5px;font-weight:600;">FAQ</a>
+        <a href="privacidad.html" style="font-size:13.5px;font-weight:600;"><span data-l="es">Política de privacidad</span><span data-l="en">Privacy policy</span></a>
+        <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc" target="_blank" style="font-size:13.5px;font-weight:600;">Chrome Web Store</a>
+      </div>
+      <div data-anim="fade" style="display:flex;flex-direction:column;gap:9px;">
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;color:var(--muted);"><span data-l="es">APOYA</span><span data-l="en">SUPPORT</span></div>
+        <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/reviews" target="_blank" style="font-size:13.5px;font-weight:600;"><span data-l="es">Deja una estrella ★</span><span data-l="en">Leave a star ★</span></a>
+        <a href="https://forms.gle/6FPaQNjs6pUJu9WV8" target="_blank" rel="noopener" style="font-size:13.5px;font-weight:600;"><span data-l="es">Reportar un error</span><span data-l="en">Report a bug</span></a>
+        <a href="https://forms.gle/ZTdVMEu3CZYTxhWf7" target="_blank" rel="noopener" style="font-size:13.5px;font-weight:600;"><span data-l="es">Pedir nueva función</span><span data-l="en">Request a feature</span></a>
+        <a href="https://buymeacoffee.com/miguelgarcia93" target="_blank" rel="noopener" style="font-size:13.5px;font-weight:600;"><span data-l="es">Invítame un café</span><span data-l="en">Buy me a coffee</span></a>
+      </div>
+    </div>
+    <div style="max-width:1220px;margin:32px auto 0;padding-top:20px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);">
+      <span>© 2026 NetSuite Full Tools · <span style="font-family:'JetBrains Mono',monospace;">v6.0.0</span></span>
+      <span><span data-l="es">Hecho por y para gente que vive en NetSuite.</span><span data-l="en">Built by and for people who live in NetSuite.</span></span>
+    </div>
+  </footer>
+</div>
+<!-- Catálogo generado desde STORE_DESCRIPTION.md -->
+<script>window.NSFT_CATALOG = {"groups":[{"id":"star","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpolygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\">\u003c/polygon>\u003c/svg>","color":"#C2557A","nameEs":"Destacados","nameEn":"Featured"},{"id":"reg","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\">\u003c/path>\u003cpolyline points=\"14 2 14 8 20 8\">\u003c/polyline>\u003c/svg>","color":"#2C6E4E","nameEs":"Registros","nameEn":"Records"},{"id":"dev","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpolyline points=\"16 18 22 12 16 6\">\u003c/polyline>\u003cpolyline points=\"8 6 2 12 8 18\">\u003c/polyline>\u003c/svg>","color":"#7C63E0","nameEs":"Desarrollo / Scripting","nameEn":"Development / Scripting"},{"id":"sql","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003ccircle cx=\"11\" cy=\"11\" r=\"8\">\u003c/circle>\u003cline x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\">\u003c/line>\u003c/svg>","color":"#1A73E8","nameEs":"Búsquedas y SQL","nameEn":"Searches & SQL"},{"id":"ui","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003crect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\">\u003c/rect>\u003cline x1=\"3\" y1=\"9\" x2=\"21\" y2=\"9\">\u003c/line>\u003cline x1=\"9\" y1=\"21\" x2=\"9\" y2=\"9\">\u003c/line>\u003c/svg>","color":"#B8862F","nameEs":"Apariencia / Layout","nameEn":"Appearance / Layout"},{"id":"prod","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z\">\u003c/path>\u003c/svg>","color":"#2F8F8A","nameEs":"Productividad","nameEn":"Productivity"},{"id":"file","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\">\u003c/path>\u003cline x1=\"8\" y1=\"13\" x2=\"16\" y2=\"13\">\u003c/line>\u003cline x1=\"8\" y1=\"17\" x2=\"16\" y2=\"17\">\u003c/line>\u003c/svg>","color":"#B0653A","nameEs":"File Cabinet","nameEn":"File Cabinet"},{"id":"pdf","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\">\u003c/path>\u003cpolyline points=\"14 2 14 8 20 8\">\u003c/polyline>\u003cline x1=\"9\" y1=\"15\" x2=\"15\" y2=\"15\">\u003c/line>\u003cline x1=\"9\" y1=\"18\" x2=\"15\" y2=\"18\">\u003c/line>\u003c/svg>","color":"#5E7387","nameEs":"Plantillas PDF / HTML","nameEn":"PDF / HTML templates"},{"id":"wf","icon":"\u003csvg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cline x1=\"3\" y1=\"7\" x2=\"18\" y2=\"7\">\u003c/line>\u003cpolyline points=\"15 4 18 7 15 10\">\u003c/polyline>\u003cline x1=\"21\" y1=\"17\" x2=\"6\" y2=\"17\">\u003c/line>\u003cpolyline points=\"9 14 6 17 9 20\">\u003c/polyline>\u003c/svg>","color":"#6E7F2F","nameEs":"Workflows","nameEn":"Workflows"}],"tools":[{"group":"star","nameEs":"Asistente de IA","descEs":"Pregunta en lenguaje natural sobre el registro y tu cuenta, sin salir de la página (con tu propia clave).","nameEn":"AI Assistant","descEn":"Ask in plain language about the record and your account, without leaving the page (bring your own key)."},{"group":"star","nameEs":"Temas de color para NetSuite","descEs":"Personaliza el esquema de colores a tu gusto.","nameEn":"Color Themes for NetSuite","descEn":"Customize the color scheme to your taste."},{"group":"star","nameEs":"Modo oscuro global","descEs":"Un tema oscuro para toda la interfaz, más cómodo para la vista.","nameEn":"Global Dark Mode","descEn":"A dark theme for the whole interface, easier on the eyes."},{"group":"star","nameEs":"Agrupar pestañas","descEs":"Agrupa automáticamente tus pestañas por cuenta y entorno (ej. 123_SB1).","nameEn":"Grouped Tabs","descEn":"Automatically group your tabs by account and environment (e.g. 123_SB1)."},{"group":"star","nameEs":"Paleta de comandos","descEs":"Navega y ejecuta cualquier herramienta con Ctrl+Shift+Espacio.","nameEn":"Command Palette","descEn":"Navigate and run any tool with Ctrl+Shift+Space."},{"group":"star","nameEs":"Hoja de atajos de teclado","descEs":"Todos los atajos de NSFT con Ctrl+Shift+?.","nameEn":"Keyboard Shortcuts Cheat Sheet","descEn":"Every NSFT shortcut with Ctrl+Shift+?."},{"group":"star","nameEs":"Distintivo de entorno (PRD/SB/RP)","descEs":"El icono te dice siempre en qué entorno estás.","nameEn":"Environment Badge (PRD/SB/RP)","descEn":"The icon always tells you which environment you're in."},{"group":"reg","nameEs":"Ver objeto del registro","descEs":"Inspecciona el objeto completo del registro actual en un visor limpio.","nameEn":"View Record Object","descEn":"Inspect the full record object in a clean, searchable viewer."},{"group":"reg","nameEs":"Ver scripts del registro","descEs":"Todos los scripts y workflows asociados, de un vistazo.","nameEn":"View Record Scripts","descEn":"Every script and workflow tied to the record, at a glance."},{"group":"reg","nameEs":"Record Trail","descEs":"Documentos de origen y destino enlazados de una transacción, con salto rápido y copia de IDs.","nameEn":"Record Trail","descEn":"Linked source and target documents of a transaction, with quick open and ID copy."},{"group":"reg","nameEs":"Cargar registro a consola","descEs":"Carga el registro actual en la consola (SS1.0 y SS2.x).","nameEn":"Load Record to Console","descEn":"Load the current record into the console (SS1.0 and SS2.x)."},{"group":"reg","nameEs":"Menú Opciones de Registro","descEs":"Accesos directos según el tipo de registro (agregar campo, ver XML, dependientes…).","nameEn":"Record Options Menu","descEn":"Shortcuts based on record type (add field, view XML, dependencies…)."},{"group":"reg","nameEs":"Ir al record","descEs":"Salta a cualquier registro con Alt+Shift+G por número, tipo o nombre.","nameEn":"Go to Record","descEn":"Jump to any record with Alt+Shift+G by number, type or name."},{"group":"reg","nameEs":"Registros recientes ampliados","descEs":"Historial completo con buscador y fecha de acceso.","nameEn":"Expanded Recent Records","descEn":"Full history with inline search and access date."},{"group":"reg","nameEs":"Abrir en otro entorno","descEs":"Abre la misma URL en producción, sandbox o release preview conservando ruta y parámetros.","nameEn":"Open in Another Environment","descEn":"Open the same URL in production, sandbox or release preview, keeping path and params."},{"group":"reg","nameEs":"Número de sandbox en el logo","descEs":"Distingue entre varios sandboxes de la misma cuenta.","nameEn":"Sandbox Number on Header Logo","descEn":"Tell multiple sandboxes of the same account apart."},{"group":"reg","nameEs":"Copiar IDs internos","descEs":"Copia con un clic IDs de campos, sublistas y registros.","nameEn":"Copy Internal IDs","descEn":"One-click copy of field, sublist and record IDs."},{"group":"reg","nameEs":"Mostrar información de campos","descEs":"En la ayuda de campo: editar valor, copiar ID, ver info técnica.","nameEn":"Show Field Information","descEn":"In field help: edit value, copy ID, view technical info."},{"group":"reg","nameEs":"Historial del campo","descEs":"Quién cambió un campo, cuándo, y sus valores anterior y nuevo.","nameEn":"Field History","descEn":"Who changed a field, when, and its previous and new values."},{"group":"reg","nameEs":"Buscar campo por ID/etiqueta","descEs":"Encuentra cualquier campo con Ctrl+Shift+F.","nameEn":"Find Field by ID/Label","descEn":"Find any field with Ctrl+Shift+F."},{"group":"reg","nameEs":"Abrir registro personalizado desde sublista","descEs":"Abre la definición del Custom Record dueño con un clic.","nameEn":"Open Custom Record from Sublist","descEn":"Open the owning Custom Record definition with one click."},{"group":"reg","nameEs":"Vista previa de custom fields al pasar el cursor","descEs":"ID, tipo y valores sin abrir su definición.","nameEn":"Hover Preview for Custom Fields","descEn":"ID, type and values without opening the definition."},{"group":"reg","nameEs":"Enlaces nativos relacionados","descEs":"Enlaces directos al registro de los campos nativos.","nameEn":"Related Native Links","descEn":"Direct links to native field records."},{"group":"reg","nameEs":"Botón Guardar y Editar","descEs":"Guarda y vuelve a edición automáticamente.","nameEn":"Save and Edit Button","descEn":"Save and return to edit mode automatically."},{"group":"reg","nameEs":"Botón Editar y Guardar","descEs":"Recarga y reguarda el registro (útil para forzar user event scripts).","nameEn":"Edit and Save Button","descEn":"Reload and re-save the record (great for forcing user event scripts)."},{"group":"reg","nameEs":"Botón Eliminar registro","descEs":"Botón Eliminar en la barra de acciones.","nameEn":"Delete Record Button","descEn":"A Delete button in the action bar."},{"group":"reg","nameEs":"Botón Cancelar sin History.Back","descEs":"Vuelve a la vista del registro actual, no a la página anterior.","nameEn":"Cancel Without History.Back","descEn":"Returns to the current record's view, not the previous page."},{"group":"reg","nameEs":"Botón Actualizar sublista","descEs":"Recarga una sublista sin refrescar toda la página.","nameEn":"Refresh Sublist Button","descEn":"Reload a sublist without refreshing the whole page."},{"group":"dev","nameEs":"Tema del editor de código","descEs":"Aplica un tema al editor.","nameEn":"Code Editor Theme","descEn":"Apply a theme to the editor."},{"group":"dev","nameEs":"Cerrar editor al guardar","descEs":"Cierra la pestaña del editor en cuanto guardas.","nameEn":"Close Editor on Save","descEn":"Closes the editor tab the moment you save."},{"group":"dev","nameEs":"Abrir archivo en nueva pestaña","descEs":"Enlace directo junto a cada archivo de una página de scripting.","nameEn":"Open File in New Tab","descEn":"Direct link next to each file on a scripting page."},{"group":"dev","nameEs":"Modo en vivo","descEs":"Logs en tiempo real, con autoinicio configurable.","nameEn":"Live Mode","descEn":"Real-time logs, with configurable auto-start."},{"group":"dev","nameEs":"Embellecer logs","descEs":"Formatea y resalta JSON/SQL en las listas de ejecución.","nameEn":"Prettify Logs","descEn":"Formats and highlights JSON/SQL in execution lists."},{"group":"dev","nameEs":"Botón Full Logs","descEs":"Salta al archivo completo de logs desde un script.","nameEn":"Full Logs Button","descEn":"Jump to the full logs archive from a script."},{"group":"dev","nameEs":"Execution Log buscable","descEs":"Busca dentro del log del script y encuentra al instante lo que necesitas.","nameEn":"Searchable Execution Log","descEn":"Search inside the script log and find what you need instantly."},{"group":"dev","nameEs":"Herramientas de Suitelet","descEs":"Acciones rápidas: Ver Script, Ver Despliegue, Editar Archivo.","nameEn":"Suitelet Tools","descEn":"Quick actions: View Script, View Deployment, Edit File."},{"group":"dev","nameEs":"Subida rápida de scripts","descEs":"Arrastra y suelta el .js en el registro de Script para subirlo al File Cabinet.","nameEn":"Quick Script Upload","descEn":"Drag & drop the .js on the Script record to upload it to the File Cabinet."},{"group":"dev","nameEs":"Autocompletar IDs de scripts","descEs":"Rellena los IDs según el nombre del archivo .js.","nameEn":"Autofill Script IDs","descEn":"Fills IDs based on the .js filename."},{"group":"dev","nameEs":"Cargar módulo N en consola","descEs":"Usa N/record, N/search y más desde la consola del navegador.","nameEn":"Load N Module in Console","descEn":"Use N/record, N/search and more from the browser console."},{"group":"dev","nameEs":"Embellecer JSON de Suitelets y RESTlets","descEs":"Respuestas JSON como árbol colapsable con buscador, copiar y descargar.","nameEn":"Beautify JSON from Suitelets and RESTlets","descEn":"JSON responses as a collapsible tree with search, copy and download."},{"group":"dev","nameEs":"Panel de rendimiento de la página","descEs":"Cuánto tardó en cargar y en qué se fue el tiempo.","nameEn":"Page Performance Panel","descEn":"How long the page took to load and where the time went."},{"group":"dev","nameEs":"Respaldo de SuiteScripts a GitHub","descEs":"Sube tus SuiteScripts a tu repositorio (incremental: solo lo que cambió).","nameEn":"Backup SuiteScripts to GitHub","descEn":"Push your SuiteScripts to your repo (incremental: only what changed)."},{"group":"sql","nameEs":"SuiteQL Runner","descEs":"Ejecuta consultas SuiteQL en la página, con guardado, historial, favoritos y resultados en tabla. Incluye catálogo de registros con diagrama de relaciones (ERD), variables reutilizables y librería de snippets.","nameEn":"SuiteQL Runner","descEn":"Run SuiteQL queries in-page, with saving, history, favorites and table results. Includes a records catalog with a relationship diagram (ERD), reusable variables and a snippet library."},{"group":"sql","nameEs":"Exportar búsquedas a SuiteScript","descEs":"Convierte saved searches a SuiteScript 1.0 y 2.0.","nameEn":"Export Search to SuiteScript","descEn":"Turn saved searches into SuiteScript 1.0 and 2.0."},{"group":"sql","nameEs":"Creación rápida de búsquedas","descEs":"Selector con buscador y enlaces favoritos.","nameEn":"Quick Search Creation","descEn":"Record-type selector with search and favorite links."},{"group":"sql","nameEs":"Buscador de campos en búsquedas","descEs":"Filtros y búsqueda rápida en los selectores de campos.","nameEn":"Search Fields Finder","descEn":"Filters and quick search in field selectors."},{"group":"sql","nameEs":"Autocompletar fórmula de búsqueda","descEs":"Sugiere IDs de campo dentro de { } en el editor de fórmulas.","nameEn":"Search Formula Autocomplete","descEn":"Suggests field IDs inside { } in the formula editor."},{"group":"sql","nameEs":"Visor de respuesta CSV","descEs":"Muestra el resultado de un import CSV como tabla editable y descargable.","nameEn":"CSV Response Viewer","descEn":"Shows a CSV import result as an editable, downloadable table."},{"group":"sql","nameEs":"Preview inline de búsquedas","descEs":"Panel inferior con la vista previa sin salir de la página.","nameEn":"Inline Search Preview","descEn":"Bottom panel with the preview without leaving the page."},{"group":"sql","nameEs":"Vista dividida de búsquedas","descEs":"Abre una saved search en un panel lateral junto a la página actual.","nameEn":"Saved Search Split View","descEn":"Open a saved search in a side panel next to the current page."},{"group":"ui","nameEs":"Banner de aviso de Producción","descEs":"Una barra visible cuando trabajas en Producción, para evitar cambios accidentales.","nameEn":"Production Warning Banner","descEn":"A visible bar when you're in Production, to avoid accidental changes."},{"group":"ui","nameEs":"Versión de NetSuite en el header","descEs":"Muestra el release actual en la barra superior.","nameEn":"NetSuite Version in Header","descEn":"Shows the current release in the top bar."},{"group":"ui","nameEs":"Quitar animaciones de NetSuite","descEs":"La interfaz responde al instante.","nameEn":"Remove NetSuite Animations","descEn":"The interface responds instantly."},{"group":"ui","nameEs":"Mejorar títulos de página","descEs":"Incluye nombre (tipo) e ID del registro en el título.","nameEn":"Better Page Titles","descEn":"Adds record name (type) and ID to the title."},{"group":"ui","nameEs":"Botón de perfil en cabecera","descEs":"Acceso directo a tu perfil de empleado.","nameEn":"Profile Button in Header","descEn":"A shortcut to your employee profile."},{"group":"ui","nameEs":"Menú de navegación compacto","descEs":"Reduce el tamaño de los elementos del menú.","nameEn":"Compact Navigation Menu","descEn":"Reduces the size of menu items."},{"group":"ui","nameEs":"Menú principal más pequeño","descEs":"Ajusta la barra superior con presets y vista previa.","nameEn":"Smaller Main Menu","descEn":"Adjusts the top bar with presets and live preview."},{"group":"ui","nameEs":"Field groups flotantes","descEs":"Mantiene fijos los títulos de cada grupo al hacer scroll.","nameEn":"Floating Field Groups","descEn":"Keeps each group title pinned as you scroll."},{"group":"ui","nameEs":"Fijar pestañas","descEs":"La barra de subpestañas se mantiene arriba.","nameEn":"Fixed Tabs","descEn":"The subtab bar stays at the top."},{"group":"ui","nameEs":"Listas desplegables compactas","descEs":"Ves más opciones de un vistazo.","nameEn":"Compact Dropdown Lists","descEn":"See more options at a glance."},{"group":"ui","nameEs":"Dropdowns más anchos","descEs":"Los textos largos ya no se cortan.","nameEn":"Wider Dropdowns","descEn":"Long texts are no longer truncated."},{"group":"ui","nameEs":"Fijar cabeceras de sublista","descEs":"Cabeceras visibles al hacer scroll vertical.","nameEn":"Fixed Sublist Headers","descEn":"Headers stay visible on vertical scroll."},{"group":"ui","nameEs":"Cabeceras de sublista compactas","descEs":"Sin salto de línea.","nameEn":"Compact Sublist Headers","descEn":"No line wrapping."},{"group":"ui","nameEs":"Fijar columna de sublista","descEs":"La primera columna se mantiene visible al hacer scroll horizontal.","nameEn":"Fixed Sublist Column","descEn":"The first column stays visible on horizontal scroll."},{"group":"ui","nameEs":"Números de línea en sublists","descEs":"Columna con el número de fila.","nameEn":"Sublist Line Numbers","descEn":"A row-number column."},{"group":"ui","nameEs":"Filtrar filas de sublistas","descEs":"Caja de búsqueda para encontrar líneas al instante.","nameEn":"Filter Sublist Rows","descEn":"A search box to find lines instantly."},{"group":"ui","nameEs":"IDs de línea en sublistas","descEs":"El id único y estable de cada línea, ideal para scripting.","nameEn":"Sublist Line IDs","descEn":"Each line's unique, stable id, ideal for scripting."},{"group":"ui","nameEs":"Paginado rápido en sublists","descEs":"Botones y atajos para navegar páginas.","nameEn":"Quick Sublist Paging","descEn":"Buttons and shortcuts to navigate pages."},{"group":"ui","nameEs":"Páginas de error más legibles","descEs":"Mejor diseño en las pantallas de error.","nameEn":"Cleaner Error Pages","descEn":"Better design on error screens."},{"group":"ui","nameEs":"Multi-select jerárquico","descEs":"Indenta las opciones según su jerarquía Padre : Hijo.","nameEn":"Hierarchical Multi-select","descEn":"Indents options by their Parent : Child hierarchy."},{"group":"ui","nameEs":"Contador en multi-select","descEs":"Muestra \"N / N\" seleccionados junto al label.","nameEn":"Multi-select Counter","descEn":"Shows \"N / N\" selected next to the label."},{"group":"ui","nameEs":"Contador de caracteres","descEs":"Usados vs. máximo; amarillo cerca del tope, rojo al alcanzarlo.","nameEn":"Character Counter","descEn":"Used vs. max; amber near the limit, red when reached."},{"group":"ui","nameEs":"Textareas más altos","descEs":"Más altura mínima y crecen con el contenido.","nameEn":"Taller Textareas","descEn":"Larger minimum height, grows with content."},{"group":"ui","nameEs":"Nombres en filtro \"From Bundle\"","descEs":"Muestra el nombre del bundle junto al ID.","nameEn":"Names on \"From Bundle\" Filter","descEn":"Shows the bundle name beside the ID."},{"group":"ui","nameEs":"Ocultar aprendizaje guiado","descEs":"Elimina el botón flotante de Oracle Guided Learning.","nameEn":"Hide Guided Learning","descEn":"Removes the floating Oracle Guided Learning button."},{"group":"prod","nameEs":"Autogenerar IDs de campos y registros","descEs":"ID automático a partir del nombre, con prefijo configurable.","nameEn":"Autogenerate Field/Record IDs","descEn":"Automatic ID from the name, with a configurable prefix."},{"group":"prod","nameEs":"Copiar ID de cuenta en roles","descEs":"Muestra y copia el ID de la cuenta desde el menú de roles.","nameEn":"Copy Account ID in Roles","descEn":"Shows and copies the account ID from the roles menu."},{"group":"prod","nameEs":"Buscador de roles","descEs":"Filtra roles y cuentas al escribir.","nameEn":"Role Finder","descEn":"Filter roles and accounts as you type."},{"group":"prod","nameEs":"Logo de compañía en login","descEs":"Muestra logo y nombre de la compañía en la página de login.","nameEn":"Company Logo on Login","descEn":"Shows the company logo and name on the login page."},{"group":"prod","nameEs":"Indicador de sandbox en login","descEs":"Banner que marca las cuentas sandbox.","nameEn":"Sandbox Indicator on Login","descEn":"A banner marking sandbox accounts."},{"group":"prod","nameEs":"Bloqueador de cierre de sesión","descEs":"Neutraliza el popup de expiración para no perder tu trabajo.","nameEn":"Logout Blocker","descEn":"Neutralizes the session-timeout popup so you don't lose work."},{"group":"prod","nameEs":"Regresar al account desde netsuite.com","descEs":"Te devuelve a tu cuenta si caes en la landing pública.","nameEn":"Return to Account from netsuite.com","descEn":"Sends you back to your account if you hit the public page."},{"group":"prod","nameEs":"Auto refresco en bundles","descEs":"Interruptor de auto refresco en la lista de bundles.","nameEn":"Auto Refresh on Bundles","descEn":"An auto-refresh toggle on the Bundle List."},{"group":"prod","nameEs":"Auto-refresh de portlets","descEs":"Refresca los portlets del dashboard automáticamente.","nameEn":"Portlet Auto-refresh","descEn":"Auto-refreshes dashboard portlets."},{"group":"prod","nameEs":"Embellecer campos de código","descEs":"Formatea y resalta JSON/SQL en registros al verlos.","nameEn":"Prettify Code Fields","descEn":"Formats and highlights JSON/SQL in records when viewing."},{"group":"prod","nameEs":"Formatear SQL/JSON","descEs":"Botón para formatear SQL/JSON en áreas de texto.","nameEn":"Format SQL/JSON","descEn":"A button to format SQL/JSON in text areas."},{"group":"file","nameEs":"Utilidades de archivador","descEs":"Columna con enlaces permanentes e IDs de carpetas/archivos.","nameEn":"File Cabinet Utilities","descEn":"A column with permalinks and IDs for folders/files."},{"group":"file","nameEs":"Copiar ruta del archivo","descEs":"Copia la ruta completa desde la fila.","nameEn":"Copy File Path","descEn":"Copy the full path from the row."},{"group":"file","nameEs":"Copiar permalink de carpeta","descEs":"Link directo a la carpeta actual junto a su título.","nameEn":"Copy Folder Permalink","descEn":"A direct link to the current folder next to its title."},{"group":"file","nameEs":"Editar archivo desde fila","descEs":"Abre el editor de texto directamente desde cada fila.","nameEn":"Edit File from Row","descEn":"Open the text editor straight from each row."},{"group":"file","nameEs":"Renombrar desde fila","descEs":"Renombra archivos y carpetas sin abrir el record.","nameEn":"Rename from Row","descEn":"Rename files and folders without opening the record."},{"group":"file","nameEs":"Eliminar desde fila con conteo","descEs":"Borra con confirmación del contenido afectado.","nameEn":"Delete from Row with Count","descEn":"Delete with a confirmation of the affected content."},{"group":"file","nameEs":"Subida por drag & drop","descEs":"Arrastra archivos desde tu escritorio a una carpeta.","nameEn":"Drag & Drop Upload","descEn":"Drag files from your desktop onto a folder."},{"group":"file","nameEs":"Descargar carpeta como ZIP","descEs":"Descarga una carpeta completa (con subcarpetas opcionales) en .zip.","nameEn":"Download Folder as ZIP","descEn":"Download a whole folder (optionally with subfolders) as a .zip."},{"group":"file","nameEs":"Preview de contenido","descEs":"Muestra el contenido del archivo con resaltado de sintaxis.","nameEn":"Content Preview","descEn":"Shows file content with syntax highlighting."},{"group":"file","nameEs":"Nombres de bundle en carpetas","descEs":"Añade el nombre del bundle a las carpetas \"Bundle 12345\".","nameEn":"Bundle Names on Folders","descEn":"Appends the bundle name to \"Bundle 12345\" folders."},{"group":"file","nameEs":"Safety en carpetas de sistema","descEs":"Bloquea acciones destructivas y avisa en carpetas del sistema.","nameEn":"System Folder Safety","descEn":"Blocks destructive actions and warns on system folders."},{"group":"pdf","nameEs":"Preview lateral","descEs":"Panel con vista previa en vivo mientras editas la plantilla.","nameEn":"Side Preview","descEn":"A live-preview panel while you edit the template."},{"group":"pdf","nameEs":"Autocompletado","descEs":"Sugiere variables y funciones nsformat_* al editar plantillas FreeMarker.","nameEn":"Autocomplete","descEn":"Suggests nsformat_* variables and functions while editing FreeMarker templates."},{"group":"pdf","nameEs":"Historial de versiones","descEs":"Navega entre versiones anteriores de la plantilla.","nameEn":"Version History","descEn":"Browse previous versions of the template."},{"group":"wf","nameEs":"Transiciones de workflow con color","descEs":"Un color por transición en el diagrama, con paleta y grosor configurables.","nameEn":"Colored Workflow Transitions","descEn":"One color per transition in the diagram, with configurable palette and width."},{"group":"wf","nameEs":"Indexador de workflow","descEs":"Indexa estados, transiciones y acciones, con panel buscador y filtros.","nameEn":"Workflow Indexer","descEn":"Indexes states, transitions and actions, with a searchable filter panel."}]};</script>
+<script src="app.js" defer></script>
+</body>
+</html>

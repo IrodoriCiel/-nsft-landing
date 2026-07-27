@@ -1,0 +1,25 @@
+{
+  "source": "nsft-chrome-extension-final/landing-page",
+  "version": "6.0.0",
+  "files": [
+    "_headers",
+    "app.js",
+    "assets/fonts/jetbrains-mono-cyrillic-ext.woff2",
+    "assets/fonts/jetbrains-mono-cyrillic.woff2",
+    "assets/fonts/jetbrains-mono-greek.woff2",
+    "assets/fonts/jetbrains-mono-latin-ext.woff2",
+    "assets/fonts/jetbrains-mono-latin.woff2",
+    "assets/fonts/jetbrains-mono-vietnamese.woff2",
+    "assets/fonts/plus-jakarta-sans-cyrillic-ext.woff2",
+    "assets/fonts/plus-jakarta-sans-latin-ext.woff2",
+    "assets/fonts/plus-jakarta-sans-latin.woff2",
+    "assets/fonts/plus-jakarta-sans-vietnamese.woff2",
+    "assets/icon128.png",
+    "assets/icon48.png",
+    "assets/logo.webp",
+    "index.html",
+    "privacidad.html",
+    "robots.txt",
+    "styles.css"
+  ]
+}

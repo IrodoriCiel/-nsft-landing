@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--
+  NetSuite Full Tools — plantilla de la Política de privacidad.
+
+  Se edita a mano; `privacidad.html` se GENERA con `npm run landing`.
+  Es la URL pública que pide la Chrome Web Store para la certificación de
+  privacidad (ver ROADMAP_FEATURED_BADGE.md y ROADMAP_ESTABLISHED_PUBLISHER.md).
+
+  Marcadores que rellena build.js:
+    6.0.0  versión del manifest   26 de julio de 2026 / July 26, 2026  última revisión
+    <p><span data-l="es">Para cualquier duda sobre esta política, usa el <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/support" target="_blank" rel="noopener">formulario de soporte</a> de la ficha en la Chrome Web Store.</span><span data-l="en">For any question about this policy, use the <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/support" target="_blank" rel="noopener">support form</a> on the Chrome Web Store listing.</span></p>  bloque de contacto
+
+  IMPORTANTE: lo que aquí se afirma tiene que seguir siendo cierto en el código.
+  Si cambian los permisos del manifest o aparece una función que envíe datos
+  fuera, hay que actualizar esta página ANTES de publicar.
+-->
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidad — NetSuite Full Tools</title>
+<meta name="description" content="Política de privacidad de la extensión de Chrome NetSuite Full Tools: qué datos guarda, dónde los guarda y qué ocurre con el Asistente de IA y el respaldo a GitHub.">
+<meta name="theme-color" content="#2C6E4E">
+<link rel="icon" type="image/png" sizes="128x128" href="assets/icon128.png">
+<link rel="stylesheet" href="styles.css">
+
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('nsft-theme'); } catch (e) { /* incógnito */ }
+    if (!t) {
+      t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.classList.add('nsft-anim');
+  })();
+</script>
+</head>
+<body>
+
+<div class="nsft-grain" aria-hidden="true"></div>
+<div class="nsft-progress" aria-hidden="true"><span id="nsft-progress-bar" class="nsft-progress-bar"></span></div>
+
+<div id="nsft-root" data-lang="es" data-theme="light" data-cat="all" style="background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;">
+
+  <header style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in oklab, var(--bg) 78%, transparent);border-bottom:1px solid var(--line);">
+    <div style="max-width:1220px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px;">
+      <a href="index.html" style="display:flex;align-items:center;gap:11px;color:var(--fg);">
+        <span class="nsft-logo-badge"><img src="assets/logo.webp" alt="" width="128" height="128"></span>
+        <span style="display:flex;flex-direction:column;line-height:1.05;">
+          <span style="font-size:15.5px;font-weight:800;letter-spacing:-.01em;">NetSuite Full Tools</span>
+          <span style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.09em;">CHROME EXTENSION</span>
+        </span>
+      </a>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+        <a href="index.html" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);"><span data-l="es">← Volver al inicio</span><span data-l="en">← Back to home</span></a>
+        <button data-act="lang" style="border:1px solid var(--line);background:var(--surface);color:var(--fg2);border-radius:9px;padding:7px 10px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
+          <span data-l="es">ES · <span style="color:var(--muted);">EN</span></span><span data-l="en"><span style="color:var(--muted);">ES</span> · EN</span>
+        </button>
+        <button data-act="theme" title="Light / dark" style="border:1px solid var(--line);background:var(--surface);color:var(--fg2);border-radius:9px;width:36px;height:34px;display:grid;place-items:center;cursor:pointer;font-size:14px;">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="nsft-legal">
+    <div class="nsft-legal-head">
+      <div class="nsft-eyebrow"><span data-l="es">DOCUMENTO LEGAL</span><span data-l="en">LEGAL DOCUMENT</span></div>
+      <h1><span data-l="es">Política de privacidad</span><span data-l="en">Privacy Policy</span></h1>
+      <p class="nsft-legal-meta">
+        <span data-l="es">Aplica a la extensión de Chrome <b>NetSuite Full Tools</b> (NSFT), versión 6.0.0. Última revisión: 26 de julio de 2026.</span>
+        <span data-l="en">Applies to the <b>NetSuite Full Tools</b> (NSFT) Chrome extension, version 6.0.0. Last reviewed: July 26, 2026.</span>
+      </p>
+      <div class="nsft-legal-tldr">
+        <span data-l="es"><b>En corto:</b> NSFT no recopila datos personales, no incorpora analítica ni publicidad, y no envía información al desarrollador. Tus preferencias se guardan en tu navegador. Las dos funciones que contactan con un tercero — el Asistente de IA y el respaldo a GitHub — están desactivadas de fábrica y solo funcionan con las credenciales que tú introduces.</span>
+        <span data-l="en"><b>In short:</b> NSFT collects no personal data, includes no analytics or advertising, and sends no information to the developer. Your preferences are stored in your browser. The only two features that contact a third party — the AI Assistant and the GitHub backup — are off by default and only work with credentials you supply yourself.</span>
+      </div>
+    </div>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">1. Alcance</span><span data-l="en">1. Scope</span></h2>
+      <p>
+        <span data-l="es">NSFT es una extensión de navegador que añade herramientas a la interfaz de NetSuite. Solo se ejecuta en direcciones de NetSuite (<code>*.netsuite.com</code>) y en sus propias páginas internas (popup, bienvenida, configuración). En cualquier otro sitio web la extensión no se activa ni observa nada.</span>
+        <span data-l="en">NSFT is a browser extension that adds tools to the NetSuite interface. It only runs on NetSuite addresses (<code>*.netsuite.com</code>) and on its own internal pages (popup, welcome, settings). On any other website the extension does not activate or observe anything.</span>
+      </p>
+      <p>
+        <span data-l="es">Esta política cubre la extensión y este sitio web. No cubre a NetSuite/Oracle ni a los proveedores externos que tú decidas conectar, que se rigen por sus propias políticas.</span>
+        <span data-l="en">This policy covers the extension and this website. It does not cover NetSuite/Oracle or any third-party provider you choose to connect, which are governed by their own policies.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">2. Qué se guarda y dónde</span><span data-l="en">2. What is stored, and where</span></h2>
+      <p>
+        <span data-l="es">Todo lo que NSFT guarda vive en el almacenamiento de la extensión dentro de tu navegador:</span>
+        <span data-l="en">Everything NSFT stores lives in the extension's storage inside your browser:</span>
+      </p>
+      <ul>
+        <li><b><span data-l="es">Preferencias</span><span data-l="en">Preferences</span></b> — <span data-l="es">qué herramientas tienes activadas y sus ajustes (tema, colores, intervalos, tamaños).</span><span data-l="en">which tools you have enabled and their settings (theme, colors, intervals, sizes).</span></li>
+        <li><b><span data-l="es">Estado de trabajo</span><span data-l="en">Working state</span></b> — <span data-l="es">consultas SuiteQL guardadas, su historial y favoritos, plantillas de campos y cachés de esquema para no volver a pedirlos.</span><span data-l="en">saved SuiteQL queries, their history and favorites, field templates and schema caches so they don't have to be fetched again.</span></li>
+        <li><b><span data-l="es">Credenciales que tú introduces</span><span data-l="en">Credentials you enter</span></b> — <span data-l="es">la clave de API del proveedor de IA y el token de GitHub, solo si configuras esas funciones.</span><span data-l="en">the AI provider API key and the GitHub token, only if you configure those features.</span></li>
+      </ul>
+      <p>
+        <span data-l="es">La mayor parte se guarda únicamente en este equipo. Dos ajustes usan el almacenamiento sincronizado de Chrome para seguirte entre tus dispositivos: la configuración del agrupado de pestañas y las plantillas de campos de la paleta de comandos. Esa sincronización la realiza tu propio navegador con tu cuenta de Google; el desarrollador no interviene ni tiene acceso.</span>
+        <span data-l="en">Most of it is kept on this device only. Two settings use Chrome's synced storage so they follow you across your devices: the tab-grouping configuration and the command palette's field templates. That sync is performed by your own browser with your Google account; the developer is not involved and has no access.</span>
+      </p>
+      <p>
+        <span data-l="es">Al desinstalar la extensión, el navegador elimina ese almacenamiento. También puedes borrarlo antes desde el popup con «Restablecer» o exportarlo con «Exportar ajustes».</span>
+        <span data-l="en">When you uninstall the extension, the browser deletes that storage. You can also clear it beforehand from the popup using “Reset”, or export it with “Export settings”.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">3. Permisos y para qué se usan</span><span data-l="en">3. Permissions and what they are for</span></h2>
+      <table class="nsft-legal-table">
+        <thead>
+          <tr>
+            <th><span data-l="es">Permiso</span><span data-l="en">Permission</span></th>
+            <th><span data-l="es">Para qué</span><span data-l="en">What for</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>storage</code></td>
+            <td><span data-l="es">Guardar tus preferencias y el estado descrito arriba.</span><span data-l="en">Save your preferences and the state described above.</span></td>
+          </tr>
+          <tr>
+            <td><code>clipboardWrite</code></td>
+            <td><span data-l="es">Copiar al portapapeles lo que tú pides: IDs internos, rutas, consultas, resultados.</span><span data-l="en">Copy to the clipboard what you ask for: internal IDs, paths, queries, results.</span></td>
+          </tr>
+          <tr>
+            <td><code>tabGroups</code></td>
+            <td><span data-l="es">Agrupar tus pestañas de NetSuite por cuenta y entorno, si activas esa función.</span><span data-l="en">Group your NetSuite tabs by account and environment, if you enable that feature.</span></td>
+          </tr>
+          <tr>
+            <td><code>https://*.netsuite.com/*</code></td>
+            <td><span data-l="es">Inyectar las herramientas en las pantallas de NetSuite. Es el único dominio donde la extensión actúa.</span><span data-l="en">Inject the tools into NetSuite screens. It is the only domain where the extension acts.</span></td>
+          </tr>
+          <tr>
+            <td><code>https://api.github.com/*</code></td>
+            <td><span data-l="es">Subir tus SuiteScripts a tu repositorio, solo si activas el respaldo a GitHub.</span><span data-l="en">Upload your SuiteScripts to your repository, only if you enable the GitHub backup.</span></td>
+          </tr>
+          <tr>
+            <td><span data-l="es">Proveedores de IA <i>(opcionales)</i></span><span data-l="en">AI providers <i>(optional)</i></span></td>
+            <td><span data-l="es">Se piden en el momento en que eliges un proveedor; si no usas la IA, nunca se conceden.</span><span data-l="en">Requested at the moment you pick a provider; if you don't use the AI, they are never granted.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">4. Asistente de IA (opcional)</span><span data-l="en">4. AI Assistant (optional)</span></h2>
+      <p>
+        <span data-l="es">El Asistente de IA no funciona hasta que eliges un proveedor e introduces tu propia clave de API. NSFT no incluye ninguna clave ni intermedia la conexión: la petición viaja de tu navegador al proveedor que tú hayas elegido.</span>
+        <span data-l="en">The AI Assistant does nothing until you pick a provider and enter your own API key. NSFT ships no key of its own and does not sit in the middle of the connection: the request travels from your browser to the provider you chose.</span>
+      </p>
+      <p>
+        <span data-l="es">En esa petición viaja lo que necesita para responder: tu pregunta y el contexto de la pantalla en la que estás — por ejemplo el tipo y los campos del registro abierto, el esquema de las tablas o la consulta que estás escribiendo. <b>Si ese contenido es confidencial en tu organización, ten en cuenta que sale hacia el proveedor.</b></span>
+        <span data-l="en">That request carries what it needs to answer: your question and the context of the screen you are on — for example the type and fields of the open record, the table schema, or the query you are writing. <b>If that content is confidential in your organisation, bear in mind that it leaves for the provider.</b></span>
+      </p>
+      <p>
+        <span data-l="es">Los proveedores disponibles son Anthropic (Claude), OpenAI, Google Gemini, Groq, OpenRouter y DeepSeek, además de un endpoint compatible que tú definas (incluido un modelo local en tu propio equipo). Lo que cada proveedor hace con los datos se rige por <b>su</b> política de privacidad, no por esta.</span>
+        <span data-l="en">The available providers are Anthropic (Claude), OpenAI, Google Gemini, Groq, OpenRouter and DeepSeek, plus any compatible endpoint you define (including a model running on your own machine). What each provider does with the data is governed by <b>their</b> privacy policy, not this one.</span>
+      </p>
+      <p>
+        <span data-l="es">Tu clave se guarda en el almacenamiento de la extensión, se envía solo al proveedor al que pertenece y puedes borrarla en cualquier momento desde la configuración del asistente.</span>
+        <span data-l="en">Your key is kept in the extension's storage, is sent only to the provider it belongs to, and you can delete it at any time from the assistant's settings.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">5. Respaldo a GitHub (opcional)</span><span data-l="en">5. GitHub backup (optional)</span></h2>
+      <p>
+        <span data-l="es">Esta función está desactivada de fábrica. Si la activas, introduces un token de acceso personal y el repositorio de destino, y NSFT sube a <b>tu</b> repositorio los SuiteScripts de la cuenta (solo los archivos que hayan cambiado). El token se guarda en el almacenamiento de la extensión y se envía únicamente a la API de GitHub.</span>
+        <span data-l="en">This feature is off by default. If you enable it, you enter a personal access token and the target repository, and NSFT uploads your account's SuiteScripts to <b>your</b> repository (only the files that changed). The token is kept in the extension's storage and is sent only to GitHub's API.</span>
+      </p>
+      <p>
+        <span data-l="es">Recomendación: usa un token con el permiso mínimo («Contents: Read and write») sobre el repositorio de destino y revócalo si dejas de usar la función.</span>
+        <span data-l="en">Recommendation: use a token with the minimum scope (“Contents: Read and write”) on the target repository, and revoke it if you stop using the feature.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">6. Lo que NSFT no hace</span><span data-l="en">6. What NSFT does not do</span></h2>
+      <ul class="nsft-legal-nots">
+        <li><span data-l="es">No recopila ni transmite datos personales al desarrollador.</span><span data-l="en">It does not collect or transmit personal data to the developer.</span></li>
+        <li><span data-l="es">No incorpora analítica, telemetría, cookies de seguimiento ni publicidad.</span><span data-l="en">It includes no analytics, telemetry, tracking cookies or advertising.</span></li>
+        <li><span data-l="es">No vende, alquila ni comparte información con terceros.</span><span data-l="en">It does not sell, rent or share information with third parties.</span></li>
+        <li><span data-l="es">No crea perfiles de uso ni identifica a quién usa la extensión.</span><span data-l="en">It does not build usage profiles or identify who uses the extension.</span></li>
+        <li><span data-l="es">No descarga ni ejecuta código remoto: todo lo que corre viene en el paquete publicado en la Chrome Web Store.</span><span data-l="en">It does not download or run remote code: everything that runs ships inside the package published on the Chrome Web Store.</span></li>
+      </ul>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">7. Certificación de uso de datos</span><span data-l="en">7. Data use certification</span></h2>
+      <p>
+        <span data-l="es">En relación con la Política de Datos de Usuario del programa para desarrolladores de la Chrome Web Store, el desarrollador de NSFT certifica que:</span>
+        <span data-l="en">In connection with the Chrome Web Store Developer Program's User Data Policy, the developer of NSFT certifies that:</span>
+      </p>
+      <ul class="nsft-legal-nots">
+        <li><span data-l="es">No vende ni transfiere datos de usuario a terceros, salvo los casos de uso aprobados.</span><span data-l="en">It does not sell or transfer user data to third parties, outside of the approved use cases.</span></li>
+        <li><span data-l="es">No usa ni transfiere datos de usuario para fines ajenos a la funcionalidad principal de la extensión.</span><span data-l="en">It does not use or transfer user data for purposes unrelated to the extension's single purpose.</span></li>
+        <li><span data-l="es">No usa ni transfiere datos de usuario para determinar solvencia ni con fines de préstamo.</span><span data-l="en">It does not use or transfer user data to determine creditworthiness or for lending purposes.</span></li>
+      </ul>
+      <p>
+        <span data-l="es">Las conexiones al proveedor de IA y a GitHub descritas arriba las inicia la persona usuaria con sus propias credenciales y no constituyen transferencia de datos al desarrollador.</span>
+        <span data-l="en">The connections to the AI provider and to GitHub described above are initiated by the user with their own credentials and do not constitute a transfer of data to the developer.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">8. Este sitio web</span><span data-l="en">8. This website</span></h2>
+      <p>
+        <span data-l="es">Esta web es un conjunto de páginas estáticas. No usa cookies de seguimiento ni analítica, y las tipografías se sirven desde el propio sitio, sin llamadas a terceros. Lo único que se recuerda entre visitas —idioma y tema— queda en tu navegador.</span>
+        <span data-l="en">This site is a set of static pages. It uses no tracking cookies or analytics, and its fonts are served from the site itself, with no third-party calls. The only things remembered between visits — language and theme — stay in your browser.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">9. Menores</span><span data-l="en">9. Minors</span></h2>
+      <p>
+        <span data-l="es">NSFT es una herramienta profesional dirigida a personas que trabajan con NetSuite. No está destinada a menores de 13 años ni se dirige a ellos.</span>
+        <span data-l="en">NSFT is a professional tool aimed at people who work with NetSuite. It is not intended for, nor directed at, children under 13.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">10. Cambios en esta política</span><span data-l="en">10. Changes to this policy</span></h2>
+      <p>
+        <span data-l="es">Si una versión futura cambia lo que la extensión maneja, esta página se actualizará antes de publicarla y cambiará la fecha de revisión de la cabecera.</span>
+        <span data-l="en">If a future version changes what the extension handles, this page will be updated before that version ships and the review date in the header will change.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">11. Contacto</span><span data-l="en">11. Contact</span></h2>
+      <p><span data-l="es">Para cualquier duda sobre esta política, usa el <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/support" target="_blank" rel="noopener">formulario de soporte</a> de la ficha en la Chrome Web Store.</span><span data-l="en">For any question about this policy, use the <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/support" target="_blank" rel="noopener">support form</a> on the Chrome Web Store listing.</span></p>
+    </section>
+  </main>
+
+  <footer style="padding:40px 24px;margin-top:56px;border-top:1px solid var(--line);">
+    <div style="max-width:880px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);">
+      <span>© 2026 NetSuite Full Tools · <span style="font-family:'JetBrains Mono',monospace;">v6.0.0</span></span>
+      <span><a href="index.html"><span data-l="es">Inicio</span><span data-l="en">Home</span></a> · <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc" target="_blank" rel="noopener">Chrome Web Store</a></span>
+    </div>
+  </footer>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
