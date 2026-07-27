@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--
+  NetSuite Full Tools — plantilla de la página de asistencia.
+
+  Se edita a mano; `soporte.html` se GENERA con `npm run landing`.
+
+  Es la URL que pide la Chrome Web Store en el campo «Asistencia» de la ficha.
+  Los formularios son los mismos que abre el popup de la extensión, así que si
+  cambian allí hay que cambiarlos aquí (y al revés).
+
+  Marcadores que rellena build.js:
+    6.0.0  versión del manifest
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asistencia — NetSuite Full Tools</title>
+<meta name="description" content="Ayuda para NetSuite Full Tools: reportar un error, pedir una función nueva, preguntas frecuentes y qué incluir al escribir.">
+<meta name="theme-color" content="#2C6E4E">
+<link rel="icon" type="image/png" sizes="128x128" href="assets/icon128.png">
+<link rel="stylesheet" href="styles.css">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Asistencia — NetSuite Full Tools">
+<meta property="og:description" content="Reportar un error, pedir una función nueva y resolver dudas sobre la extensión.">
+<meta property="og:image" content="assets/icon128.png">
+
+<script>
+  (function () {
+    // Arranca SIEMPRE en claro: la web es la carta de presentación y debe verse
+    // igual para todo el mundo. El modo oscuro es una elección del visitante, no
+    // del sistema operativo — igual que en la extensión.
+    var t = null;
+    try { t = localStorage.getItem('nsft-theme'); } catch (e) { /* incógnito */ }
+    document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+    document.documentElement.classList.add('nsft-anim');
+  })();
+</script>
+</head>
+<body>
+
+<div class="nsft-grain" aria-hidden="true"></div>
+<div class="nsft-progress" aria-hidden="true"><span id="nsft-progress-bar" class="nsft-progress-bar"></span></div>
+
+<div id="nsft-root" data-lang="es" data-theme="light" data-cat="all" style="background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;">
+
+  <header style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in oklab, var(--bg) 78%, transparent);border-bottom:1px solid var(--line);">
+    <div style="max-width:1220px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px;">
+      <a href="index.html" style="display:flex;align-items:center;gap:11px;color:var(--fg);">
+        <span class="nsft-logo-badge"><img src="assets/logo.webp" alt="" width="128" height="128"></span>
+        <span style="display:flex;flex-direction:column;line-height:1.05;">
+          <span style="font-size:15.5px;font-weight:800;letter-spacing:-.01em;">NetSuite Full Tools</span>
+          <span style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.09em;">CHROME EXTENSION</span>
+        </span>
+      </a>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+        <a href="index.html" style="padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--fg2);"><span data-l="es">← Volver al inicio</span><span data-l="en">← Back to home</span></a>
+        <button data-act="lang" style="border:1px solid var(--line);background:var(--surface);color:var(--fg2);border-radius:9px;padding:7px 10px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
+          <span data-l="es">ES · <span style="color:var(--muted);">EN</span></span><span data-l="en"><span style="color:var(--muted);">ES</span> · EN</span>
+        </button>
+        <button data-act="theme" title="Light / dark" style="border:1px solid var(--line);background:var(--surface);color:var(--fg2);border-radius:9px;width:36px;height:34px;display:grid;place-items:center;cursor:pointer;font-size:14px;">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="nsft-legal">
+    <div class="nsft-legal-head">
+      <div class="nsft-eyebrow"><span data-l="es">ASISTENCIA</span><span data-l="en">SUPPORT</span></div>
+      <h1><span data-l="es">¿En qué te echo una mano?</span><span data-l="en">How can I help?</span></h1>
+      <p class="nsft-legal-meta">
+        <span data-l="es">NetSuite Full Tools v6.0.0. Detrás de la extensión hay una persona, así que cuanto más concreto sea el mensaje, antes se arregla.</span>
+        <span data-l="en">NetSuite Full Tools v6.0.0. There's one person behind the extension, so the more specific your message, the sooner it gets fixed.</span>
+      </p>
+    </div>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">Escríbeme</span><span data-l="en">Get in touch</span></h2>
+      <div class="nsft-forms-grid">
+        <a href="https://forms.gle/6FPaQNjs6pUJu9WV8" target="_blank" rel="noopener" class="nsft-form-card">
+          <span class="nsft-form-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="6" width="8" height="14" rx="4"></rect><path d="M19 7l-3 2"></path><path d="M5 7l3 2"></path><path d="M19 13h2"></path><path d="M3 13h2"></path><path d="M19 19l-3-2"></path><path d="M5 19l3-2"></path><path d="M9 6a3 3 0 0 1 6 0"></path></svg></span>
+          <span class="nsft-form-text">
+            <strong><span data-l="es">Reportar un error</span><span data-l="en">Report a bug</span></strong>
+            <small><span data-l="es">Algo no funciona o se ve mal.</span><span data-l="en">Something is broken or looks wrong.</span></small>
+          </span>
+          <span class="nsft-form-chev" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://forms.gle/ZTdVMEu3CZYTxhWf7" target="_blank" rel="noopener" class="nsft-form-card">
+          <span class="nsft-form-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path></svg></span>
+          <span class="nsft-form-text">
+            <strong><span data-l="es">Pedir nueva función</span><span data-l="en">Request a feature</span></strong>
+            <small><span data-l="es">Falta una herramienta o se puede mejorar.</span><span data-l="en">A tool is missing or could be better.</span></small>
+          </span>
+          <span class="nsft-form-chev" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <p style="margin-top:14px;">
+        <span data-l="es">Son los mismos formularios que abre la extensión desde su popup, en <b>Configuración</b>.</span>
+        <span data-l="en">These are the same forms the extension opens from its popup, under <b>Settings</b>.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">Qué contar al reportar un error</span><span data-l="en">What to include in a bug report</span></h2>
+      <p>
+        <span data-l="es">Con estos cinco datos casi siempre basta para reproducirlo:</span>
+        <span data-l="en">These five things are usually enough to reproduce it:</span>
+      </p>
+      <ul>
+        <li><b><span data-l="es">Qué herramienta</span><span data-l="en">Which tool</span></b> — <span data-l="es">el nombre tal y como aparece en el popup.</span><span data-l="en">its name as it appears in the popup.</span></li>
+        <li><b><span data-l="es">Dónde</span><span data-l="en">Where</span></b> — <span data-l="es">tipo de pantalla de NetSuite (registro, búsqueda, File Cabinet…) y si era vista o edición.</span><span data-l="en">the kind of NetSuite screen (record, search, File Cabinet…) and whether you were viewing or editing.</span></li>
+        <li><b><span data-l="es">Qué esperabas y qué pasó</span><span data-l="en">Expected vs. actual</span></b> — <span data-l="es">en una frase cada cosa.</span><span data-l="en">one sentence each.</span></li>
+        <li><b><span data-l="es">Versión</span><span data-l="en">Version</span></b> — <span data-l="es">la que sale arriba en el popup (hoy, la 6.0.0).</span><span data-l="en">the one shown at the top of the popup (currently 6.0.0).</span></li>
+        <li><b><span data-l="es">Captura</span><span data-l="en">Screenshot</span></b> — <span data-l="es">si se ve algo raro, una imagen ahorra media conversación.</span><span data-l="en">if something looks off, an image saves half the conversation.</span></li>
+      </ul>
+      <p>
+        <span data-l="es">Si el fallo deja algo en la consola del navegador (F12 → <i>Console</i>), pega también las líneas que empiecen por <code>NSFT:</code>.</span>
+        <span data-l="en">If the failure logs anything in the browser console (F12 → <i>Console</i>), paste the lines starting with <code>NSFT:</code> as well.</span>
+      </p>
+      <p>
+        <span data-l="es"><b>No hace falta que envíes datos de tu cuenta.</b> Nunca pido credenciales, ni capturas con información de clientes: si algo es sensible, tápalo antes.</span>
+        <span data-l="en"><b>No account data is needed.</b> I never ask for credentials or for screenshots with customer information: if something is sensitive, blur it first.</span>
+      </p>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">Antes de escribir</span><span data-l="en">Before you write</span></h2>
+      <ul>
+        <li>
+          <span data-l="es">Mira las <a href="index.html#faq">preguntas frecuentes</a>: instalación, entornos, la IA y el precio están ahí.</span>
+          <span data-l="en">Check the <a href="index.html#faq">FAQ</a>: install, environments, the AI and pricing are covered there.</span>
+        </li>
+        <li>
+          <span data-l="es">Prueba a desactivar la herramienta concreta desde el popup. Si el problema desaparece, ya sabemos por dónde va.</span>
+          <span data-l="en">Try switching that one tool off from the popup. If the problem goes away, we already know where to look.</span>
+        </li>
+        <li>
+          <span data-l="es">Si tienes otras extensiones para NetSuite, desactívalas un momento: a veces se pisan entre ellas.</span>
+          <span data-l="en">If you have other NetSuite extensions, disable them for a moment: sometimes they step on each other.</span>
+        </li>
+        <li>
+          <span data-l="es">Comprueba que estás en la última versión desde <code>chrome://extensions</code>.</span>
+          <span data-l="en">Check you're on the latest version from <code>chrome://extensions</code>.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="nsft-legal-sec">
+      <h2><span data-l="es">Otros sitios</span><span data-l="en">Elsewhere</span></h2>
+      <ul>
+        <li><a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/support" target="_blank" rel="noopener"><span data-l="es">Soporte en la Chrome Web Store</span><span data-l="en">Chrome Web Store support</span></a></li>
+        <li><a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc/reviews" target="_blank" rel="noopener"><span data-l="es">Dejar una reseña</span><span data-l="en">Leave a review</span></a></li>
+        <li><a href="privacidad.html"><span data-l="es">Política de privacidad</span><span data-l="en">Privacy policy</span></a></li>
+        <li><a href="https://buymeacoffee.com/miguelgarcia93" target="_blank" rel="noopener"><span data-l="es">Invítame un café</span><span data-l="en">Buy me a coffee</span></a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer style="padding:40px 24px;margin-top:56px;border-top:1px solid var(--line);">
+    <div style="max-width:880px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);">
+      <span>© 2026 NetSuite Full Tools · <span style="font-family:'JetBrains Mono',monospace;">v6.0.0</span></span>
+      <span><a href="index.html"><span data-l="es">Inicio</span><span data-l="en">Home</span></a> · <a href="privacidad.html"><span data-l="es">Privacidad</span><span data-l="en">Privacy</span></a> · <a href="https://chromewebstore.google.com/detail/netsuite-full-tools/fgldkomofdfcmkccjgalihlollndjmcc" target="_blank" rel="noopener">Chrome Web Store</a></span>
+    </div>
+  </footer>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
