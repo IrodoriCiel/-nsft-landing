@@ -46,9 +46,9 @@
     /* ------------------------------------------------------------------ *
      * Tema
      *
-     * Aquí SÍ se sigue al sistema por defecto: es un sitio web, no un módulo
-     * de la extensión (donde el tema es siempre decisión explícita). Si el
-     * visitante toca el botón, su elección manda a partir de ese momento.
+     * El sitio arranca en claro pase lo que pase: el tema del sistema no manda
+     * aquí, igual que en la extensión. Si el visitante toca el botón, su
+     * elección queda guardada y manda a partir de ese momento.
      * ------------------------------------------------------------------ */
     function setTheme(theme) {
         const t = theme === 'dark' ? 'dark' : 'light';

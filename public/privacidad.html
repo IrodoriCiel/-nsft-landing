@@ -26,12 +26,12 @@
 
 <script>
   (function () {
+    // Arranca SIEMPRE en claro: la web es la carta de presentación y debe verse
+    // igual para todo el mundo. El modo oscuro es una elección del visitante, no
+    // del sistema operativo — igual que en la extensión.
     var t = null;
     try { t = localStorage.getItem('nsft-theme'); } catch (e) { /* incógnito */ }
-    if (!t) {
-      t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
     document.documentElement.classList.add('nsft-anim');
   })();
 </script>
