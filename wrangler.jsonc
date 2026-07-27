@@ -4,7 +4,6 @@
   // Worker de solo estáticos: no hay código, únicamente la carpeta `public`
   // que publica `npm run landing:publish` desde el repositorio de la extensión.
   // Cloudflare lo despliega con `npx wrangler deploy` en cada push.
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nsft-landing-page",
   "compatibility_date": "2026-07-27",
   "assets": {
