@@ -265,38 +265,76 @@
         });
     }
 
-    function pvPinta(stage) {
+    /**
+     * Mete el dibujo en su hueco.
+     *
+     * @param {boolean} animar  true = corre la animación; false = se pinta ya
+     *   terminado y quieto.
+     *
+     * QUIETO POR DEFECTO, Y NO ES UN CAPRICHO. Las animaciones corren una sola
+     * vez en cuanto el elemento existe, así que pintarlas al asomarse gastaba la
+     * mitad de la rejilla antes de que nadie las mirara: al llegar, ya estaban
+     * todas paradas. Ahora se pintan con `is-idle`, que fuerza duración cero y
+     * las deja en su último fotograma —el estado «después», que es el que
+     * cuenta algo—, y la animación de verdad corre al pasar el ratón.
+     */
+    function pvPinta(stage, animar) {
         const lang = root.getAttribute('data-lang') === 'en' ? 'en' : 'es';
         const mapa = pvPaquetes[lang];
         const clave = stage.getAttribute('data-pv');
         if (!mapa || !mapa[clave]) return;
         const t = PV_T[lang];
+        stage.classList.toggle('is-idle', !animar);
         stage.innerHTML = '<button class="nsft-gal-replay" type="button" data-pv-replay ' +
             'title="' + esc(t.repetir) + '" aria-label="' + esc(t.repetir) + '">&#8635;</button>' +
             mapa[clave];
     }
 
-    /** Observa las fichas para inyectar el dibujo cuando asoman. */
+    /** Observa las fichas para poner el dibujo —quieto— cuando asoman. */
     function pvObserva() {
         if (!listEl) return;
         if (!('IntersectionObserver' in window)) {
-            listEl.querySelectorAll('[data-pv]').forEach(pvPinta);
+            listEl.querySelectorAll('[data-pv]').forEach((el) => pvPinta(el, false));
             return;
         }
         if (!pvObs) {
             pvObs = new IntersectionObserver((entries) => {
-                entries.forEach((e) => { if (e.isIntersecting) pvPinta(e.target); });
+                entries.forEach((e) => {
+                    /* Una vez puesto, deja de vigilarse: el dibujo ya está y
+                       quien manda a partir de ahí es el ratón. */
+                    if (!e.isIntersecting) return;
+                    pvPinta(e.target, false);
+                    pvObs.unobserve(e.target);
+                });
             }, { rootMargin: '120px 0px' });
         }
         listEl.querySelectorAll('[data-pv]').forEach((el) => pvObs.observe(el));
     }
 
-    /* Repetir la animación: un solo escuchador para todo el catálogo, que las
-       fichas se repintan enteras a cada filtro y a cada tecla del buscador. */
+    /* Repetir y animar: un solo escuchador para todo el catálogo, que las fichas
+       se repintan enteras a cada filtro y a cada tecla del buscador. */
     if (listEl) {
         listEl.addEventListener('click', (ev) => {
             const repetir = ev.target.closest('[data-pv-replay]');
-            if (repetir) pvPinta(repetir.closest('[data-pv]'));
+            if (repetir) pvPinta(repetir.closest('[data-pv]'), true);
+        });
+
+        /* LA ANIMACIÓN CORRE AL PASAR EL RATÓN POR LA FICHA. Se usa `mouseover`
+           y no `mouseenter` porque hace falta que burbujee para escucharlo una
+           sola vez aquí arriba; recordar cuál era la última ficha es lo que
+           evita que se reproduzca otra vez al moverse por dentro de ella —el
+           `mouseover` salta con cada hijo que se pisa—. Al salir al hueco entre
+           fichas, `closest` devuelve null y la siguiente vez vuelve a correr. */
+        let _ultima = null;
+        listEl.addEventListener('mouseover', (ev) => {
+            const ficha = ev.target.closest('.nsft-gal-card');
+            if (ficha === _ultima) return;
+            _ultima = ficha;
+            if (!ficha) return;
+            const stage = ficha.querySelector('[data-pv]');
+            /* Sólo si el dibujo ya está puesto: si aún no ha llegado su turno,
+               lo pondrá el observador —quieto— y el siguiente hover lo animará. */
+            if (stage && stage.firstChild) pvPinta(stage, true);
         });
     }
 
