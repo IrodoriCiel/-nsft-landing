@@ -298,8 +298,12 @@
         if (!mapa || !mapa[clave]) return;
         const t = PV_T[lang];
         stage.classList.toggle('is-idle', !animar);
+        /* El botón lleva rótulo, no sólo el símbolo: además de repetir, es lo
+           ÚNICO que avisa de que el dibujo se anima. Un aspa gris en una esquina
+           no lo dice; «Repetir» sí. */
         stage.innerHTML = '<button class="nsft-gal-replay" type="button" data-pv-replay ' +
-            'title="' + esc(t.repetir) + '" aria-label="' + esc(t.repetir) + '">&#8635;</button>' +
+            'title="' + esc(t.repetir) + '"><span aria-hidden="true">&#8635;</span>' +
+            esc(t.repetir) + '</button>' +
             mapa[clave];
         pvAjusta(stage);
     }
