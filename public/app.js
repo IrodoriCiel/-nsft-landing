@@ -234,6 +234,12 @@
        ancho disponible antes de calcular cuánto hay que encoger el dibujo. */
     const PV_AIRE = 28;
 
+    /* Tope de alto del dibujo. No es sólo estética: las fichas de una fila se
+       estiran a la altura de la más alta, así que un dibujo de 450 px —la
+       ventana entera de NetSuite— dejaba a su compañera con un hueco enorme.
+       Con el tope, ninguna fila se dispara y todas se leen a la misma escala. */
+    const PV_ALTO = 300;
+
     /* Sello de contenido que pone build.js: cambia cuando cambia un dibujo, y
        es lo que deja cachear estos archivos para siempre sin servir uno viejo. */
     const pvSello = () => (window.NSFT_PV_V ? '?v=' + window.NSFT_PV_V : '');
@@ -323,13 +329,18 @@
         dibujo.style.zoom = '';
         dibujo.style.width = 'max-content';
         const natural = dibujo.offsetWidth;
+        const naturalAlto = dibujo.offsetHeight;
         dibujo.style.width = '';
 
         const hueco = stage.clientWidth - PV_AIRE;
         if (!natural || hueco <= 0) return;
-        /* El píxel de margen evita que un redondeo encoja un dibujo que ya
-           cabía: encoger de menos no se nota, encoger sin necesidad sí. */
-        if (natural > hueco + 1) dibujo.style.zoom = (hueco / natural).toFixed(4);
+
+        /* Se encoge por lo que peor vaya, ancho o alto, y NUNCA se agranda: un
+           dibujo pequeño a su tamaño se ve nítido; estirado, borroso. */
+        const k = Math.min(1, hueco / natural, naturalAlto ? PV_ALTO / naturalAlto : 1);
+        /* El uno por ciento de margen evita que un redondeo encoja un dibujo que
+           ya cabía: encoger de menos no se nota, encoger sin necesidad sí. */
+        if (k < 0.99) dibujo.style.zoom = k.toFixed(4);
     }
 
     /* Al cambiar el ancho de la ventana cambia el de las fichas, así que hay que

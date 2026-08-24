@@ -403,7 +403,12 @@ a:hover{color:var(--gold);}
    dibujo: los hay de una ventana entera y los hay de un campo suelto, y
    estirarlos todos a la misma altura los deformaría; el mínimo sólo evita que
    la rejilla dé saltos mientras cada uno se carga. */
-.nsft-gal-stage{position:relative;margin-top:auto;min-height:170px;display:flex;align-items:center;justify-content:center;padding:14px;background:var(--surface2);border-top:1px solid var(--line);overflow:hidden;}
+/* El hueco CRECE y centra el dibujo, en vez de quedar pegado abajo. Las fichas
+   de una misma fila se estiran a la altura de la más alta, así que con el hueco
+   anclado al fondo un dibujo corto quedaba hundido y con un vacío encima —el
+   caso de Pestañas Agrupadas al lado de Modo Oscuro—. Creciendo, el aire se
+   reparte alrededor del dibujo y las dos fichas se leen igual. */
+.nsft-gal-stage{position:relative;flex:1;min-height:170px;display:flex;align-items:center;justify-content:center;padding:14px;background:var(--surface2);border-top:1px solid var(--line);overflow:hidden;}
 /* Nada de `max-width` sobre el dibujo: los recortes traen anchos fijos en
    píxeles y limitarlos sólo aprieta su contenido, que se sale igual. A quien lo
    encoge de verdad es al `zoom` que calcula app.js midiendo cada uno. */
