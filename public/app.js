@@ -230,6 +230,10 @@
         en: { repetir: 'Play again' }
     };
 
+    /* El relleno del hueco, a los dos lados (14 px en styles.css). Se resta del
+       ancho disponible antes de calcular cuánto hay que encoger el dibujo. */
+    const PV_AIRE = 28;
+
     /* Sello de contenido que pone build.js: cambia cuando cambia un dibujo, y
        es lo que deja cachear estos archivos para siempre sin servir uno viejo. */
     const pvSello = () => (window.NSFT_PV_V ? '?v=' + window.NSFT_PV_V : '');
@@ -288,7 +292,57 @@
         stage.innerHTML = '<button class="nsft-gal-replay" type="button" data-pv-replay ' +
             'title="' + esc(t.repetir) + '" aria-label="' + esc(t.repetir) + '">&#8635;</button>' +
             mapa[clave];
+        pvAjusta(stage);
     }
+
+    /**
+     * ENCOGE EL DIBUJO HASTA QUE QUEPA.
+     *
+     * Los dibujos vienen con anchos FIJOS en píxeles: están hechos para el panel
+     * del asistente de arranque, que siempre mide lo mismo. En una rejilla, la
+     * ficha mide lo que le toque según la ventana, así que los que no caben se
+     * salían y la tarjeta los recortaba por la derecha — media ventana de
+     * NetSuite cortada.
+     *
+     * Se mide el ancho natural y se aplica `zoom`, que ENCOGE DE VERDAD: a
+     * diferencia de `transform: scale`, recalcula la maquetación, así que el
+     * hueco se queda con el alto que corresponde y no sobra ni falta espacio
+     * debajo. Sólo se encoge, nunca se agranda: un dibujo pequeño se queda a su
+     * tamaño en vez de salir borroso.
+     */
+    function pvAjusta(stage) {
+        const dibujo = stage.querySelector(':scope > :not(.nsft-gal-replay)');
+        if (!dibujo) return;
+
+        /* Medir el ancho NATURAL, no el que tiene puesto. El marco del dibujo es
+           un bloque: ya viene del ancho de su hueco y recorta por dentro lo que
+           no cabe —de ahí las ventanas de NetSuite cortadas por la derecha—, así
+           que preguntarle `offsetWidth` devolvería siempre «cabe perfecto».
+           Con `max-content` se le deja crecer un instante hasta lo que de verdad
+           ocupan sus piezas, se apunta el número y se le devuelve lo suyo. */
+        dibujo.style.zoom = '';
+        dibujo.style.width = 'max-content';
+        const natural = dibujo.offsetWidth;
+        dibujo.style.width = '';
+
+        const hueco = stage.clientWidth - PV_AIRE;
+        if (!natural || hueco <= 0) return;
+        /* El píxel de margen evita que un redondeo encoja un dibujo que ya
+           cabía: encoger de menos no se nota, encoger sin necesidad sí. */
+        if (natural > hueco + 1) dibujo.style.zoom = (hueco / natural).toFixed(4);
+    }
+
+    /* Al cambiar el ancho de la ventana cambia el de las fichas, así que hay que
+       volver a encoger. Se espera a que pare de moverse: reajustar cien dibujos
+       en cada píxel de arrastre no lo aguanta nadie. */
+    let _pvResize = null;
+    addEventListener('resize', () => {
+        clearTimeout(_pvResize);
+        _pvResize = setTimeout(() => {
+            if (!listEl) return;
+            listEl.querySelectorAll('[data-pv]').forEach((st) => { if (st.firstChild) pvAjusta(st); });
+        }, 160);
+    }, { passive: true });
 
     /** Observa las fichas para poner el dibujo —quieto— cuando asoman. */
     function pvObserva() {
