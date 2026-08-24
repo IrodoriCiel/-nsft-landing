@@ -39,8 +39,10 @@
         const q = document.getElementById('nsft-q');
         if (q) q.placeholder = PLACEHOLDER[l];
         save(LANG_KEY, l);
-        renderChips();
+        renderChips('nsft-chips');
+        renderChips('nsft-pv-chips');
         renderCatalog();
+        renderGallery();
     }
 
     /* ------------------------------------------------------------------ *
@@ -54,6 +56,11 @@
         const t = theme === 'dark' ? 'dark' : 'light';
         root.setAttribute('data-theme', t);
         html.setAttribute('data-theme', t);
+        /* Los dibujos traen su modo oscuro colgado del atributo
+           data-nsft-theme, que es como lo hace la extensión entera. Se estampa
+           aquí para que sigan al tema del sitio sin tocar ni una línea de su
+           hoja de estilos. */
+        html.setAttribute('data-nsft-theme', t);
         save(THEME_KEY, t);
     }
 
@@ -70,8 +77,10 @@
         if (kind === 'tab') return root.setAttribute('data-tab', value);
         if (kind === 'cat') {
             root.setAttribute('data-cat', value);
-            renderChips();
+            renderChips('nsft-chips');
+            renderChips('nsft-pv-chips');
             renderCatalog();
+            renderGallery();
         }
     });
 
@@ -121,9 +130,12 @@
     }
 
     /* Los chips salen de los mismos grupos que el catálogo, así que no hay
-       lista que mantener a mano en la plantilla. */
-    function renderChips() {
-        const chipsEl = document.getElementById('nsft-chips');
+       lista que mantener a mano en la plantilla. Se pintan en DOS sitios —la
+       galería y el catálogo— y los dos escriben el mismo `data-cat`: elegir
+       una categoría arriba filtra también la lista de abajo, que es lo que
+       espera cualquiera que haya visto una sola taxonomía. */
+    function renderChips(id) {
+        const chipsEl = document.getElementById(id || 'nsft-chips');
         if (!chipsEl) return;
         const en = root.getAttribute('data-lang') === 'en';
         const active = root.getAttribute('data-cat');
@@ -172,6 +184,207 @@
             query = ev.target.value;
             renderCatalog();
         });
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Galería de vistas previas
+     *
+     * Los dibujos son los MISMOS que enseña el asistente de arranque de la
+     * extensión: build.js ejecuta welcome_previews.js y deja aquí el resultado,
+     * así que la web no tiene maquetas propias que se queden viejas.
+     *
+     * Tres decisiones que explican todo lo de abajo:
+     *
+     *   · SE CARGA AL LLEGAR. El CSS de los dibujos y el paquete del idioma
+     *     pesan medio mega en crudo; quien no baje hasta aquí no los pide. Se
+     *     empiezan a traer un poco antes de que la sección entre en pantalla.
+     *   · EL DIBUJO SE INYECTA AL ASOMARSE, no al pintar la tarjeta. Sus
+     *     animaciones corren UNA vez al aparecer el elemento: metiéndolos todos
+     *     de golpe, las cien se reproducirían con la página aún arriba y el
+     *     visitante sólo vería el último fotograma.
+     *   · VOLVER A INYECTARLO ES VOLVER A REPRODUCIRLO. De ahí que repetir sea
+     *     tan simple como pintar otra vez, sin tocar clases ni reiniciar nada.
+     * ------------------------------------------------------------------ */
+    const PV = window.NSFT_PV_DATA || [];
+    const pvGrid = document.getElementById('nsft-pv-grid');
+    const pvCountEl = document.getElementById('nsft-pv-count');
+    const pvFallback = document.getElementById('nsft-pv-fallback');
+
+    const PV_T = {
+        es: { principal: 'Principal', repetir: 'Repetir la animación' },
+        en: { principal: 'Main', repetir: 'Play again' }
+    };
+
+    const pvPaquetes = {};      // idioma -> {clave: html}
+    let pvCssPedido = false;
+    let pvPintada = false;
+    let pvObs = null;
+
+    /** El CSS de los dibujos, una sola vez y sólo si hace falta. */
+    function pvCargaCss() {
+        if (pvCssPedido) return;
+        pvCssPedido = true;
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'previews.css';
+        document.head.appendChild(link);
+    }
+
+    /** El paquete de dibujos de un idioma. Se pide una vez por idioma. */
+    function pvCargaIdioma(lang) {
+        if (pvPaquetes[lang]) return Promise.resolve(pvPaquetes[lang]);
+        return new Promise((resolve) => {
+            const s = document.createElement('script');
+            s.src = 'previews.' + lang + '.js';
+            s.onload = () => {
+                /* Cada archivo deja su mapa en la misma variable; se guarda
+                   enseguida para que el del otro idioma no lo pise. */
+                pvPaquetes[lang] = window.NSFT_PV_HTML || {};
+                resolve(pvPaquetes[lang]);
+            };
+            s.onerror = () => resolve(null);
+            document.head.appendChild(s);
+        });
+    }
+
+    function pvPinta(stage) {
+        const lang = root.getAttribute('data-lang') === 'en' ? 'en' : 'es';
+        const mapa = pvPaquetes[lang];
+        const clave = stage.getAttribute('data-pv');
+        if (!mapa || !mapa[clave]) return;
+        const t = PV_T[lang];
+        stage.innerHTML = '<button class="nsft-gal-replay" type="button" data-pv-replay ' +
+            'title="' + esc(t.repetir) + '" aria-label="' + esc(t.repetir) + '">&#8635;</button>' +
+            mapa[clave];
+    }
+
+    /** Observa las tarjetas para inyectar el dibujo cuando asoman. */
+    function pvObserva() {
+        if (!('IntersectionObserver' in window)) {
+            pvGrid.querySelectorAll('[data-pv]').forEach(pvPinta);
+            return;
+        }
+        if (!pvObs) {
+            pvObs = new IntersectionObserver((entries) => {
+                entries.forEach((e) => { if (e.isIntersecting) pvPinta(e.target); });
+            }, { rootMargin: '120px 0px' });
+        }
+        pvGrid.querySelectorAll('[data-pv]').forEach((el) => pvObs.observe(el));
+    }
+
+    function pvTarjeta(ficha, color, en) {
+        const idioma = en ? 'en' : 'es';
+        const t = PV_T[idioma];
+        const textos = ficha[idioma] || ficha.es;
+        const variantes = ficha.variantes || [];
+        const pestanas = variantes.length
+            ? '<div class="nsft-gal-tabs">' +
+                '<button type="button" class="nsft-gal-tab is-on" data-pv-tab="' + esc(ficha.key) + '">' + esc(t.principal) + '</button>' +
+                variantes.map((v) => '<button type="button" class="nsft-gal-tab" data-pv-tab="' + esc(v.key) + '">' +
+                    esc(v[idioma] || v.es) + '</button>').join('') +
+              '</div>'
+            : '';
+        /* El aviso de que una función depende de otra viene del propio
+           asistente: si allí se dice, aquí también, que prometer algo que no
+           funciona solo es peor que no enseñarlo. */
+        const nota = textos.nota
+            ? '<div class="nsft-gal-dep"><span aria-hidden="true">!</span>' + esc(textos.nota) + '</div>'
+            : '';
+        return '<article class="nsft-gal-card" data-anim="up" style="--gal:' + color + ';">' +
+            '<div class="nsft-gal-stage" data-pv="' + esc(ficha.key) + '"><div class="nsft-gal-skel"></div></div>' +
+            '<div class="nsft-gal-body">' +
+              '<div class="nsft-gal-name">' + esc(textos.nombre) + '</div>' +
+              '<div class="nsft-gal-desc">' + esc(textos.desc) + '</div>' +
+              nota +
+              pestanas +
+            '</div></article>';
+    }
+
+    function renderGallery() {
+        if (!pvGrid) return;
+        if (!PV.length) {
+            if (pvFallback) pvFallback.hidden = false;
+            return;
+        }
+        const en = root.getAttribute('data-lang') === 'en';
+        const cat = root.getAttribute('data-cat');
+        const colores = {};
+        catalog.groups.forEach((g) => { colores[g.id] = g.color; });
+
+        /* Al cambiar de idioma con la galería ya cargada hay que traer SU
+           paquete: los dibujos llevan dentro los muebles de NetSuite traducidos.
+           Se vuelve a observar desde cero —desconectando primero— porque volver
+           a observar un elemento que ya lo estaba no dispara nada, y las
+           tarjetas que están a la vista tienen que repintarse. */
+        const idioma = en ? 'en' : 'es';
+        if (pvCssPedido && !pvPaquetes[idioma]) {
+            pvCargaIdioma(idioma).then(() => {
+                if (pvObs) pvObs.disconnect();
+                pvObserva();
+            });
+        }
+
+        const fichas = PV.filter((f) => cat === 'all' || f.cat === cat);
+        pvGrid.innerHTML = fichas
+            .map((f) => pvTarjeta(f, colores[f.cat] || 'var(--brand)', en))
+            .join('');
+        if (pvCountEl) {
+            /* Se cuentan los DIBUJOS, no las tarjetas: las variantes también
+               son dibujos y es lo que promete el rótulo de al lado. */
+            pvCountEl.textContent = fichas.reduce((n, f) => n + 1 + (f.variantes ? f.variantes.length : 0), 0);
+        }
+
+        // Las tarjetas entran con el mismo efecto que el resto de la página;
+        // al filtrar ya salen puestas, como hace el catálogo.
+        if (pvPintada) {
+            pvGrid.querySelectorAll('[data-anim]').forEach((el) => el.classList.add('is-in'));
+        } else {
+            observe(pvGrid);
+            pvPintada = true;
+        }
+        pvObserva();
+    }
+
+    /* Repetir y cambiar de variante: un solo escuchador para toda la rejilla,
+       que las tarjetas se repintan enteras a cada filtro. */
+    if (pvGrid) {
+        pvGrid.addEventListener('click', (ev) => {
+            const repetir = ev.target.closest('[data-pv-replay]');
+            if (repetir) return pvPinta(repetir.closest('[data-pv]'));
+
+            const pestana = ev.target.closest('[data-pv-tab]');
+            if (!pestana) return;
+            const tarjeta = pestana.closest('.nsft-gal-card');
+            const stage = tarjeta && tarjeta.querySelector('[data-pv]');
+            if (!stage) return;
+            tarjeta.querySelectorAll('[data-pv-tab]').forEach((b) => b.classList.remove('is-on'));
+            pestana.classList.add('is-on');
+            stage.setAttribute('data-pv', pestana.getAttribute('data-pv-tab'));
+            pvPinta(stage);
+        });
+    }
+
+    /** Arranca la galería cuando la sección se acerca: antes no se pide nada. */
+    function pvArranca() {
+        const seccion = document.getElementById('vistazo');
+        if (!seccion || !PV.length) { renderGallery(); return; }
+
+        const traer = () => {
+            pvCargaCss();
+            const lang = root.getAttribute('data-lang') === 'en' ? 'en' : 'es';
+            pvCargaIdioma(lang).then((mapa) => {
+                if (!mapa && pvFallback) pvFallback.hidden = false;
+                renderGallery();
+            });
+        };
+
+        if (!('IntersectionObserver' in window)) return traer();
+        const obs = new IntersectionObserver((entries) => {
+            if (!entries.some((e) => e.isIntersecting)) return;
+            obs.disconnect();
+            traer();
+        }, { rootMargin: '600px 0px' });
+        obs.observe(seccion);
     }
 
     /* ------------------------------------------------------------------ *
@@ -309,9 +522,12 @@
     // El tema ya lo estampó el script de arranque del <head> para evitar el
     // parpadeo; aquí solo se replica en el contenedor.
     root.setAttribute('data-theme', html.getAttribute('data-theme') || 'light');
+    // …y en el atributo del que cuelga el modo oscuro de los dibujos.
+    html.setAttribute('data-nsft-theme', html.getAttribute('data-theme') || 'light');
 
     wireHero();
     wireScroll();
+    pvArranca();
 
     const totalEl = document.getElementById('nsft-total');
     if (totalEl) countUp(totalEl);
