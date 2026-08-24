@@ -234,11 +234,14 @@
        ancho disponible antes de calcular cuánto hay que encoger el dibujo. */
     const PV_AIRE = 28;
 
-    /* Tope de alto del dibujo. No es sólo estética: las fichas de una fila se
-       estiran a la altura de la más alta, así que un dibujo de 450 px —la
-       ventana entera de NetSuite— dejaba a su compañera con un hueco enorme.
-       Con el tope, ninguna fila se dispara y todas se leen a la misma escala. */
-    const PV_ALTO = 300;
+    /* Tope de alto del dibujo, para que una fila no se dispare: las fichas se
+       estiran a la altura de la más alta y una ventana entera de NetSuite dejaba
+       a su compañera con un hueco enorme.
+
+       Es ALTO y a propósito. Bajarlo encogería los dibujos que ya caben de
+       ancho, y eso desharía justo lo que se ganó al pasar a dos columnas: aquí
+       manda el ancho, y el tope sólo está para cortar los extremos. */
+    const PV_ALTO = 420;
 
     /* Sello de contenido que pone build.js: cambia cuando cambia un dibujo, y
        es lo que deja cachear estos archivos para siempre sin servir uno viejo. */

@@ -409,9 +409,15 @@ a:hover{color:var(--gold);}
    caso de Pestañas Agrupadas al lado de Modo Oscuro—. Creciendo, el aire se
    reparte alrededor del dibujo y las dos fichas se leen igual. */
 .nsft-gal-stage{position:relative;flex:1;min-height:170px;display:flex;align-items:center;justify-content:center;padding:14px;background:var(--surface2);border-top:1px solid var(--line);overflow:hidden;}
-/* Nada de `max-width` sobre el dibujo: los recortes traen anchos fijos en
-   píxeles y limitarlos sólo aprieta su contenido, que se sale igual. A quien lo
-   encoge de verdad es al `zoom` que calcula app.js midiendo cada uno. */
+/* EL DIBUJO OCUPA TODO EL ANCHO DE SU HUECO. El hueco es un contenedor flex y
+   el dibujo, un bloque: sin esto se encoge a su contenido y deja franjas grises
+   a los lados —justo el espacio que se ganó al pasar a dos columnas—. Con el
+   100 %, la ventana de NetSuite llena la ficha, que es como se ve dentro de la
+   extensión.
+   Y nada de `max-width`: los recortes traen anchos fijos en píxeles y limitarlos
+   sólo aprieta su contenido, que se sale igual. A quien lo encoge cuando de
+   verdad no cabe es al `zoom` que calcula app.js midiendo cada uno. */
+.nsft-gal-stage>*:not(.nsft-gal-replay){width:100%;}
 .nsft-gal-skel{width:82%;height:110px;border-radius:10px;background:linear-gradient(100deg,var(--surface) 30%,var(--line) 50%,var(--surface) 70%);background-size:220% 100%;animation:nsftGalSkel 1.4s linear infinite;}
 @keyframes nsftGalSkel{to{background-position:-120% 0;}}
 /* EN REPOSO, EL DIBUJO SE VE TERMINADO Y QUIETO. Las animaciones de los dibujos
