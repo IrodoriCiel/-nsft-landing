@@ -582,10 +582,23 @@ html.nsft-anim [data-hero-mock]{animation-name:heroMockIn;animation-duration:1s;
 
 /* El nombre del producto va de antetítulo, con el logo al lado: se conserva la
    marca sin gastar el espacio del titular, que es para el beneficio. */
-.nsft-hero-lockup{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+/* `wrap` por la chapa de la version: en una pantalla estrecha baja de linea
+   en vez de empujar el nombre fuera del cuadro. */
+.nsft-hero-lockup{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:20px;}
 .nsft-hero-eyebrow{
   font-size:12.5px;font-weight:800;letter-spacing:.16em;
   text-transform:uppercase;color:var(--brand);
+}
+/* La version, pegada al nombre y en la tipografia de codigo: se lee como un
+   dato tecnico y no compite con el titular, pero esta donde cae la vista. */
+.nsft-hero-ver{
+  font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:11.5px;font-weight:600;line-height:1;
+  color:var(--brand);
+  background:var(--brandSoft);
+  border:1px solid color-mix(in oklab, var(--brand) 22%, transparent);
+  border-radius:999px;padding:4px 9px;
+  align-self:center;
 }
 .nsft-hero-logo{
   position:relative;display:grid;place-items:center;isolation:isolate;flex:0 0 auto;
