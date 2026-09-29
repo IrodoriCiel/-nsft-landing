@@ -1,6 +1,6 @@
 {
   "source": "nsft-chrome-extension-final/landing-page",
-  "version": "7.1.2",
+  "version": "7.2.0",
   "subdir": "public",
   "files": [
     "_headers",
