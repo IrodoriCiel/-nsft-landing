@@ -1329,3 +1329,68 @@ html[data-theme="dark"] .nsft-trail{background:var(--c) !important;}
    desvanecen para no quedarse apilados bajo el puntero (2026-11-12). */
 .nsft-trail.is-on{transition:opacity .15s ease,width .2s,height .2s,margin .2s !important;}
 .nsft-trail.is-on:not(.is-moving):not(.is-lead){opacity:0 !important;transition:opacity .6s ease !important;}
+
+/* «Desarrollado por Iro Dev» con la temática de irodoriciel.dev (2026-11-12):
+   tarjeta oscura, logo </> en degradado morado→aguamarina y borde que gira. */
+@property --irodev-ang{syntax:"<angle>";inherits:false;initial-value:0deg;}
+@keyframes irodevSpin{to{--irodev-ang:360deg;}}
+footer .nsft-irodev{position:relative;isolation:isolate;gap:13px;padding:11px 18px 11px 11px;border-radius:16px;border:1px solid #23252D !important;
+  background:radial-gradient(120% 140% at 0% 0%,#1A1730 0%,#0C0D10 60%) !important;color:#ECEDF2 !important;box-shadow:0 14px 30px -18px rgba(12,13,16,.7);}
+footer .nsft-irodev::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:conic-gradient(from var(--irodev-ang),#8B7BFF,#3EE7C4,transparent 35%,transparent 60%,#8B7BFF);
+  -webkit-mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);}
+footer .nsft-irodev:hover{transform:translateY(-3px);border-color:transparent !important;box-shadow:0 18px 36px -16px rgba(139,123,255,.55),0 0 24px -10px rgba(62,231,196,.6);}
+footer .nsft-irodev:hover::after{opacity:1;animation:irodevSpin 2.4s linear infinite;}
+.nsft-irodev-mark{width:44px;height:44px;background:none !important;box-shadow:0 8px 18px -8px rgba(139,123,255,.7);border-radius:12px;}
+.nsft-irodev-mark svg{width:44px;height:44px;}
+.nsft-irodev-txt small{color:#9A9CAB !important;letter-spacing:.09em;}
+.nsft-irodev-txt b{font-size:17px;letter-spacing:-.01em;background:linear-gradient(90deg,#8B7BFF,#3EE7C4) !important;-webkit-background-clip:text;background-clip:text;color:transparent;}
+.nsft-irodev-txt b i{font-style:normal;color:#3EE7C4;-webkit-text-fill-color:#3EE7C4;}
+.nsft-irodev-txt em{display:inline-flex;align-items:center;gap:6px;color:#3EE7C4 !important;font-size:11.5px;}
+.nsft-irodev-dot{width:6px;height:6px;border-radius:50%;background:#3EE7C4;box-shadow:0 0 0 3px rgba(62,231,196,.18);}
+footer .nsft-irodev .nsft-irodev-go{color:#9A9CAB;}
+footer .nsft-irodev:hover .nsft-irodev-go{color:#3EE7C4;}
+
+/* El punto final no se separa de la frase con degradado */
+.nsft-nowrap{white-space:nowrap;}
+
+/* Corrección del sello: «Iro Dev.» como texto con degradado (la forma corta
+   de background anulaba el recorte al texto y salía una barra de color). */
+footer .nsft-irodev .nsft-irodev-txt b{background:none !important;background-image:linear-gradient(90deg,#A79BFF,#3EE7C4) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;-webkit-text-fill-color:transparent;
+  font-size:18px;font-weight:800;line-height:1.15;padding-bottom:1px;}
+footer .nsft-irodev .nsft-irodev-txt b i{-webkit-text-fill-color:#3EE7C4;color:#3EE7C4;}
+footer .nsft-irodev .nsft-irodev-txt{gap:2px;}
+footer .nsft-irodev .nsft-irodev-txt small{font-size:10.5px;}
+
+/* Sello: el efecto de los botones de irodoriciel.dev (mismos valores):
+   temblor de color en el texto, destello que cruza, icono que salta, y en
+   «Iro Dev.» el glitch de franjas de sus titulares. */
+@keyframes irodevBtnGlitch{
+  0%{text-shadow:-2px 0 rgba(62,231,196,.85),2px 0 rgba(255,92,160,.7);}
+  33%{text-shadow:2px 0 rgba(62,231,196,.85),-2px 0 rgba(255,92,160,.7);}
+  66%{text-shadow:-1px 0 rgba(62,231,196,.6),1px 0 rgba(255,92,160,.5);}
+  100%{text-shadow:none;}
+}
+@keyframes irodevPop{0%{transform:none;}40%{transform:scale(1.25) rotate(-10deg);}70%{transform:scale(.95) rotate(4deg);}100%{transform:none;}}
+@keyframes irodevBurstA{0%{opacity:1;translate:-3px 0;clip-path:inset(10% 0 62% 0);}25%{translate:3px 0;clip-path:inset(58% 0 18% 0);}50%{translate:-2px 0;clip-path:inset(32% 0 44% 0);}75%{translate:2px 0;clip-path:inset(78% 0 4% 0);}100%{opacity:0;}}
+@keyframes irodevBurstB{0%{opacity:1;translate:3px 0;clip-path:inset(66% 0 10% 0);}25%{translate:-3px 0;clip-path:inset(20% 0 60% 0);}50%{translate:2px 0;clip-path:inset(46% 0 30% 0);}75%{translate:-2px 0;clip-path:inset(4% 0 80% 0);}100%{opacity:0;}}
+footer .nsft-irodev{overflow:hidden;}
+footer .nsft-irodev::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;transform:translateX(-120%);
+  background:linear-gradient(110deg,transparent 30%,rgba(62,231,196,.22) 48%,rgba(139,123,255,.2) 54%,transparent 70%);transition:transform .7s cubic-bezier(.2,.8,.2,1);}
+footer .nsft-irodev:hover::before{transform:translateX(120%);}
+footer .nsft-irodev:hover{animation:irodevBtnGlitch .42s steps(1) 1;}
+footer .nsft-irodev:hover .nsft-irodev-mark{animation:irodevPop .55s cubic-bezier(.2,.8,.2,1) !important;transform:none !important;}
+.irodev-glitch{position:relative;display:inline-block;}
+.irodev-glitch::before,.irodev-glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;white-space:nowrap;pointer-events:none;opacity:0;
+  background:none;-webkit-text-fill-color:currentColor;}
+.irodev-glitch::before{color:rgba(62,231,196,.7);}
+.irodev-glitch::after{color:rgba(255,92,160,.55);}
+footer .nsft-irodev:hover .irodev-glitch::before{animation:irodevBurstA .5s steps(1) forwards;}
+footer .nsft-irodev:hover .irodev-glitch::after{animation:irodevBurstB .5s steps(1) forwards;}
+
+/* Nota bajo el titular: la IA va con la clave del propio usuario */
+.nsft-hero-key{display:inline-flex;align-items:center;gap:8px;margin:2px 0 16px;padding:6px 13px;border-radius:999px;font-size:13px;font-weight:700;
+  color:#6D4FD8;background:color-mix(in oklab,#8B6CE8 10%,var(--surface));border:1px solid color-mix(in oklab,#8B6CE8 28%,transparent);}
+.nsft-hero-key span[aria-hidden]{font-size:12px;}
+#nsft-root[data-theme="dark"] .nsft-hero-key{color:#CBB8FF;}

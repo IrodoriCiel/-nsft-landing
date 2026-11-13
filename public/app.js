@@ -103,6 +103,14 @@
 
         if (kind === 'lang') return setLang(root.getAttribute('data-lang') === 'es' ? 'en' : 'es', { ancla: true });
         if (kind === 'theme') return setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        /* «Demo» abre la ventana de demos (empieza por el Asistente de IA y con
+           ‹ › recorre los destacados), en vez de llevar al catálogo como el
+           enlace de al lado. */
+        if (kind === 'demo') {
+            ev.preventDefault();
+            if (root.getAttribute('data-cat') !== 'star' && !query) { root.setAttribute('data-cat', 'star'); renderChips('nsft-chips'); renderCatalog(); }
+            return pvAbre('Asistente de IA');
+        }
         if (kind === 'tab') return root.setAttribute('data-tab', value);
         if (kind === 'cat') {
             root.setAttribute('data-cat', value);
