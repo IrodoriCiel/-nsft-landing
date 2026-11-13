@@ -1271,25 +1271,8 @@ html.nsft-lite .nsft-split .nsft-w{filter:none !important;}
 
 /* Panel de la demo */
 html.nsft-pvm-open{overflow:hidden;}
-.nsft-pvm{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;}
-.nsft-pvm[hidden]{display:none;}
-.nsft-pvm-bg{position:absolute;inset:0;background:rgba(10,24,17,.45);animation:nsftFade .25s both;}
-.nsft-pvm-box{position:relative;width:min(860px,100%);max-height:calc(100vh - 48px);overflow:auto;background:var(--surface);border:1px solid var(--line);
-  border-top:4px solid var(--gal);border-radius:18px;padding:20px 22px 22px;box-shadow:0 40px 90px -30px rgba(10,24,17,.6);animation:nsftRotIn .35s cubic-bezier(.2,.8,.2,1) both;}
 @keyframes nsftFade{from{opacity:0;}}
-.nsft-pvm-hd{display:flex;align-items:center;gap:10px;}
-.nsft-pvm-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:var(--gal);background:color-mix(in oklab,var(--gal) 12%,var(--surface));flex:0 0 auto;}
-.nsft-pvm-ic svg{width:20px;height:20px;}
-.nsft-pvm-ti{flex:1;min-width:0;display:flex;flex-direction:column;}
-.nsft-pvm-ti small{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gal);}
-.nsft-pvm-ti b{font-size:20px;font-weight:800;color:var(--fg);letter-spacing:-.01em;}
-.nsft-pvm-nav,.nsft-pvm-x{all:unset;cursor:pointer;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;border:1px solid var(--line);color:var(--fg2);font-size:18px;transition:border-color .2s,color .2s,transform .2s;}
-.nsft-pvm-nav:hover,.nsft-pvm-x:hover{border-color:var(--gal);color:var(--gal);transform:translateY(-1px);}
-.nsft-pvm-x{font-size:14px;}
-.nsft-pvm-desc{margin:12px 0 10px;font-size:15px;line-height:1.55;color:var(--muted);}
-.nsft-pvm-nota{font-size:13px;color:var(--muted);background:var(--surface2);border:1px dashed var(--line);border-radius:9px;padding:8px 11px;margin-bottom:10px;}
-.nsft-pvm-stage{min-height:260px;border-radius:12px;border:1px solid var(--line);}
-@media (max-width:640px){.nsft-tc-grid{grid-template-columns:1fr;}.nsft-pvm{padding:10px;}.nsft-pvm-nav{display:none;}}
+@media (max-width:640px){.nsft-tc-grid{grid-template-columns:1fr;}.nsft-pvm{padding:10px;}}
 
 /* Estela con los colores de la extensión (2026-11-12): más larga, late y se
    apaga despacio. Barra de scroll en el verde de la marca. */
@@ -1394,3 +1377,164 @@ footer .nsft-irodev:hover .irodev-glitch::after{animation:irodevBurstB .5s steps
   color:#6D4FD8;background:color-mix(in oklab,#8B6CE8 10%,var(--surface));border:1px solid color-mix(in oklab,#8B6CE8 28%,transparent);}
 .nsft-hero-key span[aria-hidden]{font-size:12px;}
 #nsft-root[data-theme="dark"] .nsft-hero-key{color:#CBB8FF;}
+
+/* ------------------------------------------------------------------ *
+ * Reseñas de la Chrome Web Store (2026-11-13)
+ * Con las piezas de la propia web: la nota y los usuarios son dos cifras
+ * más de .nsft-stats; la sección reusa el encabezado de «Para quién es»
+ * (.nsft-roles-head) y sus tarjetas, con borde e iniciales del color de
+ * categoría (--rc). Los datos los escribe build.js y los renueva app.js
+ * desde /api/resenas.
+ * ------------------------------------------------------------------ */
+.nsft-stars{position:relative;display:inline-block;flex:0 0 auto;font-size:14px;line-height:1;letter-spacing:1.5px;}
+.nsft-stars i{font-style:normal;color:var(--line);}
+.nsft-stars i+i{position:absolute;inset:0 auto 0 0;overflow:hidden;white-space:nowrap;color:var(--c-star);}
+
+/* Las dos cifras de la Store, destacadas del resto de la fila: tarjetita
+   suave de su color (como las etiquetas de sección), número en su propio
+   degradado y etiqueta en negrita del mismo tono. Los márgenes negativos
+   compensan el relleno para que los números sigan alineados con los demás. */
+.nsft-stat.is-destacado{
+  margin:-12px 0;padding:12px 20px 12px 18px;border-radius:16px;
+  background:color-mix(in oklab,var(--sc) 9%,var(--surface));
+  border:1px solid color-mix(in oklab,var(--sc) 28%,transparent);
+  box-shadow:0 10px 26px -18px color-mix(in oklab,var(--sc) 70%,transparent);
+}
+.nsft-stats .nsft-stat.is-destacado .nsft-stat-num{background-image:linear-gradient(90deg,var(--sc),var(--sc2));}
+.nsft-stat.is-destacado .nsft-stat-label{color:color-mix(in oklab,var(--sc) 78%,var(--fg));font-weight:700;}
+
+/* La pastilla de la Store en la fila de garantías del héroe: la misma forma
+   que sus vecinas, en dorado para que se vea antes que ellas. */
+.nsft-hero-trust li.nsft-trust-store{padding:0;border-color:color-mix(in oklab,var(--c-star) 45%,transparent);
+  background:color-mix(in oklab,var(--c-star) 10%,var(--surface));
+  box-shadow:0 8px 22px -14px color-mix(in oklab,var(--c-star) 80%,transparent);}
+.nsft-trust-store a{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px 7px;padding:7px 14px 7px 8px;color:inherit;text-decoration:none;}
+.nsft-trust-store .nsft-check{background:var(--c-star);font-size:11px;line-height:1;}
+.nsft-trust-store b{color:color-mix(in oklab,var(--c-star) 70%,var(--fg));font-weight:800;}
+.nsft-trust-sep{color:color-mix(in oklab,var(--c-star) 60%,transparent);}
+.nsft-trust-store:hover{border-color:var(--c-star);}
+
+/* Las dos cifras del héroe: el enlace no cambia el aspecto de la etiqueta. */
+.nsft-stat-link{color:inherit;text-decoration:none;border-bottom:1px dashed color-mix(in oklab,var(--muted) 55%,transparent);}
+.nsft-stat-link:hover{color:var(--brand);border-bottom-color:var(--brand);}
+
+.nsft-reviews{position:relative;padding:88px 24px 0;}
+.nsft-reviews-inner{max-width:1220px;margin:0 auto;}
+.nsft-reviews-body{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px;align-items:start;}
+
+/* El panel de la nota: tarjeta de la casa con el borde dorado. */
+.nsft-reviews-score{
+  position:sticky;top:96px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+  padding:26px 24px;border:1px solid var(--line);border-left:3px solid var(--c-star);border-radius:16px;
+  background:var(--surface);box-shadow:var(--shadowSm);
+}
+.nsft-reviews-big{font-size:56px;font-weight:800;line-height:1;letter-spacing:-.04em;
+  background:linear-gradient(90deg,var(--c-star),var(--c-prod));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.nsft-reviews-score .nsft-stars{font-size:18px;margin-bottom:4px;}
+.nsft-reviews-meta{font-size:14px;color:var(--muted);}
+.nsft-reviews-meta b{color:var(--fg);}
+.nsft-reviews-cta{margin-top:10px;padding:10px 16px !important;font-size:14px !important;}
+
+/* Las reseñas, en mosaico: cada una con su alto, sin huecos. */
+.nsft-reviews-grid{columns:2 300px;column-gap:16px;}
+.nsft-review{
+  break-inside:avoid;display:flex;flex-direction:column;gap:10px;margin:0 0 16px;padding:20px 22px;
+  border:1px solid var(--line);border-left:3px solid var(--rc,var(--brand));border-radius:16px;
+  background:var(--surface);box-shadow:var(--shadowSm);
+}
+.nsft-review-head{display:flex;align-items:center;gap:11px;}
+.nsft-review-av{display:grid;place-items:center;flex:0 0 auto;width:38px;height:38px;border-radius:11px;
+  font-size:13.5px;font-weight:800;letter-spacing:.02em;color:var(--rc,var(--brand));
+  background:color-mix(in oklab,var(--rc,var(--brand)) 12%,var(--surface));}
+.nsft-review-who{display:flex;flex-direction:column;min-width:0;flex:1;}
+.nsft-review-name{font-size:14.5px;font-weight:800;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nsft-review-date{font-size:12.5px;color:var(--muted);}
+.nsft-review-lang{flex:0 0 auto;padding:3px 8px;border-radius:99px;font-size:10.5px;font-weight:800;letter-spacing:.08em;
+  color:var(--rc,var(--brand));border:1px solid color-mix(in oklab,var(--rc,var(--brand)) 30%,transparent);}
+.nsft-review-lang[hidden]{display:none;}
+.nsft-review-text{margin:0;font-size:14.5px;line-height:1.6;color:var(--fg2);white-space:pre-line;overflow-wrap:anywhere;}
+
+@media (max-width:900px){
+  .nsft-reviews-body{grid-template-columns:1fr;}
+  .nsft-reviews-score{position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 14px;}
+  .nsft-reviews-big{font-size:44px;}
+  .nsft-reviews-cta{margin-top:0;}
+}
+@media (max-width:640px){.nsft-reviews{padding-top:72px;}}
+/* El enlace a la página de todas las reseñas, y la propia página (/reviews). */
+.nsft-reviews-more{margin:6px 0 0;text-align:center;}
+.nsft-reviews.is-pagina{padding-top:56px;}
+
+/* ------------------------------------------------------------------ *
+ * Ventana de demos (2026-11-13): cabecera con posición y ‹ › ✕, las
+ * categorías como pestañas subrayadas, y dos columnas sin scroll — qué
+ * hace a la izquierda (frase, puntos numerados, nota, ↻ con su barra) y
+ * la animación a la derecha.
+ * ------------------------------------------------------------------ */
+.nsft-pvm{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;}
+.nsft-pvm[hidden]{display:none;}
+.nsft-pvm-bg{position:absolute;inset:0;background:rgba(10,24,17,.45);animation:nsftFade .25s both;}
+@keyframes nsftFade{from{opacity:0;}}
+.nsft-pvm-box{position:relative;display:flex;flex-direction:column;width:min(900px,100%);height:min(640px,calc(100vh - 48px));overflow:hidden;
+  background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gal);border-radius:18px;
+  box-shadow:0 40px 90px -30px rgba(10,24,17,.6);animation:nsftRotIn .35s cubic-bezier(.2,.8,.2,1) both;}
+
+.nsft-pvm-hd{display:flex;align-items:center;gap:10px;padding:18px 22px 10px;}
+.nsft-pvm-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
+  color:var(--gal);background:color-mix(in oklab,var(--gal) 12%,var(--surface));}
+.nsft-pvm-ic svg{width:20px;height:20px;}
+.nsft-pvm-ti{flex:1;min-width:0;font-size:22px;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nsft-pvm-pos{font-size:13.5px;font-weight:700;color:var(--fg2);font-variant-numeric:tabular-nums;white-space:nowrap;margin-right:6px;}
+.nsft-pvm-nav{all:unset;box-sizing:border-box;cursor:pointer;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;
+  border:1px solid var(--line);background:var(--surface);color:var(--fg2);font-size:18px;transition:border-color .2s,color .2s,transform .2s;}
+.nsft-pvm-nav:hover{border-color:var(--gal);color:var(--gal);transform:translateY(-1px);}
+.nsft-pvm-x{font-size:14px;}
+
+.nsft-pvm-tabsw{display:flex;align-items:center;gap:4px;padding:0 14px 0 22px;border-bottom:1px solid var(--line);}
+.nsft-pvm-tabs{flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);}
+.nsft-pvm-tabs::-webkit-scrollbar{display:none;}
+.nsft-pvm-tab{all:unset;box-sizing:border-box;cursor:pointer;flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;
+  padding:11px 10px;margin-bottom:-1px;border-bottom:2px solid transparent;white-space:nowrap;
+  font-size:14px;font-weight:600;color:var(--fg2);transition:color .15s,border-color .15s;}
+.nsft-pvm-tab:hover{color:var(--tc);}
+.nsft-pvm-tab.is-on{color:var(--tc);border-bottom-color:var(--tc);font-weight:700;}
+.nsft-pvm-tab:focus-visible{outline:2px solid var(--tc);outline-offset:-2px;border-radius:6px;}
+.nsft-pvm-tab-ic{display:inline-flex;}
+.nsft-pvm-tab-ic svg{width:14px;height:14px;}
+.nsft-pvm-tabs-mas{all:unset;cursor:pointer;flex:0 0 auto;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:var(--muted);font-size:16px;}
+.nsft-pvm-tabs-mas:hover{color:var(--fg);background:var(--surface2);}
+
+.nsft-pvm-body{flex:1;min-height:0;display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;padding:20px 22px 22px;}
+.nsft-pvm-info{display:flex;flex-direction:column;min-height:0;overflow:auto;}
+.nsft-pvm-lead{margin:0 0 16px;font-size:16px;line-height:1.5;color:var(--fg2);}
+.nsft-pvm-puntos{margin:0 0 16px;padding:0;list-style:none;counter-reset:pt;display:grid;gap:12px;}
+.nsft-pvm-puntos[hidden]{display:none;}
+.nsft-pvm-puntos li{counter-increment:pt;position:relative;padding-left:30px;font-size:14.5px;line-height:1.45;color:var(--fg2);}
+.nsft-pvm-puntos li::before{content:counter(pt);position:absolute;left:4px;top:0;font-size:13.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;}
+.nsft-pvm-puntos b{color:var(--fg);font-weight:700;}
+.nsft-pvm-nota{margin:0;font-size:12.5px;line-height:1.45;color:var(--muted);}
+.nsft-pvm-nota[hidden]{display:none;}
+.nsft-pvm-play{margin-top:auto;display:flex;align-items:center;gap:12px;padding-top:16px;}
+.nsft-pvm-play[hidden]{display:none;}
+.nsft-pvm-replay{font-size:16px;}
+.nsft-pvm-bar{flex:1;height:4px;border-radius:99px;background:var(--line);overflow:hidden;}
+.nsft-pvm-bar i{display:block;width:100%;height:100%;border-radius:inherit;background:var(--gal);transform-origin:left;animation:nsftPvBar 7s linear both;}
+@keyframes nsftPvBar{from{transform:scaleX(0);}}
+@media (prefers-reduced-motion: reduce){.nsft-pvm-bar i{animation:none;}}
+.nsft-pvm-stage{min-height:0;height:100%;border-radius:14px;border:1px solid var(--line);background:var(--surface2);}
+.nsft-pvm-stage .nsft-gal-replay{display:none;}
+
+@media (max-width:760px){
+  .nsft-pvm-box{height:calc(100vh - 20px);}
+  .nsft-pvm-hd{padding:14px 14px 8px;}
+  .nsft-pvm-ti{font-size:17px;}
+  .nsft-pvm-ic{display:none;}
+  .nsft-pvm-hd{gap:6px;}
+  .nsft-pvm-nav{width:32px;height:32px;font-size:16px;}
+  .nsft-pvm-pos{margin-right:0;font-size:12.5px;}
+  .nsft-pvm-tabsw{padding:0 8px 0 14px;}
+  .nsft-pvm-body{grid-template-columns:1fr;grid-template-rows:auto minmax(240px,1fr);gap:14px;padding:14px;overflow:auto;}
+  .nsft-pvm-info{overflow:visible;}
+  .nsft-pvm-play{padding-top:4px;}
+}

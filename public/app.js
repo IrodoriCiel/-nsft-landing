@@ -181,18 +181,27 @@
 
     /* Los chips salen de los mismos grupos que el catálogo, así que no hay
        lista que mantener a mano en la plantilla. */
-    function renderChips(id) {
-        const chipsEl = document.getElementById(id || 'nsft-chips');
-        if (!chipsEl) return;
+    /* El marcado de los chips, uno solo para el catálogo y para la ventana de
+       demos: cambia sólo el atributo que dice qué hace cada uno al pulsarlo. */
+    function chipsHtml(active, attr) {
         const en = root.getAttribute('data-lang') === 'en';
-        const active = root.getAttribute('data-cat');
-        const all = `<button class="nsft-chip${active === 'all' ? ' is-on' : ''}" data-act="cat:all">` +
+        const all = `<button class="nsft-chip${active === 'all' ? ' is-on' : ''}" ${attr}="all">` +
             `<span data-l="es">Todas</span><span data-l="en">All</span></button>`;
-        chipsEl.innerHTML = all + catalog.groups.map((g) => `
-          <button class="nsft-chip${active === g.id ? ' is-on' : ''}" data-act="cat:${g.id}" style="--chip:${g.color};color:${active === g.id ? '#fff' : 'var(--fg2)'};">
+        return all + catalog.groups.map((g) => `
+          <button class="nsft-chip${active === g.id ? ' is-on' : ''}" ${attr}="${g.id}" style="--chip:${g.color};color:${active === g.id ? '#fff' : 'var(--fg2)'};">
             <span style="display:inline-flex;color:${active === g.id ? '#fff' : g.color};">${g.icon}</span>
             <span>${esc(en ? g.nameEn : g.nameEs)}</span>
           </button>`).join('');
+    }
+    function renderChips(id) {
+        const chipsEl = document.getElementById(id || 'nsft-chips');
+        if (!chipsEl) return;
+        chipsEl.innerHTML = chipsHtml(root.getAttribute('data-cat'), 'data-act-cat');
+        // data-act="cat:<id>" es lo que escucha el manejador de acciones.
+        chipsEl.querySelectorAll('[data-act-cat]').forEach((b) => {
+            b.setAttribute('data-act', 'cat:' + b.getAttribute('data-act-cat'));
+            b.removeAttribute('data-act-cat');
+        });
     }
 
     function renderCatalog() {
@@ -382,10 +391,17 @@
 
         /* Se encoge por lo que peor vaya, ancho o alto, y NUNCA se agranda: un
            dibujo pequeño a su tamaño se ve nítido; estirado, borroso. */
-        const k = Math.min(1, hueco / natural, naturalAlto ? PV_ALTO / naturalAlto : 1);
+        /* EXCEPCIÓN, la ventana de demos (2026-11-13): ahí la animación tiene
+           media ventana para ella y a su tamaño se veía perdida. Puede crecer
+           hasta llenar el hueco —ancho y ALTO del escenario—, con tope de 1,4:
+           los dibujos son HTML, no imágenes, y ampliados siguen nítidos. */
+        const enVentana = stage.classList.contains('nsft-pvm-stage');
+        const k = enVentana
+            ? Math.min(1.4, hueco / natural, naturalAlto ? (stage.clientHeight - PV_AIRE) / naturalAlto : 1)
+            : Math.min(1, hueco / natural, naturalAlto ? PV_ALTO / naturalAlto : 1);
         /* El uno por ciento de margen evita que un redondeo encoja un dibujo que
            ya cabía: encoger de menos no se nota, encoger sin necesidad sí. */
-        if (k < 0.99) dibujo.style.zoom = k.toFixed(4);
+        if (k < 0.99 || k > 1.01) dibujo.style.zoom = k.toFixed(4);
     }
 
     /* Al cambiar el ancho de la ventana cambia el de las fichas, así que hay que
@@ -425,7 +441,7 @@
      * Panel de la demo: el dibujo animado de una herramienta, al pulsarla.
      * Con ← → se pasa a la anterior o la siguiente de la lista visible.
      * ------------------------------------------------------------------ */
-    let pvLista = [], pvIdx = -1, pvVolver = null;
+    let pvLista = [], pvIdx = -1, pvVolver = null, pvCat = 'all';
     function pvPanel() {
         let m = document.getElementById('nsft-pvm');
         if (m) return m;
@@ -436,20 +452,50 @@
         m.innerHTML = `
           <div class="nsft-pvm-bg" data-pvm-close></div>
           <div class="nsft-pvm-box" role="dialog" aria-modal="true" aria-labelledby="nsft-pvm-t">
+            <!-- Cabecera: icono, nombre, posición y ‹ › ✕. -->
             <div class="nsft-pvm-hd">
               <span class="nsft-pvm-ic"></span>
-              <div class="nsft-pvm-ti"><small></small><b id="nsft-pvm-t"></b></div>
+              <b class="nsft-pvm-ti" id="nsft-pvm-t"></b>
+              <span class="nsft-pvm-pos" aria-live="polite"></span>
               <button type="button" class="nsft-pvm-nav" data-pvm-step="-1" aria-label="Anterior">‹</button>
               <button type="button" class="nsft-pvm-nav" data-pvm-step="1" aria-label="Siguiente">›</button>
-              <button type="button" class="nsft-pvm-x" data-pvm-close aria-label="Cerrar">✕</button>
+              <button type="button" class="nsft-pvm-nav nsft-pvm-x" data-pvm-close aria-label="Cerrar">✕</button>
             </div>
-            <p class="nsft-pvm-desc"></p>
-            <div class="nsft-pvm-nota"></div>
-            <div class="nsft-gal-stage nsft-pvm-stage"></div>
+            <!-- Las categorías como pestañas (2026-11-13): para saltar de una a
+                 otra sin cerrar la ventana. Se deslizan si no caben. -->
+            <div class="nsft-pvm-tabsw">
+              <div class="nsft-pvm-tabs" role="tablist"></div>
+              <button type="button" class="nsft-pvm-tabs-mas" data-pvm-tabs-mas aria-label="Más categorías">›</button>
+            </div>
+            <!-- Dos columnas: qué hace, a la izquierda; la animación, a la derecha.
+                 Sin scroll: todo cabe en la ventana. -->
+            <div class="nsft-pvm-body">
+              <div class="nsft-pvm-info">
+                <p class="nsft-pvm-lead"></p>
+                <ol class="nsft-pvm-puntos"></ol>
+                <p class="nsft-pvm-nota"></p>
+                <div class="nsft-pvm-play">
+                  <button type="button" class="nsft-pvm-nav nsft-pvm-replay" data-pvm-replay aria-label="Repetir la animación">↻</button>
+                  <span class="nsft-pvm-bar"><i></i></span>
+                </div>
+              </div>
+              <div class="nsft-gal-stage nsft-pvm-stage"></div>
+            </div>
           </div>`;
         document.body.appendChild(m);
         m.addEventListener('click', (ev) => {
             if (ev.target.closest('[data-pvm-close]')) return pvCierra();
+            const cat = ev.target.closest('[data-pvm-cat]');
+            if (cat) return pvFiltra(cat.getAttribute('data-pvm-cat'));
+            if (ev.target.closest('[data-pvm-tabs-mas]')) {
+                const t = m.querySelector('.nsft-pvm-tabs');
+                return t.scrollBy({ left: t.clientWidth * 0.6, behavior: 'smooth' });
+            }
+            if (ev.target.closest('[data-pvm-replay]')) {
+                const st = m.querySelector('.nsft-pvm-stage');
+                if (st.firstChild) { pvPinta(st, true); pvBarra(); }
+                return;
+            }
             const paso = ev.target.closest('[data-pvm-step]');
             if (paso) return pvMuestra(pvIdx + Number(paso.getAttribute('data-pvm-step')));
             const rep = ev.target.closest('[data-pv-replay]');
@@ -472,13 +518,24 @@
         const m = pvPanel();
         m.style.setProperty('--gal', g.color || 'var(--brand)');
         m.querySelector('.nsft-pvm-ic').innerHTML = tool.icon || g.icon || '';
-        m.querySelector('.nsft-pvm-ti small').textContent = en ? g.nameEn : g.nameEs;
-        m.querySelector('.nsft-pvm-ti b').textContent = en ? tool.nameEn : tool.nameEs;
-        m.querySelector('.nsft-pvm-desc').textContent = en ? tool.descEn : tool.descEs;
-        const nota = tool.pvNota && tool.pvNota[en ? 'en' : 'es'];
+        m.querySelector('.nsft-pvm-ti').textContent = en ? tool.nameEn : tool.nameEs;
+        m.querySelector('.nsft-pvm-tabs').innerHTML = pvTabsHtml(pvCat);
+        const activa = m.querySelector('.nsft-pvm-tab.is-on');
+        if (activa) activa.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        m.querySelector('.nsft-pvm-pos').textContent = (pvIdx + 1) + ' / ' + pvLista.length;
+        /* Qué hace: la frase, los puntos y la nota de demo-puntos.json; sin
+           ellos, la descripción entera y sin lista. */
+        const det = tool.det && tool.det[en ? 'en' : 'es'];
+        m.querySelector('.nsft-pvm-lead').textContent = det ? det.lead : (en ? tool.descEn : tool.descEs);
+        const ol = m.querySelector('.nsft-pvm-puntos');
+        ol.innerHTML = det ? det.puntos.map((pt) =>
+            '<li><b>' + esc(pt[0]) + '</b> ' + esc(pt[1] || '') + '</li>').join('') : '';
+        ol.hidden = !det;
+        const nota = (det && det.nota) || (tool.pvNota && tool.pvNota[en ? 'en' : 'es']) || '';
         const notaEl = m.querySelector('.nsft-pvm-nota');
-        notaEl.textContent = nota || '';
+        notaEl.textContent = nota;
         notaEl.hidden = !nota;
+        m.querySelector('.nsft-pvm-play').hidden = !tool.pv;
         const stage = m.querySelector('.nsft-pvm-stage');
         stage.setAttribute('data-pv', tool.pv || '');
         stage.innerHTML = '<div class="nsft-gal-skel"></div>';
@@ -486,9 +543,36 @@
         if (!tool.pv) return;
         pvCargaCss();
         const lang = en ? 'en' : 'es';
-        pvCargaIdioma(lang).then(() => { if (pvLista[pvIdx] === tool) pvPinta(stage, true); });
+        pvCargaIdioma(lang).then(() => { if (pvLista[pvIdx] === tool) { pvPinta(stage, true); pvBarra(); } });
+    }
+    /* Las pestañas de categoría: texto con subrayado del color de la categoría
+       (el icono sólo en la encendida). */
+    function pvTabsHtml(active) {
+        const en = root.getAttribute('data-lang') === 'en';
+        const tab = (id, nombre, color, icon) =>
+            `<button type="button" role="tab" aria-selected="${active === id}" class="nsft-pvm-tab${active === id ? ' is-on' : ''}" data-pvm-cat="${id}" style="--tc:${color}">` +
+            (active === id && icon ? `<span class="nsft-pvm-tab-ic">${icon}</span>` : '') + `<span>${esc(nombre)}</span></button>`;
+        return tab('all', en ? 'All' : 'Todas', 'var(--brand)', '') +
+            catalog.groups.map((g) => tab(g.id, en ? g.nameEn : g.nameEs, g.color, g.icon)).join('');
+    }
+    /* La barra de debajo de ↻: se llena mientras corre la animación. */
+    function pvBarra() {
+        const i = document.querySelector('#nsft-pvm .nsft-pvm-bar i');
+        if (!i) return;
+        i.style.animation = 'none';
+        void i.offsetWidth;   // reinicia la animación
+        i.style.animation = '';
+    }
+    /* Recorrer una categoría desde la ventana: todas sus herramientas, en el
+       orden del catálogo, empezando por la primera. */
+    function pvFiltra(cat) {
+        pvCat = cat || 'all';
+        pvLista = catalog.tools.filter((t) => pvCat === 'all' || t.group === pvCat);
+        pvMuestra(0);
     }
     function pvAbre(nombreEs) {
+        // La categoría encendida es la del catálogo; con una búsqueda escrita, «Todas».
+        pvCat = query ? 'all' : (root.getAttribute('data-cat') || 'all');
         const visibles = [...listEl.querySelectorAll('.nsft-tc')].map((b) => b.getAttribute('data-tool'));
         pvLista = visibles.map((n) => catalog.tools.find((t) => t.nameEs === n)).filter(Boolean);
         const m = pvPanel();
@@ -956,4 +1040,103 @@
 
     const totalEl = document.getElementById('nsft-total');
     if (totalEl) countUp(totalEl);
+})();
+
+
+/* ------------------------------------------------------------------ *
+ * Reseñas de la Chrome Web Store, al día (2026-11-13)
+ *
+ * build.js escribe en la página la media, los usuarios y las tarjetas tal como
+ * estaban al publicar. Aquí se piden los de ahora a /api/resenas —el Worker del
+ * sitio, que lee la Store y guarda la respuesta unas horas— y, si cambiaron, se
+ * repintan. Si la petición falla, se queda lo que trajo el HTML.
+ *
+ * Las tarjetas nuevas se clonan del <template id="nsft-review-tpl">, que build.js
+ * genera con la misma función que las de la página: el marcado vive en un solo
+ * sitio.
+ * ------------------------------------------------------------------ */
+(function () {
+    'use strict';
+
+    const grid = document.getElementById('nsft-reviews-grid');
+    const tpl = document.getElementById('nsft-review-tpl');
+    if (!grid || !tpl || !window.fetch || location.protocol === 'file:') return;
+
+    const dos = (es, en) => {
+        const f = document.createDocumentFragment();
+        [['es', es], ['en', en]].forEach(([l, t]) => {
+            const s = document.createElement('span');
+            s.setAttribute('data-l', l);
+            s.textContent = t;
+            f.appendChild(s);
+        });
+        return f;
+    };
+    const fecha = (iso, loc) => {
+        if (!iso) return '';
+        try {
+            return new Intl.DateTimeFormat(loc, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+                .format(new Date(iso + 'T12:00:00Z'));
+        } catch (e) { return iso; }
+    };
+    const pon = (sel, nodo) => document.querySelectorAll(sel).forEach((el) => {
+        el.textContent = '';
+        el.appendChild(nodo.cloneNode(true));
+    });
+
+    /* El mismo turno de colores que usó build.js (viaja en data-paleta). */
+    const PALETA = (grid.getAttribute('data-paleta') || '--brand').split(',');
+    const iniciales = (n) => String(n || '').trim().split(/\s+/).filter(Boolean).slice(0, 2)
+        .map((p) => p[0]).join('').toUpperCase();
+
+    function tarjeta(r, i) {
+        const card = tpl.content.firstElementChild.cloneNode(true);
+        card.removeAttribute('data-anim');   // llega con la sección ya a la vista
+        card.style.setProperty('--rc', 'var(' + PALETA[i % PALETA.length] + ')');
+        card.querySelector('.nsft-review-av').textContent = iniciales(r.name);
+        const idioma = card.querySelector('.nsft-review-lang');
+        idioma.textContent = String(r.lang || '').toUpperCase();
+        idioma.hidden = !r.lang;
+        const llenas = card.querySelectorAll('.nsft-stars i')[1];
+        if (llenas) llenas.style.width = (r.stars / 5 * 100) + '%';
+        const est = card.querySelector('.nsft-stars');
+        if (est) est.setAttribute('aria-label', r.stars + '/5');
+        const txt = card.querySelector('.nsft-review-text');
+        txt.textContent = r.text;
+        if (r.lang) txt.setAttribute('lang', r.lang); else txt.removeAttribute('lang');
+        card.querySelector('.nsft-review-name').textContent = r.name;
+        const t = card.querySelector('.nsft-review-date');
+        t.setAttribute('datetime', r.date || '');
+        t.textContent = '';
+        if (r.date) t.appendChild(dos(fecha(r.date, 'es-MX'), fecha(r.date, 'en-US')));
+        return card;
+    }
+
+    /* Lo que ya pintó el HTML, para no repintar si no cambió nada. */
+    const firma = (lista) => lista.map((r) => r.name + '|' + r.date + '|' + r.text.length).join('\n');
+    const actuales = Array.from(grid.querySelectorAll('.nsft-review')).map((c) => ({
+        name: (c.querySelector('.nsft-review-name') || {}).textContent || '',
+        date: (c.querySelector('.nsft-review-date') || { getAttribute: () => '' }).getAttribute('datetime') || '',
+        text: (c.querySelector('.nsft-review-text') || {}).textContent || ''
+    }));
+
+    /* `?v=` = el FORMATO de worker/index.mjs: si cambia lo que devuelve la ruta,
+       el navegador no reutiliza la respuesta vieja que tenga guardada. */
+    fetch('/api/resenas?v=2', { headers: { accept: 'application/json' } })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+            if (!d || typeof d.rating !== 'number' || !Array.isArray(d.reviews) || !d.reviews.length) return;
+            pon('[data-resenas="rating"]', document.createTextNode(d.rating.toFixed(1)));
+            if (d.count) pon('[data-resenas="count"]', dos(d.count + ' calificaciones', d.count + ' ratings'));
+            if (d.users) {
+                pon('[data-resenas="users"]', dos(d.users.toLocaleString('en-US').replace(/,/g, '.') + '+',
+                    d.users.toLocaleString('en-US') + '+'));
+            }
+            // La portada enseña las primeras; /reviews, todas (data-max lo dice).
+            const lista = d.reviews.slice(0, +grid.getAttribute('data-max') || d.reviews.length);
+            if (firma(lista) === firma(actuales)) return;
+            grid.textContent = '';
+            lista.forEach((r, i) => grid.appendChild(tarjeta(r, i)));
+        })
+        .catch(() => { /* sin datos en vivo: se queda la copia del HTML */ });
 })();

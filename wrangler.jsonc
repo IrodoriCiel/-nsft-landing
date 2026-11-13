@@ -1,13 +1,18 @@
 {
   // NSFT — sitio oficial de la extensión.
   //
-  // Worker de solo estáticos: no hay código, únicamente la carpeta `public`
-  // que publica `npm run landing:publish` desde el repositorio de la extensión.
+  // Los estáticos son la carpeta `public` que publica `npm run landing:publish`
+  // desde el repositorio de la extensión. Desde el 2026-11-13 hay además un
+  // Worker (worker/index.mjs, copiado por el mismo script) que contesta una sola
+  // ruta, /api/resenas, con las reseñas de la Chrome Web Store al día. Todo lo
+  // que casa con un archivo de `public` se sirve sin pasar por él.
   // Cloudflare lo despliega con `npx wrangler deploy` en cada push.
   "name": "nsft-landing-page",
   "compatibility_date": "2026-07-27",
+  "main": "./worker/index.mjs",
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     // /privacidad -> /privacidad.html, y / -> /index.html
     "html_handling": "auto-trailing-slash"
   }

@@ -1,0 +1,3 @@
+# Restos de `wrangler dev` en local: no se publican.
+.wrangler/
+node_modules/
