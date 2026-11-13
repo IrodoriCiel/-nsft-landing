@@ -984,6 +984,10 @@ html.nsft-anim [data-hero-mock]{animation-name:heroMockIn;animation-duration:1s;
   transition:background-size .35s cubic-bezier(.2,.8,.2,1),color .25s;padding-bottom:1px;}
 .nsft-ul:hover{background-size:100% 1.5px;}
 footer .nsft-ul{color:var(--fg2) !important;}
+/* En las columnas del pie los enlaces van uno bajo otro y cada uno ocupaba
+   todo el ancho de su columna, así que el subrayado salía larguísimo: el
+   enlace mide lo que su texto. */
+footer .nsft-ul{width:fit-content;}
 footer .nsft-ul:hover{color:var(--brand) !important;transform:translateX(3px);}
 footer .nsft-ul{display:inline-block;transition:background-size .35s cubic-bezier(.2,.8,.2,1),color .25s,transform .25s;}
 
