@@ -147,7 +147,7 @@
             : '';
         return `
         <button type="button" class="nsft-tc" data-tool="${esc(tool.nameEs)}" style="--gal:${group.color};"${tool.pv ? '' : ' data-sin-demo'}>
-          <span class="nsft-tc-ic">${group.icon}</span>
+          <span class="nsft-tc-ic">${tool.icon || group.icon}</span>
           <span class="nsft-tc-tx">
             <b>${esc(en ? tool.nameEn : tool.nameEs)}</b>
             <span>${esc(en ? tool.descEn : tool.descEs)}</span>
@@ -463,7 +463,7 @@
         const en = root.getAttribute('data-lang') === 'en';
         const m = pvPanel();
         m.style.setProperty('--gal', g.color || 'var(--brand)');
-        m.querySelector('.nsft-pvm-ic').innerHTML = g.icon || '';
+        m.querySelector('.nsft-pvm-ic').innerHTML = tool.icon || g.icon || '';
         m.querySelector('.nsft-pvm-ti small').textContent = en ? g.nameEn : g.nameEs;
         m.querySelector('.nsft-pvm-ti b').textContent = en ? tool.nameEn : tool.nameEs;
         m.querySelector('.nsft-pvm-desc').textContent = en ? tool.descEn : tool.descEs;
@@ -917,43 +917,8 @@
             mo.observe(total, { childList: true, characterData: true, subtree: true });
         }
 
-        // Estela con los colores de la extensión: verde, morado y naranja dorado.
-        if (!FINE || REDUCE) return;
-        const N = 14;
-        const PAL = ['#2C6E4E', '#4CBF88', '#7C63E0', '#A68BF2', '#E0A94F', '#F08A3C'];
-        const dots = Array.from({ length: N }, (_, k) => {
-            const d = document.createElement('span');
-            d.className = 'nsft-trail';
-            d.setAttribute('aria-hidden', 'true');
-            d.style.setProperty('--c', PAL[Math.floor(k / N * PAL.length)]);
-            d.style.setProperty('--s', Math.max(3, 11 - k * 0.6).toFixed(1) + 'px');
-            d.style.setProperty('--o', (1 - k / N * 0.75).toFixed(2));
-            d.style.setProperty('--dl', (k * 0.06).toFixed(2) + 's');
-            document.body.appendChild(d);
-            return { el: d, x: -50, y: -50 };
-        });
-        let x = -50, y = -50, corriendo = false, apaga = null;
-        const loop = () => {
-            let px = x, py = y, quieto = true;
-            dots.forEach((d, k) => {
-                const f = k ? 0.3 : 0.45;           // más lento = cola más larga
-                d.x += (px - d.x) * f; d.y += (py - d.y) * f;
-                d.el.style.transform = `translate(${d.x.toFixed(1)}px, ${d.y.toFixed(1)}px)`;
-                if (Math.abs(px - d.x) + Math.abs(py - d.y) > 0.3) quieto = false;
-                px = d.x; py = d.y;
-            });
-            if (!quieto) requestAnimationFrame(loop); else corriendo = false;
-        };
-        addEventListener('pointermove', (e) => {
-            x = e.clientX; y = e.clientY;
-            const hot = !!(e.target.closest && e.target.closest('a, button, summary, .nsft-chip, .nsft-spot, .nsft-tc, input'));
-            dots.forEach((d) => { d.el.classList.add('is-on'); d.el.classList.toggle('is-hot', hot); });
-            if (!corriendo) { corriendo = true; requestAnimationFrame(loop); }
-            // Se queda a la vista un rato tras parar el ratón, y luego se apaga.
-            clearTimeout(apaga);
-            apaga = setTimeout(() => dots.forEach((d) => d.el.classList.remove('is-on')), 2600);
-        }, { passive: true });
-        document.addEventListener('pointerleave', () => dots.forEach((d) => d.el.classList.remove('is-on')));
+        // Sin nada que siga al puntero (2026-11-12): se probaron un halo, un aro
+        // y varias estelas, y el ratón normal es lo que mejor queda.
     }
 
     /* ------------------------------------------------------------------ *

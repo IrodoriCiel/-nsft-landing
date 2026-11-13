@@ -1307,3 +1307,25 @@ html[data-theme="dark"]{scrollbar-color:#4CBF88 #0E1713;}
 ::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#245c41,#6a51d4);}
 html[data-theme="dark"] ::-webkit-scrollbar-track{background:#0E1713;}
 html[data-theme="dark"] ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#4CBF88,#8B6CE8);border-color:#0E1713;}
+
+/* Sólo laten mientras el ratón se mueve; quieto, quietas (2026-11-12). */
+.nsft-trail.is-on{animation:none;}
+.nsft-trail.is-on.is-moving{animation:nsftLate 1.4s ease-in-out infinite;animation-delay:var(--dl,0s);}
+
+/* Puntero: un solo punto verde, sin cola ni latido (2026-11-12). Sobre lo
+   que se pulsa crece con un halo suave. */
+.nsft-trail{background:#2C6E4E !important;box-shadow:0 0 0 0 rgba(44,110,78,.18);transition:opacity .4s,width .2s,height .2s,margin .2s,box-shadow .2s !important;}
+.nsft-trail.is-on.is-moving,.nsft-trail.is-on{animation:none !important;}
+.nsft-trail.is-hot{width:12px !important;height:12px !important;margin:-6px 0 0 -6px !important;opacity:.6 !important;box-shadow:0 0 0 8px rgba(44,110,78,.14);}
+html[data-theme="dark"] .nsft-trail{background:#4CBF88 !important;}
+
+/* Cola corta de 4 puntos con los colores de la extensión (2026-11-12). */
+.nsft-trail{background:var(--c) !important;}
+.nsft-trail.is-hot{width:var(--s) !important;height:var(--s) !important;margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2) !important;box-shadow:none;}
+.nsft-trail.is-hot.is-lead{box-shadow:0 0 0 7px rgba(44,110,78,.14);}
+html[data-theme="dark"] .nsft-trail{background:var(--c) !important;}
+
+/* Los de detrás aparecen al instante al moverse y, quieto el ratón, se
+   desvanecen para no quedarse apilados bajo el puntero (2026-11-12). */
+.nsft-trail.is-on{transition:opacity .15s ease,width .2s,height .2s,margin .2s !important;}
+.nsft-trail.is-on:not(.is-moving):not(.is-lead){opacity:0 !important;transition:opacity .6s ease !important;}
