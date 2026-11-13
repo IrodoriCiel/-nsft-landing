@@ -20,7 +20,8 @@
 
     const LANG_KEY = 'nsft-lang';
     // Carpeta raíz del sitio: la página inglesa vive en /en/.
-    const PV_BASE = /^\/en(\/|$)/.test(location.pathname) ? '../' : '';
+    // Absoluta y calculada al cargar: el cambio de idioma reescribe la dirección (/ ⇄ /en/) sin recargar.
+    const PV_BASE = new URL(/^\/en(\/|$)/.test(location.pathname) ? '../' : './', location.href).href;
     const THEME_KEY = 'nsft-theme';
 
     const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* incógnito */ } };
@@ -136,23 +137,23 @@
        obliga a adivinar.
        group.icon es el <svg> del panel equivalente del popup: va tal cual, sin
        escapar — lo pone build.js desde popup.html, no viene de fuera. */
-    function card(tool, color, en) {
-        const idioma = en ? 'en' : 'es';
-        const nota = tool.pvNota && tool.pvNota[idioma]
-            ? `<div class="nsft-gal-dep"><span aria-hidden="true">!</span>${esc(tool.pvNota[idioma])}</div>`
-            : '';
-        const stage = tool.pv
-            ? `<div class="nsft-gal-stage" data-pv="${esc(tool.pv)}"><div class="nsft-gal-skel"></div></div>`
+    /* FICHA COMPACTA (2026-11-12). Antes cada ficha traía su dibujo animado
+       debajo, y 118 dibujos eran decenas de pantallas de scroll. Ahora la
+       ficha dice qué hace en una línea y el dibujo se abre al pulsarla, en un
+       panel, sólo para quien lo quiere ver. */
+    function card(tool, group, en) {
+        const demo = tool.pv
+            ? `<span class="nsft-tc-demo"><span data-l="es">Ver demo</span><span data-l="en">See demo</span> ▸</span>`
             : '';
         return `
-        <div class="nsft-gal-card" style="--gal:${color};">
-          <div class="nsft-gal-body">
-            <div class="nsft-gal-name">${esc(en ? tool.nameEn : tool.nameEs)}</div>
-            <div class="nsft-gal-desc">${esc(en ? tool.descEn : tool.descEs)}</div>
-            ${nota}
-          </div>
-          ${stage}
-        </div>`;
+        <button type="button" class="nsft-tc" data-tool="${esc(tool.nameEs)}" style="--gal:${group.color};"${tool.pv ? '' : ' data-sin-demo'}>
+          <span class="nsft-tc-ic">${group.icon}</span>
+          <span class="nsft-tc-tx">
+            <b>${esc(en ? tool.nameEn : tool.nameEs)}</b>
+            <span>${esc(en ? tool.descEn : tool.descEs)}</span>
+            ${demo}
+          </span>
+        </button>`;
     }
 
     function groupBlock(group, items, en) {
@@ -164,8 +165,8 @@
           <span style="font-size:11.5px;font-weight:800;font-variant-numeric:tabular-nums;color:${group.color};background:${soft(group.color, 12)};border-radius:99px;padding:3px 9px;">${items.length}</span>
           <span style="flex:1;height:1px;background:linear-gradient(90deg, ${soft(group.color, 12)}, transparent);"></span>
         </div>
-        <div class="nsft-gal-grid">
-          ${items.map((t) => card(t, group.color, en)).join('')}
+        <div class="nsft-tc-grid">
+          ${items.map((t) => card(t, group, en)).join('')}
         </div>
       </div>`;
     }
@@ -193,8 +194,7 @@
         const needle = fold(query.trim());
 
         const matches = catalog.tools.filter((t) => {
-            if (cat !== 'all' && t.group !== cat) return false;
-            if (!needle) return true;
+            if (!needle) return cat === 'all' || t.group === cat;
             return fold(`${t.nameEs} ${t.nameEn} ${t.descEs} ${t.descEn}`).indexOf(needle) >= 0;
         });
 
@@ -411,6 +411,97 @@
             }, { rootMargin: '120px 0px' });
         }
         listEl.querySelectorAll('[data-pv]').forEach((el) => pvObs.observe(el));
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Panel de la demo: el dibujo animado de una herramienta, al pulsarla.
+     * Con ← → se pasa a la anterior o la siguiente de la lista visible.
+     * ------------------------------------------------------------------ */
+    let pvLista = [], pvIdx = -1, pvVolver = null;
+    function pvPanel() {
+        let m = document.getElementById('nsft-pvm');
+        if (m) return m;
+        m = document.createElement('div');
+        m.id = 'nsft-pvm';
+        m.className = 'nsft-pvm';
+        m.hidden = true;
+        m.innerHTML = `
+          <div class="nsft-pvm-bg" data-pvm-close></div>
+          <div class="nsft-pvm-box" role="dialog" aria-modal="true" aria-labelledby="nsft-pvm-t">
+            <div class="nsft-pvm-hd">
+              <span class="nsft-pvm-ic"></span>
+              <div class="nsft-pvm-ti"><small></small><b id="nsft-pvm-t"></b></div>
+              <button type="button" class="nsft-pvm-nav" data-pvm-step="-1" aria-label="Anterior">‹</button>
+              <button type="button" class="nsft-pvm-nav" data-pvm-step="1" aria-label="Siguiente">›</button>
+              <button type="button" class="nsft-pvm-x" data-pvm-close aria-label="Cerrar">✕</button>
+            </div>
+            <p class="nsft-pvm-desc"></p>
+            <div class="nsft-pvm-nota"></div>
+            <div class="nsft-gal-stage nsft-pvm-stage"></div>
+          </div>`;
+        document.body.appendChild(m);
+        m.addEventListener('click', (ev) => {
+            if (ev.target.closest('[data-pvm-close]')) return pvCierra();
+            const paso = ev.target.closest('[data-pvm-step]');
+            if (paso) return pvMuestra(pvIdx + Number(paso.getAttribute('data-pvm-step')));
+            const rep = ev.target.closest('[data-pv-replay]');
+            if (rep) pvPinta(rep.closest('[data-pv]'), true);
+        });
+        document.addEventListener('keydown', (ev) => {
+            if (m.hidden) return;
+            if (ev.key === 'Escape') pvCierra();
+            if (ev.key === 'ArrowRight') pvMuestra(pvIdx + 1);
+            if (ev.key === 'ArrowLeft') pvMuestra(pvIdx - 1);
+        });
+        return m;
+    }
+    function pvMuestra(idx) {
+        if (!pvLista.length) return;
+        pvIdx = (idx + pvLista.length) % pvLista.length;
+        const tool = pvLista[pvIdx];
+        const g = catalog.groups.find((x) => x.id === tool.group) || {};
+        const en = root.getAttribute('data-lang') === 'en';
+        const m = pvPanel();
+        m.style.setProperty('--gal', g.color || 'var(--brand)');
+        m.querySelector('.nsft-pvm-ic').innerHTML = g.icon || '';
+        m.querySelector('.nsft-pvm-ti small').textContent = en ? g.nameEn : g.nameEs;
+        m.querySelector('.nsft-pvm-ti b').textContent = en ? tool.nameEn : tool.nameEs;
+        m.querySelector('.nsft-pvm-desc').textContent = en ? tool.descEn : tool.descEs;
+        const nota = tool.pvNota && tool.pvNota[en ? 'en' : 'es'];
+        const notaEl = m.querySelector('.nsft-pvm-nota');
+        notaEl.textContent = nota || '';
+        notaEl.hidden = !nota;
+        const stage = m.querySelector('.nsft-pvm-stage');
+        stage.setAttribute('data-pv', tool.pv || '');
+        stage.innerHTML = '<div class="nsft-gal-skel"></div>';
+        stage.hidden = !tool.pv;
+        if (!tool.pv) return;
+        pvCargaCss();
+        const lang = en ? 'en' : 'es';
+        pvCargaIdioma(lang).then(() => { if (pvLista[pvIdx] === tool) pvPinta(stage, true); });
+    }
+    function pvAbre(nombreEs) {
+        const visibles = [...listEl.querySelectorAll('.nsft-tc')].map((b) => b.getAttribute('data-tool'));
+        pvLista = visibles.map((n) => catalog.tools.find((t) => t.nameEs === n)).filter(Boolean);
+        const m = pvPanel();
+        pvVolver = document.activeElement;
+        m.hidden = false;
+        document.documentElement.classList.add('nsft-pvm-open');
+        pvMuestra(Math.max(0, pvLista.findIndex((t) => t.nameEs === nombreEs)));
+        m.querySelector('.nsft-pvm-x').focus();
+    }
+    function pvCierra() {
+        const m = document.getElementById('nsft-pvm');
+        if (!m) return;
+        m.hidden = true;
+        document.documentElement.classList.remove('nsft-pvm-open');
+        if (pvVolver && pvVolver.focus) pvVolver.focus();
+    }
+    if (listEl) {
+        listEl.addEventListener('click', (ev) => {
+            const ficha = ev.target.closest('.nsft-tc');
+            if (ficha) pvAbre(ficha.getAttribute('data-tool'));
+        });
     }
 
     /* Repetir y animar: un solo escuchador para todo el catálogo, que las fichas
@@ -826,34 +917,41 @@
             mo.observe(total, { childList: true, characterData: true, subtree: true });
         }
 
-        // Estela de puntos con los colores de las categorías del popup.
+        // Estela con los colores de la extensión: verde, morado y naranja dorado.
         if (!FINE || REDUCE) return;
-        const COLS = ['#3B84C9', '#8058C9', '#1E9C8C', '#CE5361', '#C97534'];
-        const dots = COLS.map((c, k) => {
+        const N = 14;
+        const PAL = ['#2C6E4E', '#4CBF88', '#7C63E0', '#A68BF2', '#E0A94F', '#F08A3C'];
+        const dots = Array.from({ length: N }, (_, k) => {
             const d = document.createElement('span');
             d.className = 'nsft-trail';
             d.setAttribute('aria-hidden', 'true');
-            d.style.setProperty('--c', c);
-            d.style.setProperty('--s', (8 - k * 1.2).toFixed(1) + 'px');
+            d.style.setProperty('--c', PAL[Math.floor(k / N * PAL.length)]);
+            d.style.setProperty('--s', Math.max(3, 11 - k * 0.6).toFixed(1) + 'px');
+            d.style.setProperty('--o', (1 - k / N * 0.75).toFixed(2));
+            d.style.setProperty('--dl', (k * 0.06).toFixed(2) + 's');
             document.body.appendChild(d);
             return { el: d, x: -50, y: -50 };
         });
-        let x = -50, y = -50, corriendo = false;
+        let x = -50, y = -50, corriendo = false, apaga = null;
         const loop = () => {
             let px = x, py = y, quieto = true;
             dots.forEach((d, k) => {
-                d.x += (px - d.x) * (k ? 0.42 : 0.5); d.y += (py - d.y) * (k ? 0.42 : 0.5);
+                const f = k ? 0.3 : 0.45;           // más lento = cola más larga
+                d.x += (px - d.x) * f; d.y += (py - d.y) * f;
                 d.el.style.transform = `translate(${d.x.toFixed(1)}px, ${d.y.toFixed(1)}px)`;
-                if (Math.abs(px - d.x) + Math.abs(py - d.y) > 0.4) quieto = false;
+                if (Math.abs(px - d.x) + Math.abs(py - d.y) > 0.3) quieto = false;
                 px = d.x; py = d.y;
             });
             if (!quieto) requestAnimationFrame(loop); else corriendo = false;
         };
         addEventListener('pointermove', (e) => {
             x = e.clientX; y = e.clientY;
-            const hot = !!(e.target.closest && e.target.closest('a, button, summary, .nsft-chip, .nsft-spot, input'));
+            const hot = !!(e.target.closest && e.target.closest('a, button, summary, .nsft-chip, .nsft-spot, .nsft-tc, input'));
             dots.forEach((d) => { d.el.classList.add('is-on'); d.el.classList.toggle('is-hot', hot); });
             if (!corriendo) { corriendo = true; requestAnimationFrame(loop); }
+            // Se queda a la vista un rato tras parar el ratón, y luego se apaga.
+            clearTimeout(apaga);
+            apaga = setTimeout(() => dots.forEach((d) => d.el.classList.remove('is-on')), 2600);
         }, { passive: true });
         document.addEventListener('pointerleave', () => dots.forEach((d) => d.el.classList.remove('is-on')));
     }
@@ -882,7 +980,6 @@
     wireFloat();
     wireTicker();
     wireFx2();
-    pvArranca();
 
     const totalEl = document.getElementById('nsft-total');
     if (totalEl) countUp(totalEl);
