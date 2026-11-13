@@ -817,3 +817,12 @@ html.nsft-anim [data-hero-mock]{animation-name:heroMockIn;animation-duration:1s;
   .nsft-hero-logo-halo,.nsft-hero-logo-ring{animation:none !important;}
   .nsft-orb,.nsft-hero-mock{transform:none !important;}
 }
+
+/* Firefox: aún en revisión en addons.mozilla.org — botón sin enlace (2026-11-12).
+   Cuando lo acepten: cambiar el <span> por un <a> a la ficha de AMO. */
+.nsft-btn-soon{cursor:default;opacity:.85;}
+.nsft-btn-soon:hover{transform:none;border-color:var(--line);}
+.nsft-soon{font-style:normal;font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--brand);
+  background:color-mix(in oklab,var(--brand) 12%,transparent);border-radius:999px;padding:3px 9px;}
+.nsft-cta-soon{display:inline-flex;align-items:center;gap:10px;padding:16px 24px;border-radius:12px;font-size:16px;font-weight:800;
+  color:rgba(255,255,255,.8);border:1px dashed rgba(255,255,255,.4);cursor:default;}
