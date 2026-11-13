@@ -1243,7 +1243,6 @@ footer .nsft-irodev{display:inline-flex !important;background-image:none !import
 
 /* Modo ligero: sin difuminados, flotaciones ni animaciones continuas */
 html.nsft-lite .nsft-orb,html.nsft-lite .nsft-hero-bg{display:none !important;}
-html.nsft-lite .nsft-tile,html.nsft-lite .nsft-hero-logo-ring,html.nsft-lite .nsft-hero-logo-halo,
-html.nsft-lite .nsft-hero-title-grad,html.nsft-lite .nsft-pop-line,html.nsft-lite .nsft-gal-skel{animation:none !important;}
-html.nsft-lite .nsft-tile{box-shadow:none !important;}
+html.nsft-lite .nsft-hero-logo-ring,html.nsft-lite .nsft-hero-logo-halo,
+html.nsft-lite .nsft-pop-line,html.nsft-lite .nsft-gal-skel{animation:none !important;}
 html.nsft-lite .nsft-split .nsft-w{filter:none !important;}
