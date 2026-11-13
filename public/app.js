@@ -19,6 +19,8 @@
     if (!root) return;
 
     const LANG_KEY = 'nsft-lang';
+    // Carpeta raíz del sitio: la página inglesa vive en /en/.
+    const PV_BASE = /^\/en(\/|$)/.test(location.pathname) ? '../' : '';
     const THEME_KEY = 'nsft-theme';
 
     const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* incógnito */ } };
@@ -32,8 +34,31 @@
         en: 'Search among the tools…'
     };
 
-    function setLang(lang) {
+    /* Elemento que el visitante tiene delante: al cambiar de idioma se vuelve a
+       colocar en el mismo sitio de la pantalla. Sin esto, todo lo que cambia
+       de alto por encima (el catálogo se repinta, los textos miden distinto)
+       empujaba la página y daba la sensación de que «se mueve». */
+    function anclaVista() {
+        const vh = innerHeight;
+        const cands = document.querySelectorAll('#nsft-root section, #nsft-root h2, #nsft-root h3, .nsft-gal-card, #nsft-root p, footer');
+        let best = null, bestTop = Infinity;
+        cands.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.height && r.top >= 0 && r.top < vh && r.top < bestTop) { best = el; bestTop = r.top; }
+        });
+        return best ? { el: best, top: bestTop } : null;
+    }
+
+    // Ruta de cada idioma: / en español, /en/ en inglés (como irodoriciel.dev).
+    const rutaDe = (l) => (l === 'en' ? '/en/' : '/');
+    const idiomaDeRuta = () => (/^\/en(\/|$)/.test(location.pathname) ? 'en' : (/^\/(index\.html)?$/.test(location.pathname) ? 'es' : null));
+
+    function setLang(lang, opts) {
         const l = lang === 'en' ? 'en' : 'es';
+        const ancla = opts && opts.ancla ? anclaVista() : null;
+        if (location.protocol.startsWith('http') && rutaDe(l) !== location.pathname && idiomaDeRuta() !== null) {
+            try { history.replaceState(null, '', rutaDe(l) + location.search + location.hash); } catch (e) { /* file:// */ }
+        }
         root.setAttribute('data-lang', l);
         html.setAttribute('lang', l);            // también para lectores y buscadores
         const q = document.getElementById('nsft-q');
@@ -41,6 +66,11 @@
         save(LANG_KEY, l);
         renderChips('nsft-chips');
         renderCatalog();
+        if (ancla) {
+            const corrige = () => { const d = ancla.el.getBoundingClientRect().top - ancla.top; if (Math.abs(d) > 1) scrollBy(0, d); };
+            corrige();
+            requestAnimationFrame(() => { corrige(); setTimeout(corrige, 120); });
+        }
     }
 
     /* ------------------------------------------------------------------ *
@@ -70,7 +100,7 @@
         if (!el) return;
         const [kind, value] = el.getAttribute('data-act').split(':');
 
-        if (kind === 'lang') return setLang(root.getAttribute('data-lang') === 'es' ? 'en' : 'es');
+        if (kind === 'lang') return setLang(root.getAttribute('data-lang') === 'es' ? 'en' : 'es', { ancla: true });
         if (kind === 'theme') return setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         if (kind === 'tab') return root.setAttribute('data-tab', value);
         if (kind === 'cat') {
@@ -257,7 +287,7 @@
         pvCssPedido = true;
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'previews.css' + pvSello();
+        link.href = PV_BASE + 'previews.css' + pvSello();
         document.head.appendChild(link);
     }
 
@@ -266,7 +296,7 @@
         if (pvPaquetes[lang]) return Promise.resolve(pvPaquetes[lang]);
         return new Promise((resolve) => {
             const s = document.createElement('script');
-            s.src = 'previews.' + lang + '.js' + pvSello();
+            s.src = PV_BASE + 'previews.' + lang + '.js' + pvSello();
             s.onload = () => {
                 /* Cada archivo deja su mapa en la misma variable; se guarda
                    enseguida para que el del otro idioma no lo pise. */
@@ -480,7 +510,7 @@
                 e.target.classList.add('is-in');
                 io.unobserve(e.target);
             });
-        }, { rootMargin: '0px 0px -10% 0px' });
+        }, { rootMargin: '0px 0px -22% 0px' });
         observe(document);
     }
 
@@ -562,6 +592,272 @@
         update();
     }
 
+
+    /* ------------------------------------------------------------------ *
+     * Rediseño 2026-11-12: efectos de irodoriciel.dev y japan-pulse.com
+     * con las piezas y colores del popup.
+     *   · luz que sigue al puntero, botones magnéticos y tarjetas que se
+     *     inclinan con un brillo bajo el ratón;
+     *   · la línea que se escribe sola, la réplica animada del popup, las
+     *     baldosas de categoría que flotan y la cinta de herramientas.
+     * Nada de esto corre con «reducir movimiento».
+     * ------------------------------------------------------------------ */
+    /* Sin tarjeta gráfica (Chrome dibujando por software: «Basic Render
+       Driver», SwiftShader, llvmpipe) los efectos pesados hacen la página
+       torpe. Se detecta una vez y se apagan con la clase nsft-lite. */
+    (function () {
+        try {
+            const gl = document.createElement('canvas').getContext('webgl');
+            const dbg = gl && gl.getExtension('WEBGL_debug_renderer_info');
+            const r = gl ? String(gl.getParameter(dbg ? dbg.UNMASKED_RENDERER_WEBGL : gl.RENDERER)) : 'none';
+            if (!gl || /basic render|swiftshader|llvmpipe|software/i.test(r)) html.classList.add('nsft-lite');
+        } catch (e) { /* sin WebGL: se queda como está */ }
+    })();
+    const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const FINE = matchMedia('(pointer: fine)').matches;
+    const CAT = (window.NSFT_CATALOG || { groups: [], tools: [] });
+    const lang = () => root.getAttribute('data-lang') === 'en' ? 'en' : 'es';
+    const nameOf = (t) => (lang() === 'en' ? (t.nameEn || t.name || t.nameEs) : (t.nameEs || t.name || t.nameEn)) || '';
+    const groupOf = (id) => CAT.groups.find((g) => g.id === id) || { color: 'var(--brand)' };
+    const toolGroup = (t) => t.group || t.cat || t.g;
+
+    // Clases de efecto sobre lo que ya existe (y lo que se pinte después).
+    function tagFx() {
+        document.querySelectorAll('.nsft-btn:not(.nsft-btn-soon), .nsft-coffee-btn, .nsft-form').forEach((b) => b.classList.add('nsft-fx'));
+        document.querySelectorAll('.nsft-coffee-btn').forEach((b) => b.classList.add('is-gold'));
+        document.querySelectorAll('section [data-anim] a[target="_blank"][style*="padding:16px"]').forEach((b) => b.classList.add('nsft-fx', 'is-light'));
+        document.querySelectorAll('.nsft-role, .nsft-gal-card, .nsft-pop-card').forEach((c) => c.classList.add('nsft-spot', 'nsft-tilt'));
+    }
+
+    function wireFx() {
+        tagFx();
+        new MutationObserver(tagFx).observe(document.getElementById('nsft-catalog') || root, { childList: true, subtree: true });
+        if (!FINE || REDUCE) return;
+
+    }
+
+    // La línea que se escribe sola: nombres de herramientas, con el color de su categoría.
+    function wireTyped() {
+        const el = document.getElementById('nsft-typed');
+        if (!el || !CAT.tools.length) return;
+        const pick = CAT.tools.filter((t) => nameOf(t).length <= 34);
+        let i = 0;
+        const next = () => {
+            const t = pick[(i++ * 7) % pick.length];
+            el.parentNode.style.setProperty('--tc', groupOf(toolGroup(t)).color);
+            return nameOf(t);
+        };
+        if (REDUCE) { el.textContent = next(); return; }
+        let word = next(), n = 0, dir = 1;
+        (function tick() {
+            n += dir;
+            el.textContent = word.slice(0, n);
+            if (dir > 0 && n >= word.length) { dir = -1; return setTimeout(tick, 1500); }
+            if (dir < 0 && n <= 0) { dir = 1; word = next(); return setTimeout(tick, 250); }
+            setTimeout(tick, dir > 0 ? 55 : 28);
+        })();
+    }
+
+    // Réplica del popup: tarjetas por categoría que se iluminan una tras otra
+    // mientras el buscador «escribe» el nombre de la categoría.
+    function wirePopup() {
+        const grid = document.getElementById('nsft-pop-grid');
+        const pop = document.getElementById('nsft-pop');
+        const q = document.getElementById('nsft-pop-q');
+        if (!grid || !CAT.groups.length) return;
+        const count = (id) => CAT.tools.filter((t) => toolGroup(t) === id).length;
+        const groups = CAT.groups.slice(0, 9);
+        const TODOS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>';
+        const paint = () => {
+            const todos = { id: 'all', color: '#2F7D5A', nameEs: 'Todos', nameEn: 'All', icon: TODOS_ICON };
+            grid.innerHTML = [todos].concat(groups).map((g, k) => {
+                const n = g.id === 'all' ? CAT.tools.length : count(g.id);
+                return `<div class="nsft-pop-card" data-g="${g.id}" style="--c:${g.color};transition-delay:${(k * 0.06).toFixed(2)}s"><span class="ic">${g.icon}</span><div><b>${(lang() === 'en' ? g.nameEn : g.nameEs).split(' / ')[0]}</b><em>${n}<span> / ${n}</span></em></div></div>`;
+            }).join('');
+            tagFx();
+        };
+        paint();
+        new MutationObserver(paint).observe(root, { attributes: true, attributeFilter: ['data-lang'] });
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) pop.classList.add('is-in'); }), { threshold: 0.2 });
+        io.observe(pop);
+        if (REDUCE || !q) return;
+        let k = 0;
+        (function cycle() {
+            const g = groups[k++ % groups.length];
+            const word = (lang() === 'en' ? g.nameEn : g.nameEs).split(/[ /]/)[0].toLowerCase();
+            let n = 0;
+            grid.querySelectorAll('.nsft-pop-card').forEach((c) => c.classList.remove('is-hit', 'is-dim'));
+            (function type() {
+                q.textContent = word.slice(0, ++n);
+                if (n < word.length) return setTimeout(type, 90);
+                grid.querySelectorAll('.nsft-pop-card').forEach((c) => c.classList.toggle(c.dataset.g === g.id ? 'is-hit' : 'is-dim', true));
+                setTimeout(() => { q.textContent = ''; cycle(); }, 1700);
+            })();
+        })();
+    }
+
+    // Baldosas de categoría flotando alrededor del popup.
+    function wireFloat() {
+        const box = document.getElementById('nsft-float');
+        if (!box || !CAT.groups.length) return;
+        const spots = [[-2, 6, 62, -8], [86, -2, 52, 9], [92, 44, 58, -6], [-6, 58, 48, 7], [8, 92, 44, -10], [80, 88, 54, 6]];
+        box.innerHTML = spots.map(([x, y, s, r], k) => {
+            const g = CAT.groups[(k + 1) % CAT.groups.length];
+            return `<span class="nsft-tile" style="left:${x}%;top:${y}%;--s:${s}px;--r:${r}deg;--c:${g.color};--d:${5 + k}s;--dl:-${k * 0.7}s">${g.icon}</span>`;
+        }).join('');
+    }
+
+    // Una herramienta cada vez, al azar, con el color de su categoría.
+    function wireTicker() {
+        const slot = document.getElementById('nsft-rot'), cat = document.getElementById('nsft-rot-cat');
+        if (!slot || !CAT.tools.length) return;
+        // Barajado sin repetir hasta haber pasado por todas.
+        let bolsa = [];
+        const saca = () => {
+            if (!bolsa.length) {
+                bolsa = CAT.tools.slice();
+                for (let i = bolsa.length - 1; i > 0; i--) { const r = Math.floor(Math.random() * (i + 1)); [bolsa[i], bolsa[r]] = [bolsa[r], bolsa[i]]; }
+            }
+            return bolsa.pop();
+        };
+        const muestra = () => {
+            const t = saca(), g = groupOf(toolGroup(t));
+            const el = document.createElement('span');
+            el.className = 'nsft-rot-item';
+            el.style.setProperty('--c', g.color);
+            el.innerHTML = '<i></i>' + nameOf(t).replace(/[<&]/g, (c) => c === '<' ? '&lt;' : '&amp;');
+            const viejo = slot.querySelector('.nsft-rot-item:not(.is-out)');
+            if (viejo) { viejo.classList.add('is-out'); setTimeout(() => viejo.remove(), 450); }
+            slot.appendChild(el);
+            cat.style.setProperty('--c', g.color);
+            cat.textContent = lang() === 'en' ? g.nameEn : g.nameEs;
+        };
+        muestra();
+        if (REDUCE) return;
+        let pausa = false;
+        slot.parentNode.addEventListener('mouseenter', () => { pausa = true; });
+        slot.parentNode.addEventListener('mouseleave', () => { pausa = false; });
+        setInterval(() => { if (!pausa && !document.hidden) muestra(); }, 2200);
+    }
+
+
+    // Más animaciones: cabecera, menú, enlaces, títulos, píldoras, cascada y aro del puntero.
+    function wireFx2() {
+        const hero = document.querySelector('.nsft-hero');
+        if (hero && 'IntersectionObserver' in window) {
+            new IntersectionObserver((es) => es.forEach((e) => hero.classList.toggle('is-off', !e.isIntersecting))).observe(hero);
+        }
+        const hdr = root.querySelector(':scope > header');
+        const nav = hdr && hdr.querySelector('nav');
+        if (hdr) {
+            hdr.classList.add('nsft-hdr');
+            const onScroll = () => hdr.classList.toggle('is-scrolled', scrollY > 12);
+            addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+            hdr.querySelectorAll('button[data-act], a[aria-label="GitHub"]').forEach((b) => b.classList.add('nsft-ibtn'));
+            const cta = hdr.querySelector('a[href*="chromewebstore"]');
+            if (cta) cta.classList.add('nsft-fx');
+        }
+        if (nav) nav.classList.add('nsft-nav');
+        // Subrayado que se dibuja en los enlaces de texto.
+        root.querySelectorAll('footer a, #faq a, .nsft-hero-lead a, section p a').forEach((a) => {
+            if (!a.classList.contains('nsft-fx') && !a.classList.contains('nsft-irodev') && !a.querySelector('img')) a.classList.add('nsft-ul');
+        });
+
+        // Títulos que entran palabra a palabra.
+        const splitWords = (el) => {
+            if (el.dataset.split) return;
+            el.dataset.split = 1;
+            let i = 0;
+            const walk = (node) => {
+                [...node.childNodes].forEach((n) => {
+                    if (n.nodeType === 3) {
+                        const frag = document.createDocumentFragment();
+                        n.textContent.split(/(\s+)/).forEach((w) => {
+                            if (!w) return;
+                            if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(w)); return; }
+                            const s = document.createElement('span');
+                            s.className = 'nsft-w';
+                            s.style.setProperty('--i', i++);
+                            s.textContent = w;
+                            frag.appendChild(s);
+                        });
+                        n.replaceWith(frag);
+                    } else if (n.nodeType === 1 && !n.classList.contains('nsft-hero-title-grad')) {
+                        walk(n);
+                    } else if (n.nodeType === 1) {
+                        // El trozo con degradado entra entero, como una palabra más.
+                        n.classList.add('nsft-w');
+                        n.style.setProperty('--i', i++);
+                    }
+                });
+            };
+            walk(el);
+            el.classList.add('nsft-split');
+        };
+        const titles = [...root.querySelectorAll('h1, h2')].filter((h) => !h.closest('.nsft-pop'));
+        titles.forEach(splitWords);
+        const shine = [...root.querySelectorAll('.nsft-eyebrow')];
+        if (REDUCE || !('IntersectionObserver' in window)) {
+            titles.forEach((t) => t.classList.add('is-shown'));
+        } else {
+            const io = new IntersectionObserver((es) => es.forEach((e) => {
+                if (!e.isIntersecting) return;
+                e.target.classList.add(e.target.classList.contains('nsft-eyebrow') ? 'is-shine' : 'is-shown');
+                io.unobserve(e.target);
+            }), { threshold: 0, rootMargin: '0px 0px -28% 0px' });
+            titles.concat(shine).forEach((el) => io.observe(el));
+        }
+
+        // Cascada: los hermanos de una rejilla aparecen uno tras otro.
+        root.querySelectorAll('[data-anim]').forEach((el) => {
+            const sibs = [...el.parentNode.children].filter((c) => c.hasAttribute('data-anim'));
+            const k = sibs.indexOf(el);
+            if (sibs.length > 1 && k > 0 && !el.style.transitionDelay) el.style.transitionDelay = Math.min(k * 90, 450) + 'ms';
+        });
+
+        // Las cifras saltan al terminar de contar.
+        const total = document.getElementById('nsft-total');
+        if (total) {
+            const fin = total.dataset.total;
+            const mo = new MutationObserver(() => {
+                if (total.textContent === fin) { total.closest('.nsft-stat-num').classList.add('is-done'); mo.disconnect(); }
+            });
+            mo.observe(total, { childList: true, characterData: true, subtree: true });
+        }
+
+        // Estela de puntos con los colores de las categorías del popup.
+        if (!FINE || REDUCE) return;
+        const COLS = ['#3B84C9', '#8058C9', '#1E9C8C', '#CE5361', '#C97534'];
+        const dots = COLS.map((c, k) => {
+            const d = document.createElement('span');
+            d.className = 'nsft-trail';
+            d.setAttribute('aria-hidden', 'true');
+            d.style.setProperty('--c', c);
+            d.style.setProperty('--s', (8 - k * 1.2).toFixed(1) + 'px');
+            document.body.appendChild(d);
+            return { el: d, x: -50, y: -50 };
+        });
+        let x = -50, y = -50, corriendo = false;
+        const loop = () => {
+            let px = x, py = y, quieto = true;
+            dots.forEach((d, k) => {
+                d.x += (px - d.x) * (k ? 0.42 : 0.5); d.y += (py - d.y) * (k ? 0.42 : 0.5);
+                d.el.style.transform = `translate(${d.x.toFixed(1)}px, ${d.y.toFixed(1)}px)`;
+                if (Math.abs(px - d.x) + Math.abs(py - d.y) > 0.4) quieto = false;
+                px = d.x; py = d.y;
+            });
+            if (!quieto) requestAnimationFrame(loop); else corriendo = false;
+        };
+        addEventListener('pointermove', (e) => {
+            x = e.clientX; y = e.clientY;
+            const hot = !!(e.target.closest && e.target.closest('a, button, summary, .nsft-chip, .nsft-spot, input'));
+            dots.forEach((d) => { d.el.classList.add('is-on'); d.el.classList.toggle('is-hot', hot); });
+            if (!corriendo) { corriendo = true; requestAnimationFrame(loop); }
+        }, { passive: true });
+        document.addEventListener('pointerleave', () => dots.forEach((d) => d.el.classList.remove('is-on')));
+    }
+
     /* ------------------------------------------------------------------ *
      * Arranque
      * ------------------------------------------------------------------ */
@@ -569,7 +865,9 @@
 
     // Preferencia guardada > idioma del navegador > español.
     const navLang = (navigator.language || 'es').toLowerCase();
-    setLang(read(LANG_KEY) || (navLang.startsWith('es') ? 'es' : 'en'));
+    // La dirección manda (/en/ = inglés); en la portada sin idioma en la ruta,
+    // la preferencia guardada y luego el idioma del navegador.
+    setLang((/^\/en(\/|$)/.test(location.pathname) && 'en') || read(LANG_KEY) || (navLang.startsWith('es') ? 'es' : 'en'));
 
     // El tema ya lo estampó el script de arranque del <head> para evitar el
     // parpadeo; aquí solo se replica en el contenedor.
@@ -579,6 +877,11 @@
 
     wireHero();
     wireScroll();
+    wireFx();
+    wirePopup();
+    wireFloat();
+    wireTicker();
+    wireFx2();
     pvArranca();
 
     const totalEl = document.getElementById('nsft-total');
