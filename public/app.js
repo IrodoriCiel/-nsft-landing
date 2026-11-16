@@ -938,8 +938,7 @@
             addEventListener('scroll', onScroll, { passive: true });
             onScroll();
             hdr.querySelectorAll('button[data-act], a[aria-label="GitHub"]').forEach((b) => b.classList.add('nsft-ibtn'));
-            const cta = hdr.querySelector('a[href*="chromewebstore"]');
-            if (cta) cta.classList.add('nsft-fx');
+            // Los botones de tienda (Chrome y Firefox) llevan su propio hover: sin nsft-fx.
         }
         if (nav) nav.classList.add('nsft-nav');
         // Subrayado que se dibuja en los enlaces de texto.
