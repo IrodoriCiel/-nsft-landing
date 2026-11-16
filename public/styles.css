@@ -821,9 +821,9 @@ html.nsft-anim [data-hero-mock]{animation-name:heroMockIn;animation-duration:1s;
 .nsft-btn-soon:hover{transform:none;border-color:var(--line);}
 .nsft-soon{font-style:normal;font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--brand);
   background:color-mix(in oklab,var(--brand) 12%,transparent);border-radius:999px;padding:3px 9px;}
-.nsft-cta-ff{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:12px;font-size:16px;font-weight:800;
-  color:#fff;border:1px solid rgba(255,255,255,.45);transition:background .2s,border-color .2s,transform .2s;}
-.nsft-cta-ff:hover{background:rgba(255,255,255,.12);border-color:#fff;transform:translateY(-2px);}
+/* Igual que «Añadir a Chrome — gratis»: mismo botón blanco. */
+.nsft-cta-ff{transition:transform .2s,box-shadow .2s;}
+.nsft-cta-ff:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.18);}
 
 /* ================================================================== *
  * REDISEÑO 2026-11-12 — más vivo, al estilo de japan-pulse.com e
