@@ -1543,3 +1543,8 @@ footer .nsft-irodev:hover .irodev-glitch::after{animation:irodevBurstB .5s steps
   .nsft-pvm-info{overflow:visible;}
   .nsft-pvm-play{padding-top:4px;}
 }
+
+/* Cabecera: un botón por tienda, blancos y con el logo a color (2026-11-15). */
+.nsft-store-btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:13.5px;font-weight:700;transition:transform .2s,box-shadow .2s,border-color .2s;}
+.nsft-store-btn:hover{transform:translateY(-1px);border-color:var(--brand);box-shadow:var(--shadowSm);}
+@media (max-width:640px){.nsft-store-btn{padding:0;width:36px;justify-content:center;}.nsft-store-btn span{display:none;}}
