@@ -147,16 +147,16 @@
     <section class="nsft-legal-sec">
       <h2><span data-l="es">4. Asistente de IA (opcional)</span><span data-l="en">4. AI Assistant (optional)</span></h2>
       <p>
-        <span data-l="es">El Asistente de IA no funciona hasta que eliges un proveedor e introduces tu propia clave de API. NSFT no incluye ninguna clave ni intermedia la conexión: la petición viaja de tu navegador al proveedor que tú hayas elegido.</span>
-        <span data-l="en">The AI Assistant does nothing until you pick a provider and enter your own API key. NSFT ships no key of its own and does not sit in the middle of the connection: the request travels from your browser to the provider you chose.</span>
+        <span data-l="es">El Asistente de IA no funciona hasta que eliges una de sus dos vías: <b>NetSuite AI</b>, la IA generativa de tu propia cuenta de NetSuite (el módulo N/llm), a través de un RESTlet que se instala en la cuenta solo si lo confirmas y sin API key; o un proveedor externo con tu propia clave de API. NSFT no incluye ninguna clave ni intermedia la conexión: la petición viaja de tu navegador a tu cuenta de NetSuite o al proveedor que tú hayas elegido.</span>
+        <span data-l="en">The AI Assistant does nothing until you pick one of its two routes: <b>NetSuite AI</b>, the generative AI of your own NetSuite account (the N/llm module), through a RESTlet that is installed in the account only if you confirm and needs no API key; or an external provider with your own API key. NSFT ships no key of its own and does not sit in the middle of the connection: the request travels from your browser to your NetSuite account or to the provider you chose.</span>
       </p>
       <p>
         <span data-l="es">En esa petición viaja lo que necesita para responder: tu pregunta y el contexto de la pantalla en la que estás — por ejemplo el tipo y los campos del registro abierto, el esquema de las tablas o la consulta que estás escribiendo. <b>Si ese contenido es confidencial en tu organización, ten en cuenta que sale hacia el proveedor.</b></span>
         <span data-l="en">That request carries what it needs to answer: your question and the context of the screen you are on — for example the type and fields of the open record, the table schema, or the query you are writing. <b>If that content is confidential in your organisation, bear in mind that it leaves for the provider.</b></span>
       </p>
       <p>
-        <span data-l="es">Los proveedores disponibles son Anthropic (Claude), OpenAI, Google Gemini, Groq, OpenRouter y DeepSeek, además de un endpoint compatible que tú definas (incluido un modelo local en tu propio equipo). Lo que cada proveedor hace con los datos se rige por <b>su</b> política de privacidad, no por esta.</span>
-        <span data-l="en">The available providers are Anthropic (Claude), OpenAI, Google Gemini, Groq, OpenRouter and DeepSeek, plus any compatible endpoint you define (including a model running on your own machine). What each provider does with the data is governed by <b>their</b> privacy policy, not this one.</span>
+        <span data-l="es">Los proveedores disponibles son Anthropic (Claude), OpenAI, Google Gemini, Groq, OpenRouter y DeepSeek, además de un endpoint compatible que tú definas (incluido un modelo local en tu propio equipo). Con NetSuite AI, los datos se rigen por los términos de Oracle NetSuite para tu cuenta. Lo que cada proveedor hace con los datos se rige por <b>su</b> política de privacidad, no por esta.</span>
+        <span data-l="en">The available providers are Anthropic (Claude), OpenAI, Google Gemini, Groq, OpenRouter and DeepSeek, plus any compatible endpoint you define (including a model running on your own machine). With NetSuite AI, the data is governed by Oracle NetSuite's terms for your account. What each provider does with the data is governed by <b>their</b> privacy policy, not this one.</span>
       </p>
       <p>
         <span data-l="es">Tu clave se guarda en el almacenamiento de la extensión, se envía solo al proveedor al que pertenece y puedes borrarla en cualquier momento desde la configuración del asistente.</span>
