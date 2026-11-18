@@ -1368,7 +1368,8 @@ footer .nsft-irodev::before{content:"";position:absolute;inset:0;z-index:-1;poin
   background:linear-gradient(110deg,transparent 30%,rgba(62,231,196,.22) 48%,rgba(139,123,255,.2) 54%,transparent 70%);transition:transform .7s cubic-bezier(.2,.8,.2,1);}
 footer .nsft-irodev:hover::before{transform:translateX(120%);}
 footer .nsft-irodev:hover{animation:irodevBtnGlitch .42s steps(1) 1;}
-footer .nsft-irodev:hover .nsft-irodev-mark{animation:irodevPop .55s cubic-bezier(.2,.8,.2,1) !important;transform:none !important;}
+/* Sin !important en transform: una declaración !important le gana a la animación y el </> no saltaba. */
+footer .nsft-irodev:hover .nsft-irodev-mark{animation:irodevPop .55s cubic-bezier(.2,.8,.2,1) !important;transform:none;}
 .irodev-glitch{position:relative;display:inline-block;}
 .irodev-glitch::before,.irodev-glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;white-space:nowrap;pointer-events:none;opacity:0;
   background:none;-webkit-text-fill-color:currentColor;}
