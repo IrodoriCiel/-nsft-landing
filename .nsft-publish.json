@@ -1,6 +1,6 @@
 {
   "source": "nsft-chrome-extension-final/landing-page",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "subdir": "public",
   "files": [
     "_headers",
@@ -20,6 +20,7 @@
     "assets/logo.webp",
     "assets/logomini.png",
     "en/index.html",
+    "favicon.ico",
     "index.html",
     "previews.css",
     "previews.en.js",
